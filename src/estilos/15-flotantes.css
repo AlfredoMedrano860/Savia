@@ -1,0 +1,75 @@
+/* Botones flotantes y tipografía. */
+
+/* ---------- botones flotantes a la derecha ----------
+   Accesibilidad abajo a la derecha (su panel también sale por la derecha) y "volver arriba"
+   justo encima. El ícono de la librería viene envuelto en un div sin estilos que dejaba
+   un espacio de renglón debajo del svg y lo subía unos 3 px; aquí se centra de verdad. */
+.accesibilidad {
+  right: max(20px, env(safe-area-inset-right));
+  left: auto;
+}
+
+.volver-arriba {
+  bottom: calc(max(20px, env(safe-area-inset-bottom)) + 64px);
+}
+
+:is(.accesibilidad__boton, .volver-arriba) > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:is(.accesibilidad__boton, .volver-arriba) svg {
+  display: block;
+}
+
+/* esquina recta hacia la orilla derecha, en los dos */
+.accesibilidad__boton,
+.volver-arriba {
+  border-radius: 17px 17px 6px 17px;
+}
+
+@media (max-width: 640px) {
+  .accesibilidad {
+    right: max(14px, env(safe-area-inset-right));
+    left: auto;
+  }
+
+  .volver-arriba {
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 58px);
+  }
+}
+
+/* franja de cuaderno detrás de la etiqueta de herbario: azul claro con renglones y una línea
+   de margen, como una hoja de cuaderno sobre la que se pegó la etiqueta */
+.franja-herbario {
+  position: relative;
+  margin-top: clamp(64px, 9vw, 112px);
+  padding-block: clamp(48px, 7vw, 84px);
+  background-color: #e9eff9;
+  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.1) 35px, transparent 36px);
+}
+
+.franja-herbario::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(18px, 6vw, 96px);
+  width: 2px;
+  background: color-mix(in srgb, var(--celeste-400) 45%, transparent);
+  content: '';
+}
+
+.franja-herbario .herbario__etiqueta {
+  box-shadow: 0 26px 44px -30px rgba(16, 45, 91, 0.55);
+}
+
+
+/* ---------- tipografía ----------
+   Texto en Bricolage Grotesque (sans con carácter, ajusta su forma al tamaño) y títulos en
+   Fraunces con remates suaves y un toque irregular (ejes SOFT y WONK). Las fuentes sin esos
+   ejes los ignoran, así que se puede declarar una sola vez en la raíz. */
+html {
+  -webkit-text-size-adjust: 100%;
+  font-variation-settings: 'SOFT' 70, 'WONK' 1;
+}

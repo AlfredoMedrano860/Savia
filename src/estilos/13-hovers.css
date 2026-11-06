@@ -1,0 +1,149 @@
+/* Sistema de hovers y foco. */
+
+/* =====================================================================
+   INTERACCIÓN: hovers del sistema de diseño (tokens en tokens.css)
+   Cada tipo de componente tiene su propio comportamiento y todos los del
+   mismo tipo se comportan igual. Solo se animan color, fondo, borde y
+   transform, con la misma duración y curva.
+   ===================================================================== */
+
+.boton,
+.nav__enlace,
+.filtro,
+.opcion,
+.modo,
+.enlace,
+.seccion__enlace,
+.volver-arriba,
+.accesibilidad__boton,
+.nav__menu,
+.accesibilidad__opcion {
+  transition:
+    color var(--hover-duracion) var(--hover-curva),
+    background-color var(--hover-duracion) var(--hover-curva),
+    border-color var(--hover-duracion) var(--hover-curva),
+    box-shadow var(--hover-duracion) var(--hover-curva),
+    transform var(--hover-duracion) var(--hover-curva);
+}
+
+/* --- botón primario: un tono más oscuro y sube --- */
+.boton--tinta,
+.boton--marca {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-texto-sobre-marca);
+}
+
+.boton--tinta:hover:not(:disabled),
+.boton--marca:hover:not(:disabled) {
+  border-color: var(--hover-primario-fondo);
+  background: var(--hover-primario-fondo);
+  color: var(--color-texto-sobre-marca);
+  box-shadow: var(--hover-sombra-boton);
+  transform: var(--hover-elevar-boton);
+}
+
+/* --- botón secundario: se rellena de azul suave y sube --- */
+.boton:not(.boton--tinta):not(.boton--marca):not(.boton--claro):not(.boton--contorno):not(.boton--peligro):hover:not(:disabled) {
+  border-color: var(--hover-secundario-borde);
+  background: var(--hover-secundario-fondo);
+  color: var(--color-marca);
+  box-shadow: var(--hover-sombra-boton);
+  transform: var(--hover-elevar-boton);
+}
+
+/* --- botones sobre fondo azul (encabezado y franja del proyecto) --- */
+.boton--claro:hover:not(:disabled) {
+  border-color: var(--hover-sobre-marca-claro);
+  background: var(--hover-sobre-marca-claro);
+  color: var(--color-sobre-acento);
+  box-shadow: var(--hover-sombra-boton);
+  transform: var(--hover-elevar-boton);
+}
+
+.boton--contorno:hover:not(:disabled) {
+  border-color: var(--blanco);
+  background: var(--hover-sobre-marca-contorno);
+  color: var(--blanco);
+  box-shadow: none;
+  transform: var(--hover-elevar-boton);
+}
+
+/* en la franja clara del proyecto, el botón claro se comporta como primario */
+
+/* --- botón flotante o de ícono: un tono más oscuro y sube --- */
+.volver-arriba:hover,
+.accesibilidad__boton:hover {
+  background: var(--hover-primario-fondo);
+  box-shadow: var(--hover-sombra-boton);
+  transform: var(--hover-elevar-boton);
+}
+
+.nav__menu:hover {
+  border-color: var(--hover-secundario-borde);
+  background: var(--hover-secundario-fondo);
+  color: var(--color-marca);
+}
+
+/* --- pestaña / navegación / filtro: fondo azul suave y texto de marca --- */
+.nav__enlace:hover:not([aria-current='page']),
+.filtro:hover:not(.is-activo),
+.accesibilidad__opcion:hover:not(.is-activa) {
+  background: var(--hover-pestana-fondo);
+  color: var(--color-marca);
+  transform: none;
+}
+
+/* --- enlace de texto: más oscuro, subrayado y la flecha avanza --- */
+.enlace:hover,
+.seccion__enlace:hover {
+  color: var(--hover-enlace);
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px;
+}
+
+.seccion__enlace svg,
+.tema-tarjeta__ir svg {
+  transition: transform var(--hover-duracion) var(--hover-curva);
+}
+
+.seccion__enlace:hover svg,
+.tema-tarjeta:hover .tema-tarjeta__ir svg {
+  transform: translateX(3px);
+}
+
+/* --- tarjeta clicable: solo sube, sin cambiar de color --- */
+.modo:hover {
+  transform: var(--hover-elevar-tarjeta) rotate(0);
+}
+
+/* la tarjeta de modo conserva su fondo y bordes al pasar el mouse */
+.modo,
+.modo:hover {
+  border-color: var(--color-borde);
+  border-top-color: var(--color-marca);
+  background-color: var(--color-superficie);
+}
+
+/* --- opción seleccionable (respuestas del examen): borde y fondo azul suave --- */
+.opcion:hover:not(.is-marcada) {
+  border-color: var(--hover-opcion-borde);
+  background: var(--hover-opcion-fondo);
+}
+
+/* --- foco con teclado: el mismo anillo para todo lo interactivo --- */
+:is(.boton, .nav__enlace, .filtro, .opcion, .modo, .tema-tarjeta, .enlace, .seccion__enlace, .volver-arriba, .accesibilidad__boton, .nav__menu):focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+  box-shadow: var(--foco-anillo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton:hover,
+.modo:hover,
+.volver-arriba:hover,
+.accesibilidad__boton:hover {
+    transform: none !important;
+  }
+}

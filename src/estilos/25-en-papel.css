@@ -1,0 +1,427 @@
+/* Imprime una prueba (Practicar). */
+
+/* ---------- "Imprime una prueba" (Practicar) ----------
+   Una hoja de cuaderno con las tres opciones como mini hojas de papel y, a la derecha, un
+   talón desprendible (separado por una línea perforada) para escribir el código de la prueba. */
+.en-papel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
+  margin-top: clamp(40px, 6vw, 64px);
+  border: 1px solid #d5dfeb;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow:
+    8px 8px 0 rgba(207, 220, 236, 0.8),
+    16px 16px 0 rgba(23, 60, 120, 0.08);
+}
+
+.en-papel__hoja {
+  padding: clamp(26px, 4vw, 38px) clamp(22px, 3.5vw, 36px) clamp(26px, 4vw, 38px) clamp(58px, 6vw, 76px);
+  background-image:
+    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
+    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
+  background-size: 20px 52px, auto, auto;
+  background-repeat: repeat-y, no-repeat, repeat;
+}
+
+.en-papel__titulo {
+  margin: 6px 0 6px;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h3);
+  font-weight: 600;
+}
+
+.en-papel__texto {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  line-height: 1.55;
+}
+
+.en-papel__opciones {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* mini hoja: papel con una esquina doblada */
+.mini-hoja {
+  position: relative;
+  display: grid;
+  align-content: start;
+  width: 100%;
+  min-height: 150px;
+  padding: 14px 14px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
+  background:
+    linear-gradient(225deg, var(--fondo) 0 12px, #d5dfeb 12px 13px, #fff 13px) no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(82, 133, 181, 0.1) 19px, transparent 20px);
+  color: var(--color-texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--hover-duracion) var(--hover-curva),
+    box-shadow var(--hover-duracion) var(--hover-curva),
+    transform var(--hover-duracion) var(--hover-curva);
+}
+
+.mini-hoja__nombre {
+  color: var(--celeste-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-size: var(--texto-mano-chico);
+  line-height: 1;
+}
+
+.mini-hoja__numero {
+  margin-top: 6px;
+  color: var(--azul-700);
+  font-family: var(--fuente-titulo);
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.mini-hoja__dato {
+  margin-top: 2px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+}
+
+.mini-hoja__accion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--linea);
+  color: var(--azul-700);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+}
+
+.mini-hoja:hover {
+  border-color: var(--hover-secundario-borde);
+  box-shadow: var(--hover-sombra-boton);
+  transform: var(--hover-elevar-tarjeta);
+}
+
+.mini-hoja:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+/* la prueba completa, como en las fichas: la más cercana a la prueba real */
+.mini-hoja--completa {
+  border-color: var(--color-borde-marca);
+  background:
+    linear-gradient(225deg, var(--fondo) 0 12px, #d5dfeb 12px 13px, var(--color-marca-suave) 13px) no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(82, 133, 181, 0.12) 19px, transparent 20px);
+}
+
+/* talón desprendible */
+.en-papel__talon {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: clamp(24px, 3.5vw, 34px) clamp(22px, 3vw, 32px);
+  border-left: 2px dashed #b9c6d8;
+  background: var(--celeste-50);
+}
+
+/* muescas de la perforación, arriba y abajo */
+.en-papel__talon::before,
+.en-papel__talon::after {
+  position: absolute;
+  left: -11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--fondo);
+  content: '';
+}
+
+.en-papel__talon::before {
+  top: -11px;
+  box-shadow: inset 0 -1px 0 #d5dfeb;
+}
+
+.en-papel__talon::after {
+  bottom: -11px;
+  box-shadow: inset 0 1px 0 #d5dfeb;
+}
+
+.en-papel__talon-rotulo {
+  margin: 0;
+  color: var(--celeste-600);
+  font-size: var(--texto-mini);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.en-papel__talon-titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h4);
+  font-weight: 600;
+}
+
+.en-papel__talon-texto {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  line-height: 1.5;
+}
+
+.en-papel__codigo {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1.5px solid var(--color-borde-marca);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--azul-700);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.en-papel__codigo::placeholder {
+  color: #b9c6d8;
+}
+
+.en-papel__codigo:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.en-papel__codigo[aria-invalid='true'] {
+  border-color: var(--rojo);
+}
+
+.en-papel__error {
+  margin: 0;
+  color: var(--rojo);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+}
+
+.en-papel__ver {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .en-papel {
+    grid-template-columns: 1fr;
+  }
+
+  .en-papel__talon {
+    border-top: 2px dashed #b9c6d8;
+    border-left: 0;
+  }
+
+  .en-papel__talon::before,
+  .en-papel__talon::after {
+    top: -11px;
+    bottom: auto;
+  }
+
+  .en-papel__talon::before {
+    left: -11px;
+  }
+
+  .en-papel__talon::after {
+    right: -11px;
+    left: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .en-papel {
+    box-shadow:
+      5px 5px 0 rgba(207, 220, 236, 0.8),
+      10px 10px 0 rgba(23, 60, 120, 0.08);
+  }
+
+  .en-papel__hoja {
+    padding: 24px 18px 24px 54px;
+  }
+
+  .en-papel__opciones {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-hoja {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 14px;
+    min-height: 0;
+  }
+
+  .mini-hoja__numero {
+    grid-row: 1 / span 3;
+    grid-column: 1;
+    margin: 0;
+    font-size: 2.2rem;
+  }
+
+  .mini-hoja__nombre,
+  .mini-hoja__dato,
+  .mini-hoja__accion {
+    grid-column: 2;
+  }
+
+  .mini-hoja__accion {
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mini-hoja:hover {
+    transform: none;
+  }
+}
+
+/* respuestas de una prueba impresa (al entrar con su código) */
+.respuestas-impresa__cabecera {
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--linea);
+}
+
+.respuestas-impresa__titulo {
+  margin: 6px 0 4px;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h1);
+  font-weight: 600;
+}
+
+.respuestas-impresa__datos {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.respuestas-impresa__datos strong {
+  color: var(--azul-700);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  letter-spacing: 0.1em;
+}
+
+.respuestas-impresa__texto {
+  max-width: 60ch;
+  margin: 10px 0 0;
+  color: var(--color-texto);
+  font-size: var(--texto-detalle);
+}
+
+/* el ícono animado viene envuelto en un contenedor con alto de línea propio (16×21 px): sin
+   esto la estrella queda corrida hacia arriba dentro del botón */
+.guardar__icono {
+  display: flex !important;
+  line-height: 0;
+}
+
+/* hoja de respuestas resuelta (arriba de las explicaciones, al entrar con el código) */
+.resultados > .hoja-resuelta {
+  margin-bottom: 32px;
+  padding: clamp(22px, 3.5vw, 32px) clamp(20px, 3.5vw, 32px) clamp(22px, 3.5vw, 32px) clamp(56px, 6vw, 72px);
+  border: 1px solid #d5dfeb;
+  border-radius: 2px;
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
+    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
+  background-size: 20px 52px, auto, auto;
+  background-repeat: repeat-y, no-repeat, repeat;
+  box-shadow:
+    8px 8px 0 rgba(207, 220, 236, 0.8),
+    16px 16px 0 rgba(23, 60, 120, 0.08);
+}
+
+.hoja-resuelta__ayuda {
+  margin: -6px 0 16px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.hoja-resuelta .papel__grilla-n {
+  color: var(--color-texto);
+  text-decoration: none;
+}
+
+.hoja-resuelta .papel__grilla-n:hover {
+  color: var(--azul-700);
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+.papel__burbuja.is-clave {
+  border-color: var(--verde);
+  background: var(--verde);
+  color: #fff;
+}
+
+.respuestas-impresa__subtitulo {
+  margin: 0 0 16px;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h3);
+  font-weight: 600;
+}
+
+.respuestas-impresa .revision__item {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 560px) {
+  .hoja-resuelta .papel__grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 10px;
+  }
+
+  .hoja-resuelta .papel__grilla li {
+    gap: 4px;
+    padding: 3px 0;
+  }
+
+  .hoja-resuelta .papel__grilla-n {
+    width: 20px;
+  }
+
+  .hoja-resuelta .papel__burbuja {
+    width: 22px;
+    height: 22px;
+  }
+
+  .resultados > .hoja-resuelta {
+    padding: 22px 16px 22px 52px;
+    box-shadow:
+      5px 5px 0 rgba(207, 220, 236, 0.8),
+      10px 10px 0 rgba(23, 60, 120, 0.08);
+  }
+}
+
+/* página "Mi progreso": pregunta del día arriba y tablero de progreso debajo */
+.diaria-seccion {
+  margin-top: clamp(24px, 4vw, 36px);
+}
+
+.diaria-seccion .diaria {
+  max-width: none;
+}

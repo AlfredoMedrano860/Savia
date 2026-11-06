@@ -1,0 +1,217 @@
+/* Barra del examen. */
+
+/* ---------- barra del examen ----------
+   Blanca y liviana para no robar atención a la pregunta: salir a la izquierda, la práctica
+   al centro y el cronómetro a la derecha (ámbar con menos de 10 min, rojo en el último).
+   El avance es una línea celeste en el borde inferior. */
+
+.examen-barra__fila {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, auto) 1fr;
+  align-items: center;
+  gap: 16px;
+  width: min(1120px, 100% - 32px);
+  min-height: 66px;
+  margin-inline: auto;
+}
+
+.examen-barra__salir {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 6px;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.examen-barra__salir > div {
+  display: flex;
+}
+
+.examen-barra__centro {
+  display: grid;
+  justify-items: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.examen-barra__modo {
+  max-width: 100%;
+  overflow: hidden;
+  font-family: var(--fuente-titulo);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.examen-barra__reloj {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 8px;
+  padding: 7px 14px 7px 11px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.examen-barra__reloj svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.examen-barra__reloj--alerta {
+  border-color: #e9c46a;
+  background: #fdf3d9;
+  color: #8a5a00;
+}
+
+.examen-barra__reloj--critico {
+  border-color: #e5a29b;
+  background: #fbe9e7;
+  color: #b3261e;
+  animation: reloj-latido 1s ease-in-out infinite;
+}
+
+@keyframes reloj-latido {
+  50% {
+    box-shadow: 0 0 0 5px rgba(179, 38, 30, 0.14);
+  }
+}
+
+.examen-barra__avance span {
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .examen-barra__fila {
+    gap: 10px;
+    min-height: 58px;
+  }
+
+  /* en celular "Salir" queda solo como flecha */
+
+  .examen-barra__salir span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .examen-barra__modo {
+    font-size: 0.98rem;
+  }
+
+  .examen-barra__reloj {
+    padding: 6px 10px 6px 8px;
+    font-size: 1rem;
+  }
+
+  .examen-barra__reloj svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .examen-barra__reloj--critico {
+    animation: none;
+  }
+}
+
+html.a11y-reduce-motion .examen-barra__reloj--critico {
+  animation: none;
+}
+
+/* barra del examen en azul de marca */
+.examen-barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--azul-700);
+  box-shadow: 0 10px 24px -18px rgba(16, 45, 91, 0.6);
+  backdrop-filter: none;
+}
+
+.examen-barra__salir {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--blanco);
+}
+
+.examen-barra__salir:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.examen-barra__salir:focus-visible,
+.examen-barra__reloj:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+  outline-color: var(--celeste-200);
+}
+
+.examen-barra__modo {
+  color: var(--blanco);
+}
+
+.examen-barra__progreso {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.examen-barra__progreso strong {
+  color: var(--celeste-200);
+}
+
+.examen-barra__reloj {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--blanco);
+}
+
+.examen-barra__avance {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.examen-barra__avance span {
+  background: var(--celeste-300);
+}
+
+/* "Salir" como enlace, sin forma de botón */
+.examen-barra__salir,
+.examen-barra__salir:hover {
+  padding: 6px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.examen-barra__salir:hover span {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .examen-barra__salir {
+    padding: 8px 4px;
+  }
+}

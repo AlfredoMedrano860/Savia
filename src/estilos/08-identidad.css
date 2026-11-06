@@ -1,0 +1,362 @@
+/* Identidad visual de Savia. */
+
+/* ---------- identidad visual de Savia ---------- */
+
+.logo__icono {
+  color: #1f4e9c;
+}
+
+.nav__enlace[aria-current='page'] {
+  background: #e9eff9;
+}
+
+.heroe::before {
+  top: -225px;
+  right: -120px;
+  width: 660px;
+  height: 660px;
+  border-color: rgba(220, 236, 250, 0.18);
+  box-shadow:
+    0 0 0 24px rgba(220, 236, 250, 0.045),
+    0 0 0 58px rgba(220, 236, 250, 0.035),
+    0 0 0 108px rgba(220, 236, 250, 0.025);
+}
+
+.heroe::after {
+  filter: blur(2px);
+  right: 41%;
+  bottom: -192px;
+  width: 350px;
+  height: 350px;
+  border-color: rgba(143, 205, 202, 0.12);
+  background: rgba(122, 197, 194, 0.12);
+}
+
+.heroe__contenido {
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr);
+  gap: clamp(24px, 5vw, 72px);
+  padding-top: clamp(54px, 7vw, 86px);
+  padding-bottom: 112px;
+}
+
+.heroe__titulo {
+  margin-top: 20px;
+}
+
+.heroe__titulo em {
+  display: block;
+  margin-top: 0.12em;
+  color: #c3e3ed;
+  font-weight: 400;
+}
+
+.heroe__texto {
+  max-width: 43ch;
+  margin-top: 22px;
+}
+
+.heroe__acciones {
+  gap: 14px;
+}
+
+.boton--contorno {
+  border-color: rgba(230, 240, 250, 0.6);
+  color: #f3f7fc;
+}
+
+.heroe__datos {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 34px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(230, 240, 250, 0.22);
+  list-style: none;
+}
+
+.heroe__datos li {
+  gap: 1px;
+  border-left: 1px solid rgba(230, 240, 250, 0.22);
+}
+
+.heroe__datos li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.heroe__datos span {
+  color: #d3e0ef;
+}
+
+.heroe__escena {
+  position: relative;
+  width: min(100%, 500px);
+  justify-self: end;
+  padding: 22px 10px 30px;
+  animation: aparecer-arriba 750ms 120ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.heroe__marco-arte {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  min-height: 400px;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(255, 255, 255, 0.98), rgba(231, 239, 249, 0.96) 68%),
+    #e7eff9;
+}
+
+.heroe__marco-arte::before,
+.heroe__marco-arte::after {
+  position: absolute;
+  z-index: -1;
+  width: 86%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(31, 78, 156, 0.12);
+  border-radius: 50%;
+  content: '';
+}
+
+.heroe__marco-arte::after {
+  width: 67%;
+}
+
+.heroe__arte {
+  width: min(95%, 440px);
+  justify-self: center;
+}
+
+.ilustracion-biologia {
+  filter: drop-shadow(0 22px 24px rgba(35, 73, 130, 0.14));
+}
+
+.heroe__numero {
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  font-weight: 700;
+}
+
+.heroe__sello-icono svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.heroe__ola-relleno {
+  fill: var(--fondo);
+}
+
+
+.seccion {
+  padding-top: clamp(56px, 8vw, 96px);
+}
+
+.seccion__cabecera {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.seccion__introduccion {
+  max-width: 38ch;
+  color: var(--tinta-suave);
+}
+
+.seccion__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  text-underline-offset: 5px;
+}
+
+.seccion__enlace span {
+  transition: transform 0.2s ease;
+}
+
+.seccion__enlace:hover span {
+  transform: translateX(4px);
+}
+
+.pasos {
+  gap: 18px;
+}
+
+.paso {
+  min-height: 218px;
+  padding: 26px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(180, 208, 228, 0.32), transparent 38%),
+    linear-gradient(145deg, #fff, #edf2f8);
+}
+
+.paso:nth-child(2) {
+  background:
+    radial-gradient(circle at 100% 0, rgba(215, 205, 235, 0.3), transparent 38%),
+    linear-gradient(145deg, #fff, #f1eef8);
+}
+
+.paso:nth-child(3) {
+  background:
+    radial-gradient(circle at 100% 0, rgba(173, 218, 211, 0.34), transparent 38%),
+    linear-gradient(145deg, #fff, #eaf4f5);
+}
+
+.paso:hover {
+  transform: translateY(-6px);
+}
+
+.paso:nth-child(2) .paso__numero {
+  border-color: #d8cce8;
+}
+
+.paso:nth-child(3) .paso__numero {
+  border-color: #c0dcdf;
+}
+
+.paso__texto {
+  line-height: 1.65;
+}
+
+.tema-tarjeta {
+  gap: 9px;
+}
+
+.tema-tarjeta__codigo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+}
+
+.tema-tarjeta__codigo span {
+  font-size: 0.9rem;
+}
+
+.tema-tarjeta__nombre {
+  max-width: 19ch;
+  padding-right: 20px;
+  line-height: 1.2;
+}
+
+.tema-tarjeta__icono {
+  top: 18px;
+  right: 17px;
+  border: 1px solid color-mix(in srgb, var(--tema-acento) 20%, white);
+}
+
+.tema-icono {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+}
+
+.tema-icono svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.tema-tarjeta__ir {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 8px;
+  opacity: 1;
+  transform: none;
+}
+
+.enlace {
+  color: #1f4e9c;
+}
+
+@media (max-width: 900px) {
+  .heroe__contenido {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.82fr);
+    gap: 24px;
+  }
+
+  .heroe__marco-arte {
+    min-height: 330px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroe__contenido {
+    grid-template-columns: 1fr;
+    padding-top: 42px;
+    padding-bottom: 80px;
+  }
+
+  .heroe__texto {
+    max-width: 36ch;
+    margin-top: 18px;
+  }
+
+  .heroe__datos {
+    justify-content: space-between;
+    margin-top: 26px;
+  }
+
+  .heroe__datos li {
+    padding-inline: 10px;
+  }
+
+  .heroe__datos li:first-child {
+    padding-left: 0;
+  }
+
+  .heroe__escena {
+    width: min(88%, 390px);
+    justify-self: center;
+    margin-top: 4px;
+    padding-top: 18px;
+  }
+
+  .heroe__marco-arte {
+    min-height: 280px;
+  }
+
+  .heroe__arte {
+    width: min(90%, 300px);
+    margin: 0;
+  }
+
+  .heroe__numero {
+    top: 22px;
+  }
+
+  .seccion__cabecera {
+    align-items: start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .seccion__introduccion {
+    max-width: 44ch;
+  }
+
+  .paso {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroe__escena {
+    animation: none;
+  }
+}

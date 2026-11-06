@@ -1,0 +1,173 @@
+/* Avisos de Savia. */
+
+/* ---------- avisos (notificaciones) ----------
+   Una tarjetita de papel con un trozo de cinta arriba, pegada a la orilla derecha de la
+   pantalla (no a la columna de contenido). Entra desde la derecha y una línea abajo marca
+   los segundos que le quedan; se pausa con el cursor encima. */
+.avisos-savia {
+  position: fixed;
+  z-index: 60;
+  top: 88px;
+  right: max(20px, env(safe-area-inset-right));
+  display: grid;
+  width: min(360px, calc(100vw - 32px));
+  gap: 14px;
+  pointer-events: none;
+}
+
+.aviso-savia {
+  --aviso-acento: var(--celeste-600);
+  --aviso-suave: var(--celeste-50);
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 28px;
+  align-items: start;
+  gap: 12px;
+  padding: 16px 12px 16px 16px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border-radius: 6px;
+  background: var(--color-superficie);
+  box-shadow: 0 18px 38px -22px rgba(16, 45, 91, 0.5);
+  pointer-events: auto;
+  animation: aviso-savia-entrar 360ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+
+.aviso-savia--info {
+  --aviso-acento: var(--azul-600);
+  --aviso-suave: var(--azul-50);
+}
+
+/* trozo de cinta */
+.aviso-savia::before {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 18px;
+  background: color-mix(in srgb, var(--celeste-200) 85%, transparent);
+  box-shadow: 0 1px 4px -2px rgba(16, 45, 91, 0.35);
+  clip-path: polygon(0 10%, 6% 0, 94% 8%, 100% 0, 97% 50%, 100% 100%, 5% 92%, 0 100%, 3% 50%);
+  transform: translateX(-50%) rotate(-4deg);
+  content: '';
+}
+
+.aviso-savia__icono {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--aviso-suave);
+  color: var(--aviso-acento);
+}
+
+.aviso-savia__icono > div {
+  display: flex;
+}
+
+.aviso-savia__icono svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+}
+
+.aviso-savia__contenido {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.aviso-savia__titulo {
+  margin: 0;
+  color: var(--azul-800);
+  font-family: var(--fuente-titulo);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.aviso-savia__mensaje {
+  margin: 4px 0 0;
+  color: var(--color-texto-suave);
+  line-height: 1.45;
+}
+
+.aviso-savia__cerrar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.aviso-savia__cerrar > div {
+  display: flex;
+}
+
+.aviso-savia__cerrar:hover {
+  background: var(--azul-50);
+  color: var(--azul-700);
+}
+
+.aviso-savia__cerrar:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.aviso-savia__tiempo {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  left: 12px;
+  height: 3px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--aviso-acento) 45%, transparent);
+  transform-origin: left;
+  animation: aviso-savia-tiempo var(--aviso-duracion, 4000ms) linear both;
+}
+
+.aviso-savia.is-pausada .aviso-savia__tiempo {
+  animation-play-state: paused;
+}
+
+@keyframes aviso-savia-entrar {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aviso-savia-tiempo {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* en celular arriba, debajo del menú, para no chocar con los botones flotantes */
+@media (max-width: 640px) {
+  .avisos-savia {
+    top: 90px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso-savia {
+    animation: none;
+  }
+}
+
+html.a11y-reduce-motion .aviso-savia {
+  animation: none;
+}

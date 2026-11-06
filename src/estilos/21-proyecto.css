@@ -1,0 +1,497 @@
+/* Página El proyecto y desarrollado por. */
+
+/* ---------- página El proyecto ----------
+   Editorial en vez de paneles: texto corrido con la ficha de herbario al lado, "¿Por qué
+   Savia?" destacado en una franja celeste, actividades numeradas y contacto en tarjetas. */
+.proyecto-pagina__regresar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.proyecto-pagina__regresar > div {
+  display: flex;
+}
+
+.proyecto-pagina__cabecera {
+  max-width: 760px;
+}
+
+.proyecto-pagina__cabecera .pagina__titulo {
+  margin-top: 14px;
+}
+
+.proyecto-pagina__bajada {
+  margin-top: 12px;
+}
+
+.proyecto-pagina__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(28px, 5vw, 64px);
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.proyecto-pagina__intro .prosa p {
+  max-width: 62ch;
+  color: var(--color-texto);
+  line-height: 1.7;
+}
+
+.proyecto-pagina__ficha {
+  margin-top: 8px;
+  transform: rotate(-0.8deg);
+}
+
+.proyecto-pagina__ficha .herbario__ficha dd {
+  padding-right: 0;
+}
+
+/* franja celeste */
+.proyecto-pagina__savia {
+  position: relative;
+  margin-top: clamp(48px, 7vw, 80px);
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 52px);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.08) 35px, transparent 36px),
+    var(--celeste-50);
+}
+
+.proyecto-pagina__savia-rotulo {
+  margin: 0;
+  color: var(--celeste-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-size: var(--texto-mano);
+  line-height: 1;
+}
+
+.proyecto-pagina__savia-titulo {
+  max-width: 24ch;
+  margin: 8px 0 14px;
+  color: var(--azul-800);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.proyecto-pagina__savia > p:not(.proyecto-pagina__savia-rotulo) {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--color-texto);
+  line-height: 1.7;
+}
+
+.proyecto-pagina__rasgos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proyecto-pagina__rasgos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--celeste-500) 35%, transparent);
+  border-radius: 999px;
+  background: var(--color-superficie);
+  color: var(--azul-700);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+}
+
+.proyecto-pagina__rasgos li::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--celeste-400);
+  content: '';
+}
+
+.proyecto-pagina__bloque {
+  margin-top: clamp(48px, 7vw, 80px);
+}
+
+/* actividades */
+.actividades {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.actividad {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 20px 22px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border-radius: 4px;
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  line-height: 1.55;
+}
+
+.actividad__numero {
+  color: var(--azul-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-size: var(--texto-mano);
+  line-height: 1;
+}
+
+/* contacto */
+.contacto-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contacto-tarjeta__icono {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 8px;
+  fill: none;
+  stroke: var(--celeste-500);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contacto-tarjeta__rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contacto-tarjeta__valor {
+  color: var(--azul-700);
+  font-weight: 700;
+}
+
+a.contacto-tarjeta__valor {
+  text-decoration: none;
+}
+
+@media (max-width: 960px) {
+  .actividades,
+  .contacto-tarjetas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .proyecto-pagina__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .proyecto-pagina__ficha {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 520px) {
+  .actividades,
+  .contacto-tarjetas {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contacto-tarjeta {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 20px 22px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border-radius: 4px;
+  background: var(--color-superficie);
+  overflow-wrap: break-word;
+}
+
+/* créditos del pie: firma a mano y autor */
+.contraportada__creditos {
+  display: grid;
+  flex: none;
+  justify-items: end;
+  gap: 2px;
+}
+
+.contraportada__autor {
+  margin: 0;
+  font-size: var(--texto-detalle);
+}
+
+.contraportada__autor a:focus-visible {
+  outline: 2px solid var(--celeste-200);
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .contraportada__creditos {
+    justify-items: start;
+  }
+}
+
+/* nombre del autor como los demás enlaces del pie: sin negrita, línea al pasar el cursor */
+.contraportada__autor a {
+  text-decoration-color: color-mix(in srgb, var(--celeste-300) 60%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--celeste-300), var(--celeste-300));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  color: var(--blanco);
+  font-weight: 400;
+  text-decoration: none;
+  transition: background-size 0.25s ease, color 0.2s ease;
+}
+
+.contraportada__autor a:hover {
+  text-decoration-color: var(--celeste-300);
+  background-size: 100% 2px;
+  color: var(--celeste-100);
+}
+
+/* más aire entre la franja del proyecto y la ola del pie */
+*:has(> main > .franja-herbario:last-child) + .contraportada {
+  margin-top: clamp(24px, 3vw, 44px);
+  margin-top: clamp(64px, 8vw, 104px);
+}
+
+/* ---------- desarrollado por ----------
+   La foto como una polaroid pegada con cinta, igual que el resto del cuaderno. */
+
+.autor__polaroid {
+  position: relative;
+  flex: none;
+  width: clamp(170px, 20vw, 220px);
+  margin: 0;
+  background: var(--color-superficie);
+  box-shadow: 0 1px 2px rgba(16, 45, 91, 0.12), 0 18px 34px -22px rgba(16, 45, 91, 0.5);
+}
+
+/* trozo de cinta arriba */
+.autor__polaroid::before {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  background: color-mix(in srgb, var(--celeste-200) 85%, transparent);
+  box-shadow: 0 1px 4px -2px rgba(16, 45, 91, 0.35);
+  clip-path: polygon(0 10%, 5% 0, 95% 8%, 100% 0, 97% 50%, 100% 100%, 5% 92%, 0 100%, 3% 50%);
+  transform: translateX(-50%) rotate(4deg);
+  content: '';
+}
+
+.autor__polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+@media (max-width: 560px) {
+  .autor {
+    flex-direction: column;
+  }
+}
+
+/* desarrollado por, v2: hoja de cuaderno con renglones y margen, polaroid encima */
+.autor {
+  gap: clamp(28px, 5vw, 56px);
+  padding-top: clamp(40px, 6vw, 64px);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 64px);
+  margin-inline: auto;
+  border-top: 0;
+  background:
+    linear-gradient(90deg, transparent clamp(22px, 4vw, 52px), color-mix(in srgb, var(--celeste-400) 45%, transparent) 0 calc(clamp(22px, 4vw, 52px) + 2px), transparent 0),
+    repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.12) 35px, transparent 36px),
+    var(--color-superficie);
+}
+
+.autor__polaroid {
+  width: clamp(190px, 22vw, 240px);
+  transform: rotate(-4deg);
+  transition: transform 0.35s ease;
+}
+
+.autor:hover .autor__polaroid {
+  transform: rotate(-1.5deg) translateY(-4px);
+}
+
+.autor__nombre {
+  margin: 14px 0 0;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.autor__nota {
+  color: var(--azul-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  line-height: 1.1;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
+}
+
+.autor__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 25%, transparent);
+  border-radius: 999px;
+  background: var(--color-superficie);
+  color: var(--azul-700);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.autor__enlace > div {
+  display: flex;
+}
+
+.autor__enlace:hover {
+  border-color: var(--azul-700);
+  background: var(--azul-700);
+  color: var(--blanco);
+  transform: translateY(-2px);
+}
+
+.autor__enlace:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .autor {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    padding-left: clamp(40px, 12vw, 64px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .autor__polaroid,
+  .autor__enlace {
+    transition: none;
+  }
+
+  .autor:hover .autor__polaroid,
+  .autor__enlace:hover {
+    transform: none;
+  }
+}
+
+/* desarrollado por, v3: más chica y con la misma hoja del encabezado (agujeros a la
+   izquierda, margen rojo, renglones y hojas apiladas detrás) */
+.autor {
+  gap: clamp(22px, 4vw, 40px);
+  padding: 28px 32px 28px 64px;
+  border: 1px solid #d5dfeb;
+  border-radius: 2px;
+  background-color: #fff;
+  background-image:
+    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
+    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
+  background-size: 20px 52px, auto, auto;
+  background-position: left top, left top, left top;
+  background-repeat: repeat-y, no-repeat, repeat;
+  box-shadow:
+    8px 8px 0 rgba(207, 220, 236, 0.8),
+    16px 16px 0 rgba(23, 60, 120, 0.08);
+}
+
+.autor__polaroid {
+  width: clamp(140px, 16vw, 168px);
+  padding: 8px 8px 0;
+}
+
+.autor__polaroid::before {
+  top: -10px;
+  width: 64px;
+  height: 20px;
+}
+
+.autor__polaroid figcaption {
+  color: var(--azul-700);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  line-height: 1;
+  text-align: center;
+  padding: 8px 4px 10px;
+  font-size: var(--texto-mano-chico);
+}
+
+.autor__nombre {
+  margin-top: 10px;
+  font-size: var(--texto-h3);
+}
+
+.autor__rol {
+  margin: 8px 0 0;
+  margin-top: 4px;
+  font-size: var(--texto-base);
+}
+
+.autor__nota {
+  margin: 10px 0 16px;
+  font-size: var(--texto-mano-chico);
+}
+
+.autor__enlace {
+  padding: 8px 14px 8px 12px;
+  font-size: var(--texto-detalle);
+}
+
+.autor__linkedin {
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 640px) {
+  .autor {
+    padding: 24px 20px 24px 56px;
+  }
+}
+
+/* Los íconos de @animateicons vienen envueltos en un div con clases de Tailwind
+   ("inline-flex items-center justify-center") que este proyecto no carga, así que el div
+   quedaba como bloque y el svg con espacio de renglón debajo: el ícono se veía corrido
+   hacia arriba. Se definen aquí para que todos queden centrados. */
+div.inline-flex.items-center.justify-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+div.inline-flex.items-center.justify-center > svg {
+  display: block;
+}
