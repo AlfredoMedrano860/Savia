@@ -1,0 +1,355 @@
+/* Bocetos, hoja del encabezado y post-its de temas. */
+
+/* ---------- bocetos de fondo (lapicero negro y azul, solo decoración) ---------- */
+.contenido {
+  position: relative;
+  isolation: isolate;
+}
+
+.bocetos {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* posición y tamaño los calcula Bocetos.tsx: solo en espacios en blanco */
+.boceto {
+  position: absolute;
+  height: auto;
+  opacity: 0.42;
+  transform: rotate(var(--giro, 0deg));
+  user-select: none;
+}
+
+
+html.a11y-hide-decor .bocetos,
+html.a11y-contrast .bocetos {
+  display: none;
+}
+
+
+/* boceto de la célula en el encabezado: alto proporcional (sin estirar la hoja) */
+.heroe__arte img.ilustracion-biologia {
+  width: 78%;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* ---------- detalles de la hoja del encabezado ---------- */
+
+/* "apuntes de biología": cinta adhesiva escrita a mano que sujeta la hoja */
+.heroe__nota {
+  padding: 5px 16px 4px;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.35);
+  backdrop-filter: none;
+  /* bordes cortados en zigzag, como cinta rota a mano */
+  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
+}
+
+.heroe__nota--arriba {
+  top: 8px;
+  right: 12%;
+  transform: rotate(5deg);
+}
+
+/* "lámina 01 · célula": otro trozo de la misma cinta, en la esquina de abajo */
+.heroe__nota--abajo {
+  bottom: 14px;
+  left: 4%;
+  transform: rotate(-4deg);
+}
+
+/* "La vida en estudio": anotación a bolígrafo azul, encerrada en un círculo dibujado a mano */
+.heroe__sello {
+  right: 16px;
+  bottom: 16px;
+  width: auto;
+  height: auto;
+  padding: 12px 16px 10px;
+  border: 2px solid rgba(31, 78, 156, 0.8);
+  border-radius: 58% 42% 55% 45% / 48% 58% 42% 52%;
+  background: transparent;
+  color: var(--azul-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+  transform: rotate(-8deg);
+  opacity: 1;
+}
+
+/* segunda vuelta del trazo, un poco corrida, como cuando se encierra algo a mano */
+.heroe__sello::after {
+  content: '';
+  position: absolute;
+  inset: -4px -2px -2px -5px;
+  border: 1.5px solid rgba(31, 78, 156, 0.45);
+  border-radius: 45% 55% 48% 52% / 55% 45% 56% 44%;
+  pointer-events: none;
+}
+
+.heroe__sello-icono {
+  margin: 0 auto 4px;
+}
+
+@media (max-width: 640px) {
+
+  .heroe__sello {
+    right: 10px;
+    bottom: 10px;
+    padding: 9px 12px 8px;
+    font-size: 0.95rem;
+  }
+}
+
+/* número de lámina a la derecha del margen rojo de la hoja (que está en 39px) */
+.heroe__numero {
+  left: 52px;
+}
+
+/* ola del encabezado en movimiento: se desliza un periodo (1440) y vuelve */
+.heroe__ola-capa {
+  animation: ola 14s linear infinite;
+}
+
+@keyframes ola {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1440px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroe__ola-capa {
+    animation: none;
+  }
+}
+
+html.a11y-reduce-motion .heroe__ola-capa {
+  animation: none;
+}
+
+/* ---------- texto del encabezado ---------- */
+
+/* etiqueta superior: un trozo de la misma cinta adhesiva que las notas de la hoja */
+.heroe__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px 5px;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.35);
+  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+.heroe__etiqueta-icono {
+  color: var(--color-sobre-acento);
+}
+
+/* título: líneas más juntas para que se lea como una sola idea */
+
+/* "pregunta por pregunta." resaltado con un trazo de marcador menta, como en un apunte */
+.heroe__resaltado {
+  padding-bottom: 0.04em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23b6d8cb' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 92%;
+  background-size: 100% 0.22em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* subtítulo con más contraste y aire antes de los botones */
+.heroe__texto {
+  color: var(--color-texto-sobre-marca-suave);
+}
+
+.heroe__acciones {
+  margin-top: 32px;
+}
+
+.boton--contorno svg {
+  flex: none;
+}
+
+/* cifras como fichas con su ícono */
+.heroe__datos {
+  gap: 12px;
+  padding-top: 22px;
+}
+
+.heroe__datos li,
+.heroe__datos li:first-child {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 16px 10px 12px;
+  border: 1px solid rgba(230, 240, 250, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.heroe__dato-icono {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(159, 216, 198, 0.18);
+  color: var(--celeste-200);
+}
+
+.heroe__datos strong {
+  line-height: 1.1;
+}
+
+.heroe__datos span {
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+
+  .heroe__datos {
+    gap: 8px;
+  }
+
+  .heroe__datos li,
+  .heroe__datos li:first-child {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------- tarjetas de temas con el sistema de diseño y los detalles del encabezado ----------
+   Hojas de cuaderno blancas (renglones y margen rojo, como la hoja del encabezado), pegadas con
+   la cinta celeste, código escrito a mano e ícono en círculo celeste. Todas en azul y celeste. */
+
+/* la misma cinta adhesiva de las notas del encabezado */
+
+/* "§ T19" escrito a mano, como las cintas */
+
+/* ícono en círculo celeste, como las fichas de cifras del encabezado */
+
+/* ---------- secciones con los detalles del encabezado ---------- */
+
+/* encabezado de sección ("Cómo usar este cuaderno", "Índice de contenidos"): cinta adhesiva */
+.seccion__kicker {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 5px 16px 4px;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.3);
+  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+/* línea bajo el título: el mismo trazo de marcador de "pregunta por pregunta" */
+.seccion__titulo::after {
+  margin-top: 11px;
+  width: 120px;
+  height: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23b6d8cb' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+
+/* huecos de la hoja: los mismos agujeros redondos de la hoja del encabezado */
+.paso::after {
+  position: absolute;
+  z-index: 0;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  right: auto;
+  display: block;
+  width: 20px;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, var(--gris-300) 4.5px 5.5px, transparent 6px) left top / 20px 52px repeat-y;
+  content: '';
+  pointer-events: none;
+}
+
+/* número del paso en los colores de marca, igual en los tres */
+.paso__numero,
+.paso:nth-child(2) .paso__numero,
+.paso:nth-child(3) .paso__numero {
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: var(--color-marca);
+}
+
+.paso {
+  border-color: var(--color-borde);
+  box-shadow:
+    0 12px 20px -14px rgba(10, 30, 61, 0.35),
+    4px 4px 0 var(--azul-50);
+}
+
+.paso__titulo {
+  color: var(--azul-800);
+}
+
+/* ---------- tarjetas de temas como post-its de marca ----------
+   Papel liso (sin renglones ni huecos) en los tres colores de marca, en un orden variado
+   para que no se repita el mismo color en una columna ni en una fila. La cinta celeste las sujeta arriba. */
+
+/* azul de marca con texto blanco */
+
+/* blanco, con un borde suave para que no se pierda sobre el fondo */
+
+/* sobre el post-it celeste, la cinta va en blanco translúcido para que se distinga */
+
+/* el ícono del post-it celeste, en blanco */
+
+/* sin márgenes de cuaderno, el texto vuelve a su lugar */
+
+/* ---------- hover de los post-its: solo se elevan ----------
+   Sin cambios de color, sombra ni borde (repintar sombras grandes hacía que la página
+   se trabara al pasar rápido de una tarjeta a otra). Solo se anima el transform, que
+   el navegador resuelve en la GPU. */
+
+/* el ícono queda igual al pasar el mouse */
+
+/* los bocetos de fondo en su propia capa: lo que pase encima no obliga a volver a dibujarlos */
+.boceto {
+  will-change: transform;
+  contain: layout paint;
+}
