@@ -140,7 +140,7 @@ export function Portada() {
                   <img src={BOCETOS[t]} alt="" loading="lazy" decoding="async" />
                 </span>
                 <span className="lamina__titulo">
-                  {TEMAS[t]}
+                  <span className="lamina__nombre">{TEMAS[t]}</span>
                   <span className="lamina__flecha" aria-hidden="true">
                     <ArrowRightIcon size={16} isAnimated={animarIconos} aria-hidden="true" />
                   </span>

@@ -1,0 +1,212 @@
+/* Escala tipográfica, guía y máscara de lectura. */
+
+/* ---------- escala tipográfica aplicada ----------
+   Cada texto del sitio usa uno de los niveles definidos en tokens.css. Va al final para
+   ganarle a los tamaños sueltos que quedaron en reglas anteriores. Para un elemento nuevo,
+   agrégalo al grupo que le corresponde en vez de ponerle un tamaño propio. */
+
+/* titular del inicio */
+.heroe__titulo {
+  font-size: var(--texto-portada);
+  line-height: 1.05;
+}
+
+/* título de página */
+.pagina__titulo,
+.practica__titulo {
+  font-size: var(--texto-h1);
+  line-height: 1.1;
+}
+
+/* título de sección */
+.seccion__titulo,
+.herbario__titulo,
+.practica__subtitulo,
+.practicar__historial .titulo-seccion {
+  font-size: var(--texto-h2);
+  line-height: 1.15;
+}
+
+/* título de bloque o panel */
+.titulo-seccion,
+.hoja__enunciado {
+  font-size: var(--texto-h3);
+  line-height: 1.3;
+}
+
+/* título de tarjeta */
+.paso__titulo,
+.lamina__titulo,
+.ficha__nombre,
+.temario__nombre,
+.retomar__titulo,
+.tarjeta__titulo,
+.revision__enunciado {
+  font-size: var(--texto-h4);
+  line-height: 1.3;
+}
+
+/* párrafo de entrada */
+.heroe__texto,
+.pagina__texto,
+.practica__texto,
+.seccion__introduccion,
+.herbario__texto {
+  font-size: var(--texto-entrada);
+  line-height: 1.6;
+}
+
+/* texto corriente */
+.paso__texto,
+.practica__nota,
+.opcion__texto,
+.prosa,
+.revision__explicacion,
+.seccion__enlace {
+  font-size: var(--texto-base);
+}
+
+/* detalle */
+.ficha__descripcion,
+.ficha__preguntas,
+.historial td,
+.temario__total,
+.temario__conteo,
+.temario__subtemas,
+.practica__privacidad,
+.retomar__dato,
+.contraportada,
+.contraportada__texto,
+.contraportada__lista,
+.hoja__tema,
+.atajos,
+.tarjeta__leyenda,
+.revision__meta,
+.por-tema__dato,
+.proyecto dt,
+.examen-barra__progreso,
+.aviso-savia__mensaje,
+.nota {
+  font-size: var(--texto-detalle);
+}
+
+/* rótulos en mayúsculas y cifras chicas */
+.lamina__dato,
+.contraportada__titulo,
+.historial th,
+.herbario__ficha dt,
+.herbario__etiqueta-titulo,
+.paso__numero,
+.heroe__numero,
+.hoja__numero,
+.anillo__texto small {
+  font-size: var(--texto-mini);
+}
+
+/* anotaciones a mano */
+.lamina__numero,
+.ficha__numero,
+.contraportada__lema,
+.herbario__ficha dd,
+.retomar__rotulo {
+  font-size: var(--texto-mano);
+}
+
+/* cintas y notas cortas a mano */
+.seccion__kicker,
+.heroe__etiqueta,
+.heroe__nota,
+.ficha__cinta,
+.contraportada__firma {
+  font-size: var(--texto-mano-chico);
+}
+
+/* cifras destacadas dentro de tarjetas y datos */
+.heroe__datos strong,
+.ficha__preguntas strong {
+  font-size: var(--texto-h3);
+}
+
+.anillo__texto {
+  font-size: var(--texto-h4);
+}
+
+/* aviso legal del pie */
+.contraportada__base {
+  font-size: var(--texto-detalle);
+}
+
+/* todos los títulos en Fraunces con el mismo grosor */
+.heroe__titulo,
+.pagina__titulo,
+.practica__titulo,
+.seccion__titulo,
+.herbario__titulo,
+.practica__subtitulo,
+.titulo-seccion,
+.paso__titulo,
+.lamina__titulo,
+.ficha__nombre,
+.temario__nombre,
+.retomar__titulo,
+.tarjeta__titulo {
+  font-weight: 600;
+}
+
+/* etiquetas bajo las cifras del inicio */
+.heroe__datos span {
+  font-size: var(--texto-detalle);
+}
+
+/* línea del menú: azul sólido y crece desde el centro */
+.nav__enlace::after {
+  background: var(--azul-700);
+  transform-origin: center;
+}
+
+/* ---------- guía y máscara de lectura ----------
+   La guía es una regla del alto de un renglón; la máscara oscurece todo menos una ventana
+   de unos tres renglones. Las dos siguen --guia-y (cursor, dedo o foco del teclado). */
+.guia-lectura__linea {
+  top: calc(var(--guia-y) - 18px);
+  height: 36px;
+  border-top: 0;
+  border-bottom: 3px solid var(--azul-600);
+  background: color-mix(in srgb, var(--celeste-200) 30%, transparent);
+  mix-blend-mode: multiply;
+}
+
+.mascara-lectura {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mascara-lectura__superior,
+.mascara-lectura__inferior {
+  position: fixed;
+  right: 0;
+  left: 0;
+  background: rgba(10, 30, 61, 0.62);
+}
+
+.mascara-lectura__superior {
+  top: 0;
+  height: max(0px, calc(var(--guia-y) - 56px));
+}
+
+.mascara-lectura__inferior {
+  top: calc(var(--guia-y) + 56px);
+  bottom: 0;
+}
+
+.mascara-lectura__ventana {
+  position: fixed;
+  top: calc(var(--guia-y) - 56px);
+  right: 0;
+  left: 0;
+  height: 112px;
+  box-shadow: inset 0 2px 0 var(--celeste-300), inset 0 -2px 0 var(--celeste-300);
+}

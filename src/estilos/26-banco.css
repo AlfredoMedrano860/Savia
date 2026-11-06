@@ -1,0 +1,153 @@
+/* Banco de preguntas por tema (Temario). */
+
+/* ---------- banco de preguntas por tema (Temario) ----------
+   Cada tema puede abrir sus preguntas debajo de los subtemas: buscador, filtro por subtema y
+   tarjetas con la respuesta tapada hasta tocar "Ver respuesta". Los subtemas son botones que
+   abren el banco ya filtrado. */
+.temario__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.temario__subtema {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.temario__subtema:hover span:first-child {
+  color: var(--azul-700);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.temario__subtema:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.banco {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--color-borde-marca);
+}
+
+.banco__controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.banco__busqueda {
+  flex: 1 1 260px;
+}
+
+.banco__busqueda input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--color-texto);
+  font: inherit;
+}
+
+.banco__busqueda input:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.banco__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.banco__conteo {
+  margin: 14px 0 10px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 700;
+}
+
+.banco__lista {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.banco__item {
+  padding: 16px 18px;
+  border: 1px solid var(--linea);
+  border-left: 4px solid var(--color-borde-marca);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.banco__item.is-abierta {
+  border-left-color: var(--verde);
+}
+
+.banco__ver {
+  margin-top: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--azul-700);
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.banco__ver:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.banco__mas {
+  width: 100%;
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .temario__acciones {
+    justify-content: flex-start;
+  }
+
+  .banco__controles .boton {
+    width: 100%;
+  }
+}
+
+/* En celular los dos botones del tema van a la par, del mismo ancho. */
+@media (max-width: 640px) {
+  .temario__acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .temario__acciones .boton {
+    justify-content: center;
+    padding-inline: 10px;
+    text-align: center;
+    white-space: normal;
+  }
+}

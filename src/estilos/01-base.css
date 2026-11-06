@@ -1,0 +1,124 @@
+/* Variables de la app, reset y piezas comunes. */
+
+:root {
+  --fondo: var(--color-fondo);
+  --panel: var(--color-superficie);
+  --tinta: var(--color-texto);
+  --tinta-suave: var(--color-texto-suave);
+  --linea: var(--color-borde);
+  --linea-suave: var(--color-borde-suave);
+  --azul: var(--azul-600);
+  --azul-oscuro: var(--color-marca);
+  --azul-claro: var(--color-marca-suave);
+  --verde: #2e7d32;
+  --verde-claro: #e8f3e9;
+  --rojo: #c62828;
+  --rojo-claro: #fbeaea;
+  --ambar: #438b9a;
+  --ambar-claro: #e6f2f3;
+  --sombra-suave: 0 12px 30px -20px rgba(27, 36, 51, 0.32);
+  --sombra-elevar: 0 18px 36px -20px rgba(23, 60, 120, 0.34);
+
+  --fuente: 'Bricolage Grotesque Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fuente-titulo: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- piezas comunes ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1px solid var(--linea);
+  background: var(--panel);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton:hover:not(:disabled) {
+  border-color: var(--azul);
+  background: var(--azul-claro);
+  box-shadow: var(--sombra-suave);
+  transform: translateY(-2px);
+}
+
+.boton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.boton--ancho {
+  width: 100%;
+}
+
+.enlace {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.titulo-seccion {
+  margin-bottom: 12px;
+}
+
+.titulo-fila {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nota {
+  margin-top: 12px;
+  color: var(--tinta-suave);
+}

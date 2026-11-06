@@ -1,0 +1,359 @@
+/* Página Practicar. */
+
+/* ---------- página Practicar ----------
+   Mismo lenguaje que la portada: cinta a mano, títulos en Fraunces y fichas de papel con
+   marco fino. Cada ficha lleva un reloj de anillo con su duración frente a la más larga. */
+.practica__cabecera {
+  max-width: 640px;
+  margin-bottom: clamp(32px, 5vw, 48px);
+}
+
+.practica__titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+  letter-spacing: -0.02em;
+}
+
+.practica__texto {
+  margin: 14px 0 0;
+  color: var(--color-texto-suave);
+}
+
+.practica__bloque + .practica__bloque {
+  margin-top: clamp(48px, 7vw, 72px);
+}
+
+.practica__subtitulo {
+  margin: 0 0 20px;
+  color: var(--color-texto);
+  font-family: var(--fuente-titulo);
+}
+
+.practica__nota {
+  margin: 20px 0 0;
+  color: var(--color-texto-suave);
+}
+
+.practica__nota strong {
+  color: var(--azul-700);
+}
+
+/* --- seguir con la prueba abierta --- */
+.retomar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin-bottom: clamp(36px, 5vw, 52px);
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 22%, transparent);
+  border-left: 5px solid var(--celeste-400);
+  border-radius: 4px;
+  background: var(--celeste-50);
+}
+
+.retomar__info {
+  flex: 1;
+  max-width: 460px;
+}
+
+.retomar__rotulo {
+  margin: 0;
+  color: var(--celeste-600);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  line-height: 1;
+}
+
+.retomar__titulo {
+  margin: 4px 0 12px;
+  color: var(--azul-700);
+  font-family: var(--fuente-titulo);
+}
+
+.retomar__barra {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--azul-700) 12%, transparent);
+}
+
+.retomar__barra span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--celeste-500);
+}
+
+.retomar__dato {
+  margin: 8px 0 0;
+  color: var(--color-texto-suave);
+}
+
+/* --- fichas de modo --- */
+.fichas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ficha {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 20px 22px 20px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 22%, transparent);
+  border-radius: 4px;
+  background: var(--color-superficie);
+  color: var(--azul-700);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.ficha::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 10%, transparent);
+  border-radius: 2px;
+  pointer-events: none;
+  content: '';
+}
+
+.ficha:hover {
+  border-color: color-mix(in srgb, var(--azul-700) 45%, transparent);
+  background: var(--celeste-50);
+  box-shadow: 0 18px 34px -26px rgba(16, 45, 91, 0.45);
+  transform: translateY(-3px);
+}
+
+.ficha:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+.ficha__cinta {
+  position: absolute;
+  top: -13px;
+  padding: 3px 14px 4px;
+  background: color-mix(in srgb, var(--celeste-200) 88%, transparent);
+  box-shadow: 0 2px 6px -3px rgba(16, 45, 91, 0.35);
+  color: var(--azul-800);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  clip-path: polygon(0 8%, 4% 0, 96% 6%, 100% 0, 98% 50%, 100% 100%, 4% 94%, 0 100%, 2% 50%);
+}
+
+.ficha__cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ficha__numero {
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  line-height: 1;
+}
+
+.ficha__nombre {
+  margin-top: 18px;
+  font-family: var(--fuente-titulo);
+}
+
+.ficha__descripcion {
+  margin-top: 8px;
+  color: var(--color-texto-suave);
+  line-height: 1.5;
+}
+
+.ficha__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--azul-700) 14%, transparent);
+}
+
+
+.ficha__preguntas {
+  color: var(--color-texto-suave);
+}
+
+.ficha__preguntas strong {
+  margin-right: 2px;
+  color: var(--azul-700);
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ficha__flecha {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--azul-700) 25%, transparent);
+  border-radius: 50%;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.ficha__flecha > div {
+  display: flex;
+}
+
+.ficha:hover .ficha__flecha {
+  border-color: var(--azul-700);
+  background: var(--azul-700);
+  color: var(--blanco);
+  transform: translateX(3px);
+}
+
+/* reloj de anillo */
+.anillo {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+}
+
+.anillo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.anillo__fondo,
+.anillo__arco {
+  fill: none;
+  stroke-width: 5;
+}
+
+.anillo__fondo {
+  stroke: color-mix(in srgb, var(--azul-700) 10%, transparent);
+}
+
+.anillo__arco {
+  stroke: var(--celeste-400);
+  stroke-linecap: round;
+}
+
+.anillo__texto {
+  position: relative;
+  color: var(--azul-700);
+  white-space: nowrap;
+}
+
+/* --- historial --- */
+.intentos {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--azul-700) 14%, transparent);
+  list-style: none;
+}
+
+.intento {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 4px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--azul-700) 22%, transparent);
+}
+
+/* la nota encerrada en un círculo a mano, como la marca un profesor */
+
+.practica__privacidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 0;
+  color: var(--color-texto-suave);
+}
+
+.practica__privacidad svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 900px) {
+  .fichas {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .retomar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .intento {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ficha,
+  .ficha__flecha {
+    transition: none;
+  }
+
+  .ficha:hover,
+  .ficha:hover .ficha__flecha {
+    transform: none;
+  }
+}
+
+.ficha__descripcion {
+  margin-bottom: 22px;
+}
+
+.anillo__texto {
+  display: grid;
+  justify-items: center;
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.anillo__texto small {
+  margin-top: 1px;
+  color: var(--color-texto-suave);
+  font-family: var(--fuente);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ficha__cinta {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.practica .practicar__historial {
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.practica > .practica__privacidad {
+  margin-top: 24px;
+}
