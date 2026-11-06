@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { cargarPreguntas, CODIGOS, MINUTOS_POR_PREGUNTA, PREGUNTAS_POR_TEMA, TEMAS, subtemas, type Pregunta, type TemaCodigo } from '../lib/banco'
 import { destinoTemario } from '../lib/ruta'
 import { BancoTema } from '../components/BancoTema'
+import { Modal } from '../components/Modal'
 
 // Tema y subtema que pide la dirección (#/temario/T22/Genética); se actualiza al cambiarla.
 function useDestino() {
@@ -18,16 +19,9 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
   const [preguntas, setPreguntas] = useState<Pregunta[] | null>(null)
   const [errorCarga, setErrorCarga] = useState(false)
   const destino = useDestino()
-  // banco abierto por tema: null = todos los subtemas, texto = un subtema; sin clave = cerrado
-  const [bancos, setBancos] = useState<Partial<Record<TemaCodigo, string | null>>>({})
-
-  const abrirBanco = (tema: TemaCodigo, subtema: string | null) => setBancos((b) => ({ ...b, [tema]: subtema }))
-  const cerrarBanco = (tema: TemaCodigo) =>
-    setBancos((b) => {
-      const copia = { ...b }
-      delete copia[tema]
-      return copia
-    })
+  // Banco abierto en el modal: el tema y el subtema elegido (null = todos); null = cerrado.
+  const [banco, setBanco] = useState<{ tema: TemaCodigo; subtema: string | null } | null>(null)
+  const abrirBanco = (tema: TemaCodigo, subtema: string | null) => setBanco({ tema, subtema })
 
   useEffect(() => {
     let vigente = true
@@ -77,7 +71,6 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
             const lista = subtemas(t, preguntas)
             const delTema = preguntas.filter((p) => p.t === t)
             const total = delTema.length
-            const abierto = t in bancos
             return (
               <li key={t} id={`tema-${t}`} className={`panel temario__tema ${destino?.tema === t ? 'is-destino' : ''}`}>
                 <div className="temario__cabecera">
@@ -90,14 +83,8 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                     <button type="button" className="boton boton--tinta" onClick={() => onPracticarTema(t)}>
                       Practicar este tema
                     </button>
-                    <button
-                      type="button"
-                      className="boton"
-                      aria-expanded={abierto}
-                      aria-controls={`banco-${t}`}
-                      onClick={() => (abierto ? cerrarBanco(t) : abrirBanco(t, null))}
-                    >
-                      {abierto ? 'Ocultar preguntas' : `Ver las ${total} preguntas`}
+                    <button type="button" className="boton-discreto" aria-haspopup="dialog" onClick={() => abrirBanco(t, null)}>
+                      Ver las {total} preguntas
                     </button>
                   </div>
                 </div>
@@ -107,6 +94,7 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                       <button
                         type="button"
                         className="temario__subtema"
+                        aria-haspopup="dialog"
                         onClick={() => abrirBanco(t, s.nombre)}
                         aria-label={`Ver las ${s.total} preguntas de ${s.nombre}`}
                       >
@@ -116,15 +104,21 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                     </li>
                   ))}
                 </ul>
-                {abierto && (
-                  <div id={`banco-${t}`}>
-                    <BancoTema preguntas={delTema} subtemas={lista} subtema={bancos[t] ?? null} onSubtema={(sub) => abrirBanco(t, sub)} />
-                  </div>
-                )}
               </li>
             )
           })}
         </ol>
+      )}
+
+      {banco && preguntas && (
+        <Modal etiqueta={`${banco.tema} · Banco de preguntas`} titulo={TEMAS[banco.tema]} onCerrar={() => setBanco(null)}>
+          <BancoTema
+            preguntas={preguntas.filter((p) => p.t === banco.tema)}
+            subtemas={subtemas(banco.tema, preguntas)}
+            subtema={banco.subtema}
+            onSubtema={(sub) => abrirBanco(banco.tema, sub)}
+          />
+        </Modal>
       )}
     </main>
   )

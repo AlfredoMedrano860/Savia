@@ -69,7 +69,7 @@ export function useConfirmacion() {
           <h2 id="confirmacion-titulo">{pendiente.titulo}</h2>
           <p id="confirmacion-mensaje">{pendiente.mensaje}</p>
           <div className="dialogo__acciones">
-            <button ref={botonCancelar} type="button" className="boton" onClick={() => responder(false)}>
+            <button ref={botonCancelar} type="button" className="boton-discreto" onClick={() => responder(false)}>
               {pendiente.cancelar ?? 'Cancelar'}
             </button>
             <button type="button" className={`boton ${pendiente.peligro ? 'boton--peligro' : 'boton--tinta'}`} onClick={() => responder(true)}>

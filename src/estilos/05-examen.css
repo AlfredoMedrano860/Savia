@@ -2,16 +2,6 @@
 
 /* ---------- examen ---------- */
 
-.reloj {
-  justify-self: end;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
 .examen__cuerpo {
   width: min(1120px, 100% - 32px);
   margin: 0 auto;

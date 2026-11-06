@@ -3,6 +3,9 @@ import { ArrowRightIcon, PrinterIcon } from '@animateicons/react/lucide'
 import { MODOS, NOTA_MINIMA, normalizarCodigo, porcentaje, type Modo, type Prueba, type Resultado } from '../lib/banco'
 import { formatoDuracion, formatoFecha } from '../lib/formato'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { HojaCuaderno } from '../components/HojaCuaderno'
+import { MarcoDoble } from '../components/MarcoDoble'
+import { Cinta } from '../components/Cinta'
 
 const DESCRIPCIONES: Record<Modo['id'], string> = {
   completa: 'Un recorrido amplio por los seis temas, con el tiempo de la prueba real.',
@@ -92,10 +95,10 @@ export function Practicar({
         <h2 id="modos-titulo" className="practica__subtitulo">
           ¿Cuánto tiempo tienes?
         </h2>
-        <ul className="fichas">
+        <ul className="rejilla-3 fichas">
           {MODOS.map((modo, i) => (
             <li key={modo.id}>
-              <button type="button" className={`ficha ficha--${modo.id}`} onClick={() => onEmpezar(modo)}>
+              <MarcoDoble as="button" interactivo type="button" className={`ficha ficha--${modo.id}`} onClick={() => onEmpezar(modo)}>
                 {modo.id === 'completa' && <span className="ficha__cinta">como la prueba real</span>}
                 <span className="ficha__cabecera">
                   <span className="ficha__numero">Ficha {String(i + 1).padStart(2, '0')}</span>
@@ -111,7 +114,7 @@ export function Practicar({
                     <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
                   </span>
                 </span>
-              </button>
+              </MarcoDoble>
             </li>
           ))}
         </ul>
@@ -122,8 +125,8 @@ export function Practicar({
       </section>
 
       <section className="en-papel" aria-labelledby="imprimir-titulo">
-        <div className="en-papel__hoja">
-          <p className="seccion__kicker">En papel</p>
+        <HojaCuaderno variante="solo-papel" className="en-papel__hoja">
+          <Cinta className="seccion__kicker">En papel</Cinta>
           <h2 id="imprimir-titulo" className="en-papel__titulo">
             Imprime una prueba
           </h2>
@@ -145,7 +148,7 @@ export function Practicar({
               </li>
             ))}
           </ul>
-        </div>
+        </HojaCuaderno>
 
         <form className="en-papel__talon" onSubmit={verRespuestas} aria-labelledby="talon-titulo">
           <p className="en-papel__talon-rotulo">Talón de respuestas</p>
@@ -183,7 +186,7 @@ export function Practicar({
         <section className="panel practicar__historial" aria-labelledby="historial-titulo">
           <div className="titulo-fila">
             <div>
-              <p className="seccion__kicker">Registro personal</p>
+              <Cinta className="seccion__kicker">Registro personal</Cinta>
               <h2 id="historial-titulo" className="titulo-seccion">
                 Tus intentos
               </h2>

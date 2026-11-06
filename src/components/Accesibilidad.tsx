@@ -36,7 +36,7 @@ type AjustesAccesibilidad = {
 
 type AjusteBooleano = Exclude<keyof AjustesAccesibilidad, 'tamano' | 'color'>
 
-const CLAVE = 'ribosoma:accesibilidad'
+const CLAVE = 'savia:accesibilidad'
 const INICIAL: AjustesAccesibilidad = {
   tamano: 'normal',
   color: 'normal',

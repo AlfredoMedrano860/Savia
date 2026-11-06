@@ -75,9 +75,9 @@
 }
 
 .examen-barra__reloj--alerta {
-  border-color: #e9c46a;
-  background: #fdf3d9;
-  color: #8a5a00;
+  border-color: var(--ambar);
+  background: var(--ambar-claro);
+  color: var(--ambar-oscuro);
 }
 
 .examen-barra__reloj--critico {
