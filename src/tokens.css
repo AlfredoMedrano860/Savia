@@ -1,0 +1,115 @@
+/* Sistema de diseño de Savia
+   Tres colores de marca: blanco, azul (#173c78) y celeste (#d6e9e2), cada uno con su escala.
+   Primero las escalas (primitivos) y después los usos (tokens semánticos): en los componentes
+   se usan los semánticos, así un cambio de marca se hace en un solo lugar. */
+
+:root {
+  /* ---------- primitivos ---------- */
+  --blanco: #ffffff;
+
+  /* azul de marca (base: 700) */
+  --azul-50: #eff3fb;
+  --azul-100: #dae5f6;
+  --azul-200: #b5caee;
+  --azul-300: #7ca2de;
+  --azul-400: #4277cd;
+  --azul-500: #2859a9;
+  --azul-600: #1d4990;
+  --azul-700: #173c78;
+  --azul-800: #102d5b;
+  --azul-900: #0a1e3d;
+
+  /* celeste de marca (base: 100) */
+  --celeste-50: #f1f8f6;
+  --celeste-100: #d6e9e2;
+  --celeste-200: #b6d8cb;
+  --celeste-300: #8ec2af;
+  --celeste-400: #60a98e;
+  --celeste-500: #458c72;
+  --celeste-600: #33715a;
+  --celeste-700: #255b47;
+  --celeste-800: #194333;
+  --celeste-900: #0f2e23;
+
+  /* grises neutros con un toque del azul, para texto, bordes y fondos */
+  --gris-50: #f5f7f9;
+  --gris-100: #eaecf1;
+  --gris-200: #d6dae1;
+  --gris-300: #b4bbc5;
+  --gris-400: #8f97a3;
+  --gris-500: #6c7584;
+  --gris-600: #555e6d;
+  --gris-700: #3e4756;
+  --gris-800: #28303e;
+  --gris-900: #181f2a;
+
+  /* ---------- semánticos ---------- */
+  /* marca */
+  --color-marca: var(--azul-700);
+  --color-marca-hover: var(--azul-800);
+  --color-marca-suave: var(--azul-50);
+  --color-acento: var(--celeste-100);
+  --color-acento-fuerte: var(--celeste-300);
+  --color-sobre-acento: var(--azul-800);
+
+  /* superficies */
+  --color-fondo: var(--gris-50);
+  --color-superficie: var(--blanco);
+  --color-superficie-marca: var(--azul-700);
+  --color-superficie-acento: var(--celeste-50);
+
+  /* texto */
+  --color-texto: var(--gris-900);
+  --color-texto-suave: var(--gris-600);
+  --color-texto-sobre-marca: var(--blanco);
+  --color-texto-sobre-marca-suave: rgba(255, 255, 255, 0.9);
+  --color-enlace: var(--azul-600);
+
+  /* bordes */
+  --color-borde: var(--gris-200);
+  --color-borde-suave: var(--gris-100);
+  --color-borde-marca: var(--azul-300);
+  --color-foco: var(--azul-500);
+
+  /* ---------- interacción (hover y foco) ----------
+     Un comportamiento por tipo de componente, no uno para todo:
+     - botón primario: un tono más oscuro y sube 2px
+     - botón secundario: se rellena de azul suave y sube 2px
+     - botón sobre fondo azul: se rellena de celeste (claro) o de blanco translúcido (contorno)
+     - botón flotante o de ícono: un tono más oscuro y sube 2px
+     - pestaña / navegación / filtro: fondo azul suave y texto de marca
+     - enlace de texto: color más oscuro, subrayado y la flecha avanza
+     - tarjeta clicable: solo sube, sin cambiar de color
+     - opción seleccionable: borde y fondo azul suave */
+  --hover-duracion: 180ms;
+  --hover-curva: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --hover-elevar-boton: translateY(-2px);
+  --hover-elevar-tarjeta: translateY(-6px);
+  --hover-sombra-boton: 0 8px 16px -10px rgba(10, 30, 61, 0.45);
+
+  --hover-primario-fondo: var(--color-marca-hover);
+  --hover-secundario-fondo: var(--color-marca-suave);
+  --hover-secundario-borde: var(--color-borde-marca);
+  --hover-sobre-marca-claro: var(--color-acento);
+  --hover-sobre-marca-contorno: rgba(255, 255, 255, 0.12);
+  --hover-pestana-fondo: var(--color-marca-suave);
+  --hover-enlace: var(--color-marca-hover);
+  --hover-opcion-fondo: var(--color-marca-suave);
+  --hover-opcion-borde: var(--color-borde-marca);
+  --foco-anillo: 0 0 0 3px var(--azul-200);
+
+  /* ---------- escala tipográfica ----------
+     Un solo juego de tamaños para todo el sitio. Los grandes se ajustan al ancho de la
+     pantalla con clamp(); del texto base para abajo son fijos. */
+  --texto-portada: clamp(2.6rem, 5.5vw, 4.5rem); /* el titular del inicio */
+  --texto-h1: clamp(2.2rem, 4vw, 3rem); /* título de cada página */
+  --texto-h2: clamp(1.65rem, 2.6vw, 2.25rem); /* título de sección */
+  --texto-h3: clamp(1.3rem, 1.8vw, 1.5rem); /* título de bloque o panel */
+  --texto-h4: 1.2rem; /* título de tarjeta */
+  --texto-entrada: 1.125rem; /* párrafo que acompaña a un título */
+  --texto-base: 1.0625rem; /* texto corriente */
+  --texto-detalle: 0.9375rem; /* descripciones, datos secundarios, pie */
+  --texto-mini: 0.75rem; /* rótulos en mayúsculas y cifras chicas */
+  --texto-mano: 1.375rem; /* anotaciones a mano (Caveat) */
+  --texto-mano-chico: 1.2rem; /* cintas y notas cortas a mano */
+}
