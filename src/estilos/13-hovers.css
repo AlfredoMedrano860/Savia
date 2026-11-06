@@ -147,3 +147,12 @@
     transform: none !important;
   }
 }
+
+/* El botón del menú centra su ícono (antes quedaba sobre la línea de texto, corrido hacia arriba). */
+@media (max-width: 900px) {
+  .nav__menu {
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+}

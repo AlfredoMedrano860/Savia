@@ -305,3 +305,39 @@
     bottom: -18px;
   }
 }
+
+/* En celular todas las láminas miden lo mismo (la fila más alta manda), el boceto queda
+   centrado en su columna y el título arriba con la flecha abajo a la derecha. */
+@media (max-width: 560px) {
+  .laminas {
+    grid-auto-rows: 1fr;
+  }
+
+  .lamina {
+    grid-template-columns: 96px 1fr;
+  }
+
+  .lamina__boceto {
+    align-self: center;
+    justify-self: center;
+    width: 96px;
+    height: 96px;
+  }
+
+  .lamina__boceto img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .lamina__titulo {
+    align-items: stretch;
+  }
+
+  .lamina__nombre {
+    align-self: flex-start;
+  }
+
+  .lamina__flecha {
+    align-self: flex-end;
+  }
+}

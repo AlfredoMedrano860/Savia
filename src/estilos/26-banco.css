@@ -136,3 +136,18 @@
     width: 100%;
   }
 }
+
+/* En celular los dos botones del tema van a la par, del mismo ancho. */
+@media (max-width: 640px) {
+  .temario__acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .temario__acciones .boton {
+    justify-content: center;
+    padding-inline: 10px;
+    text-align: center;
+    white-space: normal;
+  }
+}

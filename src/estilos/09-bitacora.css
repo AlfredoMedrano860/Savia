@@ -718,3 +718,8 @@ h3:not(.revision__enunciado) {
     min-height: 205px;
   }
 }
+
+/* Todas las opciones de una pregunta miden lo mismo: la más alta define la altura. */
+.opciones {
+  grid-auto-rows: 1fr;
+}

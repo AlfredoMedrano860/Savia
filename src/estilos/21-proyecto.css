@@ -495,3 +495,17 @@ div.inline-flex.items-center.justify-center {
 div.inline-flex.items-center.justify-center > svg {
   display: block;
 }
+
+/* En celular la foto, el texto y el enlace del autor quedan centrados en la hoja. */
+@media (max-width: 640px) {
+  .autor {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .autor__texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
