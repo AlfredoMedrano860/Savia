@@ -9,16 +9,7 @@
 }
 
 .imprimible__regresar {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
 }
 
 .imprimible__accion {

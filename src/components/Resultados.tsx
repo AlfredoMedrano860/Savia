@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeftIcon } from '@animateicons/react/lucide'
 import { cargarPreguntas, CODIGOS, LETRAS, NOTA_MINIMA, TEMAS, porcentaje, type Pregunta, type Resultado } from '../lib/banco'
 import { formatoDuracion } from '../lib/formato'
 import { enlaceTemario } from '../lib/ruta'
 import { BotonGuardar } from './BotonGuardar'
-import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { BotonRegresar } from './BotonRegresar'
 
 type Filtro = 'todas' | 'incorrectas' | 'sin-responder'
 
@@ -21,7 +20,6 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
   const nota = porcentaje(resultado)
   const aprobada = nota >= NOTA_MINIMA
   const incorrectas = resultado.total - resultado.correctas - resultado.sinResponder
-  const animarIconos = useIconosAnimados()
 
   useEffect(() => {
     let vigente = true
@@ -56,10 +54,7 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
 
   return (
     <main className="resultados">
-      <button type="button" className="seccion__enlace resultados__regresar" onClick={onInicio}>
-        <ArrowLeftIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-        Regresar
-      </button>
+      <BotonRegresar className="resultados__regresar" onClick={onInicio} />
       <section className={`calificacion ${aprobada ? 'is-aprobada' : 'is-reprobada'}`} aria-labelledby="nota-titulo">
         <p className="calificacion__modo">{resultado.nombre}</p>
         <h1 id="nota-titulo" className="calificacion__nota">
@@ -92,7 +87,7 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
             Nueva prueba
           </button>
           {falladas.length > 0 && (
-            <button type="button" className="boton" onClick={() => onRepasar(falladas)}>
+            <button type="button" className="boton-discreto" onClick={() => onRepasar(falladas)}>
               Repasar las {falladas.length} que fallé
             </button>
           )}

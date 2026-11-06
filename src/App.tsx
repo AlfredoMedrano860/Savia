@@ -10,10 +10,11 @@ import { agregarAlHistorial, borrarHistorial, cargarHistorial, cargarPrueba, gua
 import { registrarResultado } from './lib/aprendizaje'
 import { EVENTO_LISTO } from './lib/pwa'
 import { calificar, nuevaPrueba, nuevoCodigo, pruebaDeRepaso, pruebaDeTema, pruebaImprimible, type Prueba, type Resultado } from './lib/banco'
-import { irA, RUTAS, useRuta } from './lib/ruta'
+import { esRutaLegal, irA, RUTAS, RUTAS_LEGALES, useRuta } from './lib/ruta'
 import { Portada } from './pages/Portada'
 import { MiProgreso } from './pages/MiProgreso'
 import { Practicar } from './pages/Practicar'
+import { Legal } from './pages/Legal'
 import { Proyecto } from './pages/Proyecto'
 import { Temario } from './pages/Temario'
 
@@ -108,7 +109,7 @@ export default function App() {
   }, [ruta])
 
   useEffect(() => {
-    const pagina = RUTAS.find((r) => r.id === ruta)?.nombre
+    const pagina = [...RUTAS, ...RUTAS_LEGALES].find((r) => r.id === ruta)?.nombre
     const titulo =
       vista.tipo === 'examen' && prueba
         ? `${prueba.nombre} · Savia`
@@ -127,6 +128,10 @@ export default function App() {
       progreso: 'Tu pregunta del día, el repaso de lo que fallaste y tu avance en cada tema de Biología para EDAD II.',
       temario: 'Explora los seis temas de Biología de EDAD II, revisa sus subtemas y practica cada área con preguntas gratuitas.',
       proyecto: 'Conoce Savia, una herramienta gratuita de apoyo educativo creada como parte de un proyecto comunitario de la Universidad de Costa Rica.',
+      terminos: 'Condiciones para usar Savia, la práctica gratuita de Biología para EDAD II.',
+      privacidad: 'Savia no pide cuentas ni datos personales: tu progreso se guarda solo en tu dispositivo.',
+      cookies: 'Savia no usa cookies ni rastreo. Qué guarda en tu navegador y cómo borrarlo.',
+      licencias: 'Fuentes, íconos y bibliotecas de código abierto que usa Savia y sus licencias.',
     }
     const descripcion =
       vista.tipo === 'examen'
@@ -317,6 +322,7 @@ export default function App() {
           </p>
         )}
         {ruta === 'inicio' && <Portada />}
+        {esRutaLegal(ruta) && <Legal documento={ruta} />}
         {ruta === 'practicar' && (
           <Practicar
             enCurso={prueba}

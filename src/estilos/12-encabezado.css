@@ -40,21 +40,25 @@ html.a11y-contrast .bocetos {
 /* ---------- detalles de la hoja del encabezado ---------- */
 
 /* "apuntes de biología": cinta adhesiva escrita a mano que sujeta la hoja */
+/*  Cinta adhesiva escrita a mano (components/Cinta.tsx): fondo celeste, letra Caveat y bordes
+   cortados en zigzag. La usan las etiquetas de sección, la del encabezado y las notas de la hoja.  */
+.cinta {
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  font-family: 'Caveat', var(--fuente-titulo), cursive;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
+}
 .heroe__nota {
   padding: 5px 16px 4px;
   border: 0;
   border-radius: 0;
-  background: var(--color-acento);
-  color: var(--color-sobre-acento);
-  font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
   box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.35);
   backdrop-filter: none;
   /* bordes cortados en zigzag, como cinta rota a mano */
-  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
 }
 
 .heroe__nota--arriba {
@@ -154,15 +158,8 @@ html.a11y-reduce-motion .heroe__ola-capa {
   align-items: center;
   gap: 8px;
   padding: 6px 18px 5px;
-  background: var(--color-acento);
-  color: var(--color-sobre-acento);
-  font-family: 'Caveat', var(--fuente-titulo), cursive;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
   text-transform: none;
   box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.35);
-  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
   transform: rotate(-2deg);
   transform-origin: left center;
 }
@@ -266,15 +263,8 @@ html.a11y-reduce-motion .heroe__ola-capa {
   width: fit-content;
   margin-bottom: 14px;
   padding: 5px 16px 4px;
-  background: var(--color-acento);
-  color: var(--color-sobre-acento);
-  font-family: 'Caveat', var(--fuente-titulo), cursive;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
   text-transform: none;
   box-shadow: 0 2px 6px -2px rgba(8, 30, 60, 0.3);
-  clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
   transform: rotate(-2deg);
   transform-origin: left center;
 }
@@ -288,23 +278,6 @@ html.a11y-reduce-motion .heroe__ola-capa {
 }
 
 /* huecos de la hoja: los mismos agujeros redondos de la hoja del encabezado */
-.paso::after {
-  position: absolute;
-  z-index: 0;
-  top: 8px;
-  bottom: 8px;
-  left: 0;
-  right: auto;
-  display: block;
-  width: 20px;
-  height: auto;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  background: radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, var(--gris-300) 4.5px 5.5px, transparent 6px) left top / 20px 52px repeat-y;
-  content: '';
-  pointer-events: none;
-}
 
 /* número del paso en los colores de marca, igual en los tres */
 .paso__numero,
@@ -314,13 +287,6 @@ html.a11y-reduce-motion .heroe__ola-capa {
   border-radius: 50%;
   background: var(--color-acento);
   color: var(--color-marca);
-}
-
-.paso {
-  border-color: var(--color-borde);
-  box-shadow:
-    0 12px 20px -14px rgba(10, 30, 61, 0.35),
-    4px 4px 0 var(--azul-50);
 }
 
 .paso__titulo {

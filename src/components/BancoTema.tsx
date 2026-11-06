@@ -1,10 +1,11 @@
-import { useEffect, useId, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { EyeIcon, EyeOffIcon } from '@animateicons/react/lucide'
 import { LETRAS, type Pregunta } from '../lib/banco'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { BotonGuardar } from './BotonGuardar'
+import { Paginacion } from './Paginacion'
 
-const POR_PAGINA = 15
+const POR_PAGINA = 10
 
 interface BancoTemaProps {
   preguntas: Pregunta[]
@@ -18,11 +19,12 @@ interface BancoTemaProps {
 const normalizar = (texto: string) => texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 // Banco de preguntas de un tema: todas sus preguntas con buscador y filtro por subtema. La
-// respuesta de cada una está tapada hasta tocar "Ver respuesta" (o "Mostrar todas"), para
+// respuesta de cada una está tapada hasta tocar "Ver respuesta" (o "Mostrar las respuestas"), para
 // poder estudiar intentando responder primero.
 export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTemaProps) {
   const [busqueda, setBusqueda] = useState('')
-  const [visibles, setVisibles] = useState(POR_PAGINA)
+  const [pagina, setPagina] = useState(1)
+  const conteo = useRef<HTMLParagraphElement>(null)
   const [reveladas, setReveladas] = useState<Set<number>>(() => new Set())
   const [todas, setTodas] = useState(false)
   const animarIconos = useIconosAnimados()
@@ -38,7 +40,17 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
   }, [preguntas, subtema, busqueda])
 
   // Al cambiar el filtro se vuelve a la primera página.
-  useEffect(() => setVisibles(POR_PAGINA), [subtema, busqueda])
+  useEffect(() => setPagina(1), [subtema, busqueda])
+
+  const totalPaginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA))
+  const actual = Math.min(pagina, totalPaginas)
+  const deLaPagina = lista.slice((actual - 1) * POR_PAGINA, actual * POR_PAGINA)
+
+  // Al cambiar de página se sube al inicio de la lista (dentro del modal o de la página).
+  const irAPagina = (nueva: number) => {
+    setPagina(nueva)
+    conteo.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
+  }
 
   const alternar = (id: number) =>
     setReveladas((actuales) => {
@@ -64,13 +76,13 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
             autoComplete="off"
           />
         </div>
-        <button type="button" className="boton" onClick={() => setTodas((t) => !t)} aria-pressed={todas}>
+        <button type="button" className="boton-discreto" onClick={() => setTodas((t) => !t)} aria-pressed={todas}>
           {todas ? (
             <EyeOffIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
           ) : (
             <EyeIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
           )}
-          {todas ? 'Tapar respuestas' : 'Mostrar todas las respuestas'}
+          {todas ? 'Ocultar las respuestas' : 'Mostrar las respuestas'}
         </button>
       </div>
 
@@ -91,7 +103,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
         ))}
       </div>
 
-      <p className="banco__conteo" role="status">
+      <p ref={conteo} className="banco__conteo" role="status">
         {lista.length === 1 ? '1 pregunta' : `${lista.length} preguntas`}
         {busqueda.trim() && ` con “${busqueda.trim()}”`}
       </p>
@@ -100,7 +112,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
         <p className="vacio">No hay preguntas con esa búsqueda. Prueba con otra palabra o elige otro subtema.</p>
       ) : (
         <ol className="banco__lista">
-          {lista.slice(0, visibles).map((p) => {
+          {deLaPagina.map((p) => {
             const abierta = todas || reveladas.has(p.id)
             return (
               <li key={p.id} className={`banco__item ${abierta ? 'is-abierta' : ''}`}>
@@ -128,7 +140,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
                 ) : null}
                 {!todas && (
                   <button type="button" className="banco__ver" onClick={() => alternar(p.id)} aria-expanded={abierta}>
-                    {abierta ? 'Tapar respuesta' : 'Ver respuesta'}
+                    {abierta ? 'Ocultar respuesta' : 'Ver respuesta'}
                   </button>
                 )}
               </li>
@@ -137,11 +149,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
         </ol>
       )}
 
-      {visibles < lista.length && (
-        <button type="button" className="boton banco__mas" onClick={() => setVisibles((v) => v + POR_PAGINA)}>
-          Ver {Math.min(POR_PAGINA, lista.length - visibles)} preguntas más ({lista.length - visibles} restantes)
-        </button>
-      )}
+      <Paginacion pagina={actual} totalPaginas={totalPaginas} onCambiar={irAPagina} etiqueta="preguntas" />
     </div>
   )
 }

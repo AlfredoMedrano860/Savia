@@ -1,0 +1,90 @@
+/* Paginación (components/Paginacion.tsx), con los botones y colores de Savia: cuadros
+   blancos con borde fino, la página actual en el azul de marca y el hover de los botones
+   secundarios. */
+
+.paginacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 22px;
+}
+
+.paginacion__numeros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paginacion__boton {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  /* va después de "font", que si no reinicia el interlineado */
+  line-height: 0;
+}
+
+.paginacion__boton:hover:not(:disabled, .is-actual) {
+  border-color: var(--hover-secundario-borde);
+  background: var(--hover-secundario-fondo);
+  color: var(--color-marca);
+}
+
+.paginacion__boton.is-actual {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--blanco);
+  cursor: default;
+}
+
+.paginacion__boton:disabled {
+  color: var(--color-texto-suave);
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.paginacion__boton:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.paginacion__salto {
+  min-width: 18px;
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+.paginacion__resumen {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  text-align: center;
+}
+
+/* Al saltar a otra página, el inicio de la lista queda un poco por debajo del borde. */
+.banco__conteo {
+  scroll-margin-top: 16px;
+}
+
+@media (max-width: 400px) {
+  .paginacion,
+  .paginacion__numeros {
+    gap: 4px;
+  }
+
+  .paginacion__boton {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+  }
+}

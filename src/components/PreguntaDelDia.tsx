@@ -5,8 +5,10 @@ import { cargarPreguntas, LETRAS, TEMAS, TOTAL_PREGUNTAS, type Pregunta } from '
 import { enlaceTemario } from '../lib/ruta'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { BotonGuardar } from './BotonGuardar'
+import { HojaCuaderno } from './HojaCuaderno'
+import { Cinta } from './Cinta'
 
-const CLAVE = 'ribosoma:diaria'
+const CLAVE = 'savia:diaria'
 
 interface EstadoDiario {
   fecha: string
@@ -66,6 +68,8 @@ function guardarEstado(estado: EstadoDiario) {
 
 // Una pregunta distinta cada día (la misma para todas las personas ese día), con la
 // explicación al responder y una racha de días seguidos para crear el hábito.
+// Después de responder se avisa que la pregunta se ocultará al cambiar de sección; al
+// volver ese mismo día solo queda un resumen corto con la racha hasta el día siguiente.
 export function PreguntaDelDia() {
   const hoy = claveDia()
   const ayer = claveDia(new Date(Date.now() - 86_400_000))
@@ -73,6 +77,9 @@ export function PreguntaDelDia() {
   const [pregunta, setPregunta] = useState<Pregunta | null>(null)
   const [error, setError] = useState(false)
   const [estado, setEstado] = useState(() => leerEstado(hoy))
+  // Si al entrar ya estaba respondida (se respondió antes de cambiar de sección), solo se
+  // muestra el resumen; si se responde ahora, la pregunta se queda hasta salir.
+  const [yaRespondidaAlEntrar] = useState(() => estado.elegida !== null)
   const s = semilla(hoy)
   const orden = useMemo(() => ordenDelDia(s), [s])
 
@@ -108,23 +115,47 @@ export function PreguntaDelDia() {
   const respondida = estado.elegida !== null
   const acerto = pregunta !== null && estado.elegida === pregunta.r
   const fecha = new Date().toLocaleDateString('es-CR', { weekday: 'long', day: 'numeric', month: 'long' })
+  const titulo = fecha.charAt(0).toUpperCase() + fecha.slice(1)
+  const racha = rachaViva > 0 && (
+    <div className="diaria__racha">
+      <FlameIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
+      {rachaViva} {rachaViva === 1 ? 'día' : 'días seguidos'}
+    </div>
+  )
+
+  if (yaRespondidaAlEntrar) {
+    return (
+      <section className="diaria-seccion" aria-labelledby="diaria-titulo">
+        <HojaCuaderno className="diaria diaria--hecha">
+          <header className="diaria__cabecera">
+            <div>
+              <Cinta className="seccion__kicker">Pregunta del día</Cinta>
+              <h2 id="diaria-titulo" className="diaria__fecha">
+                {titulo}
+              </h2>
+            </div>
+            {racha}
+          </header>
+          <div className="diaria__hecha" role="status">
+            <CheckIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
+            Ya respondiste la pregunta de hoy. Vuelve mañana por otra.
+          </div>
+        </HojaCuaderno>
+      </section>
+    )
+  }
 
   return (
     <section className="diaria-seccion" aria-labelledby="diaria-titulo">
-      <div className="diaria">
+      <HojaCuaderno className="diaria">
         <header className="diaria__cabecera">
           <div>
-            <p className="seccion__kicker">Pregunta del día</p>
+            <Cinta className="seccion__kicker">Pregunta del día</Cinta>
             <h2 id="diaria-titulo" className="diaria__fecha">
-              {fecha.charAt(0).toUpperCase() + fecha.slice(1)}
+              {titulo}
             </h2>
           </div>
-          {rachaViva > 0 && (
-            <div className="diaria__racha">
-              <FlameIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-              {rachaViva} {rachaViva === 1 ? 'día' : 'días seguidos'}
-            </div>
-          )}
+          {racha}
         </header>
 
         {!pregunta ? (
@@ -173,12 +204,16 @@ export function PreguntaDelDia() {
                   </a>
                   <BotonGuardar id={pregunta.id} />
                 </div>
+                <p className="diaria__aviso">
+                  Esta pregunta se ocultará cuando cambies de sección. Si quieres repasarla después, guárdala con la estrella
+                  y la encontrarás en <strong>Mis guardadas</strong>.
+                </p>
                 <p className="diaria__manana">Vuelve mañana por otra pregunta.</p>
               </div>
             )}
           </>
         )}
-      </div>
+      </HojaCuaderno>
     </section>
   )
 }

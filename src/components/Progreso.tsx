@@ -3,6 +3,7 @@ import resumenTemas from 'virtual:resumen-temas'
 import { estadoRepaso, idsGuardadas, pendientesDeRepaso, progresoPorTema, useAprendizaje } from '../lib/aprendizaje'
 import { NOTA_MINIMA, TEMAS, type TemaCodigo } from '../lib/banco'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { Cinta } from './Cinta'
 
 interface ProgresoProps {
   onRepasar: (ids: number[]) => void
@@ -30,7 +31,7 @@ export function Progreso({ onRepasar, onGuardadas, onPracticarTema }: ProgresoPr
   return (
     <section className="progreso" aria-labelledby="progreso-titulo">
       <div className="progreso__cabecera">
-        <p className="seccion__kicker">Tu cuaderno</p>
+        <Cinta className="seccion__kicker">Tu cuaderno</Cinta>
         <h2 id="progreso-titulo" className="practica__subtitulo">
           Repaso y avance
         </h2>

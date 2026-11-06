@@ -1,0 +1,209 @@
+/* Modal de Savia (components/Modal.tsx) y su barra de scroll propia (lib/barraScroll.ts).
+   Entra bajando y aparece; sale subiendo y se desvanece, como los modales de My Green
+   Farm. Hoja blanca con el borde y la sombra de las tarjetas de Savia. */
+
+/* --modal-margen es el espacio entre el modal y los bordes de la pantalla: el mismo a
+   los lados, arriba y abajo. El alto se calcula sobre la pantalla visible (100%, el
+   modal es fixed), no con dvh, para que abajo quede el mismo espacio que arriba aunque
+   el navegador muestre sus barras. */
+.modal {
+  --modal-margen: 24px;
+  width: min(920px, 100% - var(--modal-margen) * 2);
+  max-width: none;
+  max-height: calc(100% - var(--modal-margen) * 2);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: 14px;
+  background: var(--blanco);
+  color: var(--color-texto);
+  box-shadow: 0 30px 70px -30px rgba(10, 30, 61, 0.55);
+  animation: modal-entrar 0.32s ease-out;
+}
+
+.modal[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.is-saliendo {
+  animation: modal-salir 0.32s ease-in forwards;
+}
+
+.modal::backdrop {
+  background: rgba(10, 30, 61, 0.55);
+  animation: modal-fondo 0.32s ease-out;
+}
+
+.modal.is-saliendo::backdrop {
+  opacity: 0;
+  transition: opacity 0.32s ease-in;
+}
+
+@keyframes modal-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes modal-salir {
+  to {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes modal-fondo {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Barra fija de arriba con la etiqueta y el botón de cerrar. */
+.modal__barra {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 14px 14px clamp(18px, 4vw, 44px);
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.modal__barra .seccion__kicker {
+  margin: 0;
+}
+
+/* Zona con scroll: la barra nativa se oculta y se usa la propia. */
+.modal__contenido {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* el espacio de abajo es el mismo que el de los lados */
+  padding: 24px clamp(18px, 4vw, 44px) clamp(18px, 4vw, 44px);
+  scrollbar-width: none;
+}
+
+.modal__contenido::-webkit-scrollbar {
+  display: none;
+}
+
+.modal__titulo {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h2);
+  line-height: 1.15;
+}
+
+/* Dentro del modal el banco no necesita la línea de separación de la tarjeta. */
+.modal .banco {
+  margin-top: 18px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/*  Botón cuadrado blanco con borde fino (cerrar el modal, números de la paginación).  */
+
+.boton-cuadro {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-borde);
+  background: var(--blanco);
+  color: var(--color-texto);
+  line-height: 0;
+  cursor: pointer;
+  transition: background-color var(--hover-duracion) var(--hover-curva), border-color var(--hover-duracion) var(--hover-curva), color var(--hover-duracion) var(--hover-curva);
+}
+
+.modal__cerrar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.modal__cerrar:hover {
+  border-color: var(--hover-secundario-borde);
+  background: var(--hover-secundario-fondo);
+  color: var(--color-marca);
+}
+
+.modal__cerrar:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* Barra de scroll: línea delgada que se ensancha al pasar el mouse o al arrastrarla. */
+.barra-scroll {
+  position: absolute;
+  right: 6px;
+  z-index: 3;
+  width: 4px;
+  transition: width 150ms ease-out;
+}
+
+.barra-scroll[hidden] {
+  display: none;
+}
+
+.barra-scroll__pulgar {
+  width: 100%;
+  border-radius: 999px;
+  background: var(--azul-600);
+  opacity: 0.35;
+  cursor: grab;
+  touch-action: none;
+  transition: opacity 150ms ease-out;
+}
+
+.barra-scroll:hover,
+.barra-scroll.is-arrastrando {
+  width: 7px;
+}
+
+.barra-scroll:hover .barra-scroll__pulgar,
+.barra-scroll.is-arrastrando .barra-scroll__pulgar {
+  opacity: 0.7;
+}
+
+.barra-scroll.is-arrastrando .barra-scroll__pulgar {
+  cursor: grabbing;
+}
+
+@media (max-width: 560px) {
+  .modal {
+    --modal-margen: 12px;
+    border-radius: 12px;
+  }
+
+  .modal__barra {
+    padding: 10px 10px 10px 18px;
+  }
+
+  .modal__contenido {
+    padding-top: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal.is-saliendo,
+  .modal::backdrop {
+    animation: none;
+  }
+
+  .barra-scroll,
+  .barra-scroll__pulgar {
+    transition: none;
+  }
+}
+
+html.a11y-reduce-motion .modal,
+html.a11y-reduce-motion .modal::backdrop {
+  animation: none;
+}

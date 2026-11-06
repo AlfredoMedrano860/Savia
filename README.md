@@ -30,6 +30,10 @@ El sitio generado en `dist/` se puede publicar en un hosting estático gratuito,
 
 El modo sin internet (service worker) solo funciona en la versión compilada, no con `npm run dev`.
 
+## Información legal
+
+Las páginas Términos de uso, Privacidad, Cookies y almacenamiento, y Licencias y créditos están en `src/pages/Legal.tsx` y se enlazan desde el pie de página. Si Savia empieza a guardar datos de otra forma (cuentas, analíticas, un servidor), hay que actualizar esos textos y su fecha de vigencia antes de publicar el cambio.
+
 ## Progreso
 
 Los intentos, la prueba en curso, el progreso por tema y las preguntas guardadas se guardan en el almacenamiento local del navegador. No se envían a ningún servidor ni se sincronizan entre dispositivos. Borrar los datos del navegador puede eliminar el progreso guardado.

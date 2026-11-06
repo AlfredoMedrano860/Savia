@@ -8,7 +8,7 @@ import { useSyncExternalStore } from 'react'
  */
 
 export const EVENTO_LISTO = 'savia:sin-conexion-listo'
-const CLAVE_AVISADO = 'ribosoma:sin-conexion-avisado'
+const CLAVE_AVISADO = 'savia:sin-conexion-avisado'
 
 interface EventoInstalar extends Event {
   prompt: () => Promise<void>

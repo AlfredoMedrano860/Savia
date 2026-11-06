@@ -6,21 +6,6 @@
    imprimible. Usan la hoja de cuaderno del sistema donde el contenido es "de papel". */
 
 /* hoja de cuaderno reutilizable */
-.diaria,
-.papel {
-  border: 1px solid #d5dfeb;
-  border-radius: 2px;
-  background-color: #fff;
-  background-image:
-    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
-    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
-    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
-  background-size: 20px 52px, auto, auto;
-  background-repeat: repeat-y, no-repeat, repeat;
-  box-shadow:
-    8px 8px 0 rgba(207, 220, 236, 0.8),
-    16px 16px 0 rgba(23, 60, 120, 0.08);
-}
 
 /* tablero de progreso */
 .progreso {
@@ -175,7 +160,7 @@
 }
 
 .avance__tema.is-mal .avance__barra span {
-  background: #d9822b;
+  background: var(--ambar);
 }
 
 .avance__cobertura {
@@ -225,20 +210,21 @@
   color: var(--color-marca);
 }
 
+/* Pregunta guardada: estrella rellena en celeste de marca. */
 .guardar.is-guardada:hover {
-  border-color: #c98f14;
-  background: #ffefc2;
-  color: #8a5a00;
+  border-color: var(--celeste-500);
+  background: var(--celeste-100);
+  color: var(--celeste-800);
 }
 
 .guardar.is-guardada {
-  border-color: #e0a526;
-  background: #fff6dc;
-  color: #8a5a00;
+  border-color: var(--celeste-400);
+  background: var(--celeste-50);
+  color: var(--celeste-700);
 }
 
 .guardar.is-guardada .guardar__icono {
-  fill: #e0a526;
+  fill: var(--celeste-400);
 }
 
 .guardar--compacto {
@@ -272,12 +258,6 @@
   content: ' →';
 }
 
-.revision__temario:hover {
-  text-decoration: underline !important;
-  text-decoration-thickness: 2px !important;
-  text-underline-offset: 4px;
-}
-
 /* temario abierto desde un enlace */
 .temario__tema {
   scroll-margin-top: 96px;
@@ -292,7 +272,7 @@
   margin-inline: -10px;
   padding-inline: 10px;
   border-radius: 4px;
-  background: #fff6dc;
+  background: var(--celeste-100);
   font-weight: 700;
 }
 
@@ -326,8 +306,8 @@
   margin: 0;
   padding: 4px 12px;
   border-radius: 999px;
-  background: #fff1e0;
-  color: #b4530a;
+  background: var(--celeste-100);
+  color: var(--celeste-700);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -438,8 +418,8 @@
 }
 
 .diaria__respuesta.is-mal {
-  border-left-color: #d9822b;
-  background: rgba(255, 241, 224, 0.9);
+  border-left-color: var(--ambar);
+  background: var(--ambar-claro);
 }
 
 .diaria__veredicto {
@@ -464,6 +444,34 @@
   margin-top: 12px;
 }
 
+/* Aviso de que la pregunta se ocultará al salir de la sección. */
+.diaria__aviso {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--blanco) 70%, transparent);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  line-height: 1.45;
+}
+
+.diaria__aviso strong {
+  color: var(--color-texto);
+}
+
+/* Resumen cuando la pregunta de hoy ya se respondió antes de entrar. */
+.diaria__hecha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
+  color: var(--color-texto-suave);
+}
+
+.diaria__hecha > div {
+  color: var(--verde);
+}
+
 .diaria__manana {
   margin: 10px 0 0;
   color: var(--color-texto-suave);
@@ -472,12 +480,6 @@
 }
 
 @media (max-width: 720px) {
-  .diaria,
-  .papel {
-    box-shadow:
-      5px 5px 0 rgba(207, 220, 236, 0.8),
-      10px 10px 0 rgba(23, 60, 120, 0.08);
-  }
 
   .diaria {
     padding: 24px 18px 24px 54px;
@@ -710,30 +712,64 @@
   }
 }
 
-/* botón "Instalar Savia" en el pie (solo aparece si el navegador permite instalarla) */
+/* Botón "Instalar Savia" en el pie (solo aparece si el navegador permite instalarla).
+   Una ficha clara sobre el azul del pie: ícono en un círculo celeste y dos líneas, el
+   nombre de la acción y lo que se gana (usarla como app y sin internet). */
 .contraportada__instalar {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin: 4px 0 14px;
-  padding: 9px 16px;
-  border: 1px solid color-mix(in srgb, var(--blanco) 40%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--blanco) 8%, transparent);
-  color: var(--blanco);
+  gap: 12px;
+  margin: 22px 0 16px;
+  padding: 8px 20px 8px 8px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--blanco);
+  color: var(--azul-800);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.55);
   font: inherit;
-  font-size: var(--texto-detalle);
-  font-weight: 700;
+  text-align: left;
   cursor: pointer;
   transition:
     background-color var(--hover-duracion) var(--hover-curva),
-    border-color var(--hover-duracion) var(--hover-curva),
+    box-shadow var(--hover-duracion) var(--hover-curva),
     transform var(--hover-duracion) var(--hover-curva);
 }
 
-/* como el botón de contorno sobre fondo azul */
+.contraportada__instalar-icono {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--celeste-100);
+  color: var(--azul-700);
+  line-height: 0;
+  transition: background-color var(--hover-duracion) var(--hover-curva);
+}
+
+.contraportada__instalar-texto {
+  display: grid;
+  gap: 1px;
+  line-height: 1.25;
+}
+
+.contraportada__instalar-texto strong {
+  font-size: var(--texto-base);
+  font-weight: 700;
+}
+
+.contraportada__instalar-texto span {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
 .contraportada__instalar:hover {
-  border-color: var(--blanco);
-  background: var(--hover-sobre-marca-contorno);
+  background: var(--celeste-50);
+  box-shadow: 0 16px 30px -16px rgba(0, 0, 0, 0.6);
   transform: var(--hover-elevar-boton);
+}
+
+.contraportada__instalar:hover .contraportada__instalar-icono {
+  background: var(--celeste-200);
 }

@@ -44,7 +44,17 @@ const Libro = lapiz(libro)
 const DIBUJOS = [Microscopio, MatrazLapiz, Tubos, Petri, AdnLapiz, CelulaLapiz, Gotero, Vaso, Gafas, Molecula, Guantes, Frasco, Tubo, HojaLapiz, Libro]
 
 // Cada página arranca la serie en un dibujo distinto, para que no se repitan iguales.
-const INICIO_POR_RUTA: Record<Ruta, number> = { inicio: 0, practicar: 2, progreso: 3, temario: 4, proyecto: 6 }
+const INICIO_POR_RUTA: Record<Ruta, number> = {
+  inicio: 0,
+  practicar: 2,
+  progreso: 3,
+  temario: 4,
+  proyecto: 6,
+  terminos: 8,
+  privacidad: 9,
+  cookies: 10,
+  licencias: 11,
+}
 
 // ---------------------------------------------------------------------------
 // Ubicación: los dibujos solo van en espacios en blanco

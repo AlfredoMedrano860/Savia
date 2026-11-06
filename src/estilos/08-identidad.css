@@ -102,9 +102,6 @@
   display: grid;
   min-height: 400px;
   place-items: center;
-  background:
-    radial-gradient(ellipse at 50% 44%, rgba(255, 255, 255, 0.98), rgba(231, 239, 249, 0.96) 68%),
-    #e7eff9;
 }
 
 .heroe__marco-arte::before,
@@ -193,21 +190,6 @@
 .paso {
   min-height: 218px;
   padding: 26px;
-  background:
-    radial-gradient(circle at 100% 0, rgba(180, 208, 228, 0.32), transparent 38%),
-    linear-gradient(145deg, #fff, #edf2f8);
-}
-
-.paso:nth-child(2) {
-  background:
-    radial-gradient(circle at 100% 0, rgba(215, 205, 235, 0.3), transparent 38%),
-    linear-gradient(145deg, #fff, #f1eef8);
-}
-
-.paso:nth-child(3) {
-  background:
-    radial-gradient(circle at 100% 0, rgba(173, 218, 211, 0.34), transparent 38%),
-    linear-gradient(145deg, #fff, #eaf4f5);
 }
 
 .paso:hover {
@@ -226,34 +208,6 @@
   line-height: 1.65;
 }
 
-.tema-tarjeta {
-  gap: 9px;
-}
-
-.tema-tarjeta__codigo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border: 0;
-  background: transparent;
-}
-
-.tema-tarjeta__codigo span {
-  font-size: 0.9rem;
-}
-
-.tema-tarjeta__nombre {
-  max-width: 19ch;
-  padding-right: 20px;
-  line-height: 1.2;
-}
-
-.tema-tarjeta__icono {
-  top: 18px;
-  right: 17px;
-  border: 1px solid color-mix(in srgb, var(--tema-acento) 20%, white);
-}
-
 .tema-icono {
   display: inline-flex;
   width: 34px;
@@ -268,16 +222,6 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.8;
-}
-
-.tema-tarjeta__ir {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: auto;
-  padding-top: 8px;
-  opacity: 1;
-  transform: none;
 }
 
 .enlace {
