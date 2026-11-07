@@ -193,32 +193,10 @@ export function Portada() {
                 <dd>{PROYECTO.region}</dd>
               </div>
             </dl>
-            <SelloUcr />
+            <Cinta as="span" className="herbario__cinta" aria-hidden="true" />
           </MarcoDoble>
         </HojaCuaderno>
       </section>
     </main>
-  )
-}
-
-// Sello de tinta circular, como el que se estampa en las etiquetas de herbario.
-function SelloUcr() {
-  return (
-    <svg className="herbario__sello" viewBox="0 0 120 120" aria-hidden="true">
-      <defs>
-        <path id="sello-circulo" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" />
-      </defs>
-      <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" strokeWidth="2.2" />
-      <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" strokeWidth="1.2" />
-      <text fontSize="9.5" fill="currentColor" fontWeight="700">
-        <textPath href="#sello-circulo" textLength="268" lengthAdjust="spacing">UNIVERSIDAD DE COSTA RICA · {PROYECTO.codigo} ·</textPath>
-      </text>
-      {/* brote */}
-      <g fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M60 78V56" />
-        <path d="M60 60c0-9-6-14-15-14 0 9 6 14 15 14Z" />
-        <path d="M60 56c0-8 5-13 14-13 0 8-5 13-14 13Z" />
-      </g>
-    </svg>
   )
 }

@@ -147,6 +147,7 @@ export function Proyecto() {
       <section className="proyecto-pagina__bloque" aria-labelledby="autor-titulo">
         <HojaCuaderno className="autor">
           <figure className="autor__polaroid">
+            <Cinta as="span" className="autor__cinta" aria-hidden="true" />
             <img src={fotoAutor} alt={`Foto de ${DESARROLLADOR.nombre}`} width={480} height={600} loading="lazy" decoding="async" />
             <figcaption>{DESARROLLADOR.nombre}</figcaption>
           </figure>

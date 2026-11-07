@@ -230,3 +230,20 @@
   gap: 10px;
   margin-top: 22px;
 }
+
+/* En pantallas angostas los dos botones no caben en una línea: en vez de bajar uno,
+   se reparten el ancho por mitades y, si hace falta, el texto parte en dos renglones. */
+@media (max-width: 480px) {
+  .dialogo__acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dialogo__acciones > * {
+    min-width: 0;
+    padding-inline: 10px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
+}

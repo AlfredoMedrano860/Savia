@@ -272,17 +272,15 @@
   font-weight: 700;
 }
 
-.herbario__sello {
-  position: absolute;
-  right: -18px;
-  bottom: -22px;
+/* Trozo de cinta adhesiva cruzado en diagonal sobre la esquina de abajo a la derecha,
+   como si sujetara la etiqueta a la hoja. Es algo transparente para que se vea la
+   esquina del papel debajo. */
+.herbario__cinta {
+  right: -40px;
+  bottom: -2px;
   width: 112px;
-  height: 112px;
-  color: var(--celeste-600);
-  opacity: 0.78;
-  mix-blend-mode: multiply;
-  transform: rotate(-14deg);
-  pointer-events: none;
+  height: 30px;
+  transform: rotate(-45deg);
 }
 
 @media (max-width: 820px) {
@@ -305,11 +303,10 @@
     padding-right: 0;
   }
 
-  .herbario__sello {
-    width: 88px;
-    height: 88px;
-    right: -10px;
-    bottom: -18px;
+  .herbario__cinta {
+    right: -30px;
+    width: 90px;
+    height: 26px;
   }
 }
 

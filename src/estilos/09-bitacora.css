@@ -497,3 +497,11 @@ h3:not(.revision__enunciado) {
 .opciones {
   grid-auto-rows: 1fr;
 }
+
+/* En celulares y tabletas táctiles no hay teclado físico: las teclas rápidas no sirven
+   ahí, así que no se muestran. Se ven en computadoras aunque la ventana sea angosta. */
+@media (hover: none) and (pointer: coarse) {
+  .atajos {
+    display: none;
+  }
+}

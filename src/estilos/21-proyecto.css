@@ -278,15 +278,9 @@ a.contacto-tarjeta__valor {
 }
 
 /* trozo de cinta arriba */
-.autor__polaroid::before {
-  position: absolute;
-  z-index: 1;
+.autor__cinta {
   left: 50%;
-  background: color-mix(in srgb, var(--celeste-200) 85%, transparent);
-  box-shadow: 0 1px 4px -2px rgba(16, 45, 91, 0.35);
-  clip-path: polygon(0 10%, 5% 0, 95% 8%, 100% 0, 97% 50%, 100% 100%, 5% 92%, 0 100%, 3% 50%);
   transform: translateX(-50%) rotate(4deg);
-  content: '';
 }
 
 .autor__polaroid img {
@@ -402,7 +396,7 @@ a.contacto-tarjeta__valor {
   padding: 8px 8px 0;
 }
 
-.autor__polaroid::before {
+.autor__cinta {
   top: -10px;
   width: 64px;
   height: 20px;
