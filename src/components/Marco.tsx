@@ -6,7 +6,7 @@ import { DESARROLLADOR, PROYECTO } from '../lib/proyecto'
 import { abrirLegal, RUTAS, RUTAS_LEGALES, type Ruta } from '../lib/ruta'
 import { MenuIcon, XIcon } from '@animateicons/react/lucide'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
-import hojaBoceto from '../assets/bocetos/hoja.svg'
+import plantaBoceto from '../assets/bocetos/planta.webp'
 import { IconoContacto, type TipoContacto } from './IconoContacto'
 import { instalar, useInstalable } from '../lib/pwa'
 import { DownloadIcon } from '@animateicons/react/lucide'
@@ -82,7 +82,7 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
         <svg className="contraportada__ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
           <path d="M0 30C240 6 480 6 720 30s480 24 720 0V60H0Z" />
         </svg>
-        <img className="contraportada__boceto" src={hojaBoceto} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img className="contraportada__boceto" src={plantaBoceto} alt="" aria-hidden="true" loading="lazy" decoding="async" />
 
         <div className="contraportada__contenedor">
           <div className="contraportada__marca">

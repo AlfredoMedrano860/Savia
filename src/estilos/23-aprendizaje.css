@@ -182,60 +182,48 @@
 
 
 
-/* estrella para guardar */
+/* Estrella para guardar: solo el ícono, sin borde ni fondo. Vacía si no está guardada;
+   rellena de celeste de marca si lo está. El área táctil es de 40 px aunque se vea
+   solo la estrella. */
 .guardar {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  padding: 4px 12px;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  background: var(--panel);
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: var(--color-texto-suave);
-  font: inherit;
-  font-size: var(--texto-mini);
-  font-weight: 700;
   cursor: pointer;
-  transition:
-    color var(--hover-duracion) var(--hover-curva),
-    border-color var(--hover-duracion) var(--hover-curva),
-    background-color var(--hover-duracion) var(--hover-curva);
+  transition: color var(--hover-duracion) var(--hover-curva), transform var(--hover-duracion) var(--hover-curva);
 }
 
-/* como el botón secundario del sistema: se rellena de azul suave */
 .guardar:hover {
-  border-color: var(--hover-secundario-borde);
-  background: var(--hover-secundario-fondo);
   color: var(--color-marca);
-}
-
-/* Pregunta guardada: estrella rellena en celeste de marca. */
-.guardar.is-guardada:hover {
-  border-color: var(--celeste-500);
-  background: var(--celeste-100);
-  color: var(--celeste-800);
+  transform: scale(1.12);
 }
 
 .guardar.is-guardada {
-  border-color: var(--celeste-400);
-  background: var(--celeste-50);
   color: var(--celeste-700);
 }
 
-.guardar.is-guardada .guardar__icono {
+/* el ícono trae fill="none" en el svg y en el trazo: se rellena el trazo directamente */
+.guardar.is-guardada .guardar__icono path {
   fill: var(--celeste-400);
 }
 
-.guardar--compacto {
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  padding: 0;
+.guardar:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 0;
 }
 
+/* centrada con la etiqueta del tema; el margen negativo evita que el área táctil de
+   40 px agrande la fila */
 .hoja__meta .guardar {
-  margin-left: auto;
+  align-self: center;
+  margin: -8px 0 -8px auto;
 }
 
 .revision__cabecera {
