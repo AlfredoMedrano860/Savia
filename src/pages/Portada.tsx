@@ -1,7 +1,8 @@
 import { ArrowRightIcon, ArrowUpRightIcon, AtomIcon, BookOpenIcon, GiftIcon, LayersIcon, ListChecksIcon } from '@animateicons/react/lucide'
 import { CODIGOS, TEMAS, TOTAL_PREGUNTAS, type TemaCodigo } from '../lib/banco'
 import { PROYECTO } from '../lib/proyecto'
-import celulaBoceto from '../assets/bocetos/celula.webp'
+// la portada conserva la célula detallada de la versión anterior
+import celulaBoceto from '../assets/bocetos/celula-portada.webp'
 import adnBoceto from '../assets/bocetos/adn.webp'
 import balonBoceto from '../assets/bocetos/balon.webp'
 import matrazBoceto from '../assets/bocetos/matraz.webp'
@@ -78,7 +79,7 @@ export function Portada() {
             <HojaCuaderno className="heroe__marco-arte">
               <span className="heroe__numero" aria-hidden="true">01 / 06</span>
               <div className="heroe__arte">
-                <img className="ilustracion-biologia" src={celulaBoceto} alt="Boceto a lápiz de una célula" width={694} height={720} />
+                <img className="ilustracion-biologia" src={celulaBoceto} alt="Boceto a lápiz de una célula" width={703} height={720} />
               </div>
               <span className="heroe__sello">
                 <AtomIcon className="heroe__sello-icono" size={26} isAnimated={animarIconos} aria-hidden="true" />
