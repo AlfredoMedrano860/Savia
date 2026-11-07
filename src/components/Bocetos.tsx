@@ -1,20 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { Ruta } from '../lib/ruta'
-import adn from '../assets/bocetos/adn.svg'
-import celula from '../assets/bocetos/celula.svg'
-import frasco from '../assets/bocetos/frasco.svg'
-import gafas from '../assets/bocetos/gafas.svg'
-import gotero from '../assets/bocetos/gotero.svg'
-import guantes from '../assets/bocetos/guantes.svg'
-import hoja from '../assets/bocetos/hoja.svg'
-import libro from '../assets/bocetos/libro.svg'
-import matraz from '../assets/bocetos/matraz.svg'
-import microscopio from '../assets/bocetos/microscopio.svg'
-import molecula from '../assets/bocetos/molecula.svg'
-import petri from '../assets/bocetos/petri.svg'
-import tubo from '../assets/bocetos/tubo.svg'
-import tubos from '../assets/bocetos/tubos.svg'
-import vaso from '../assets/bocetos/vaso.svg'
+import adn from '../assets/bocetos/adn.webp'
+import balon from '../assets/bocetos/balon.webp'
+import celula from '../assets/bocetos/celula.webp'
+import matraz from '../assets/bocetos/matraz.webp'
+import microscopio from '../assets/bocetos/microscopio.webp'
+import petri from '../assets/bocetos/petri.webp'
+import planta from '../assets/bocetos/planta.webp'
+import tubo from '../assets/bocetos/tubo.webp'
 
 // Bocetos de biología a lápiz (vectorizados), al fondo de la página y solo como
 // decoración: se ubican únicamente en los espacios en blanco.
@@ -25,23 +18,7 @@ const lapiz = (src: string) =>
     return <image href={src} x={10} y={4} width={180} height={192} preserveAspectRatio="xMidYMid meet" />
   }
 
-const Microscopio = lapiz(microscopio)
-const MatrazLapiz = lapiz(matraz)
-const Tubos = lapiz(tubos)
-const Petri = lapiz(petri)
-const AdnLapiz = lapiz(adn)
-const CelulaLapiz = lapiz(celula)
-const Gotero = lapiz(gotero)
-const Vaso = lapiz(vaso)
-const Gafas = lapiz(gafas)
-const Molecula = lapiz(molecula)
-const Guantes = lapiz(guantes)
-const Frasco = lapiz(frasco)
-const Tubo = lapiz(tubo)
-const HojaLapiz = lapiz(hoja)
-const Libro = lapiz(libro)
-
-const DIBUJOS = [Microscopio, MatrazLapiz, Tubos, Petri, AdnLapiz, CelulaLapiz, Gotero, Vaso, Gafas, Molecula, Guantes, Frasco, Tubo, HojaLapiz, Libro]
+const DIBUJOS = [microscopio, matraz, adn, petri, planta, celula, tubo, balon].map(lapiz)
 
 // Cada página arranca la serie en un dibujo distinto, para que no se repitan iguales.
 const INICIO_POR_RUTA: Record<Ruta, number> = {
@@ -50,10 +27,10 @@ const INICIO_POR_RUTA: Record<Ruta, number> = {
   progreso: 3,
   temario: 4,
   proyecto: 6,
-  terminos: 8,
-  privacidad: 9,
-  cookies: 10,
-  licencias: 11,
+  terminos: 1,
+  privacidad: 5,
+  cookies: 7,
+  licencias: 3,
 }
 
 // ---------------------------------------------------------------------------
