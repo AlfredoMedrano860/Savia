@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { XIcon } from '@animateicons/react/lucide'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 
@@ -36,7 +36,7 @@ type AjustesAccesibilidad = {
 
 type AjusteBooleano = Exclude<keyof AjustesAccesibilidad, 'tamano' | 'color'>
 
-const CLAVE = 'ribosoma:accesibilidad'
+const CLAVE = 'savia:accesibilidad'
 const INICIAL: AjustesAccesibilidad = {
   tamano: 'normal',
   color: 'normal',
@@ -221,6 +221,15 @@ function MascaraLectura() {
 export function Accesibilidad() {
   const [ajustes, setAjustes] = useState(cargarAjustes)
   const [abierto, setAbierto] = useState(false)
+  // El panel no existe en la página hasta la primera vez que se abre; desde entonces se
+  // queda montado para poder animar también el cierre (como el menú de Noctivulp).
+  const [montado, setMontado] = useState(false)
+  const alternarPanel = () => {
+    if (montado) return setAbierto((estado) => !estado)
+    setMontado(true)
+    // un cuadro cerrado para que la entrada se anime
+    requestAnimationFrame(() => requestAnimationFrame(() => setAbierto(true)))
+  }
   const [leyendo, setLeyendo] = useState(false)
   const [estadoLector, setEstadoLector] = useState('')
   const raiz = useRef<HTMLDivElement>(null)
@@ -430,21 +439,17 @@ export function Accesibilidad() {
       {ajustes.guiaLectura && <GuiaLectura />}
       {ajustes.mascaraLectura && <MascaraLectura />}
       <div ref={raiz} className="accesibilidad" data-a11y-ui="">
-        {abierto && (
-          <button
-            type="button"
-            className="accesibilidad__fondo"
-            aria-label="Cerrar opciones de accesibilidad"
-            onClick={() => setAbierto(false)}
-          />
+        {montado && (
+          <div className={`accesibilidad__fondo ${abierto ? 'is-abierto' : ''}`} aria-hidden="true" onClick={() => setAbierto(false)} />
         )}
+        {montado && (
         <aside
           id="panel-accesibilidad"
-          className="accesibilidad__panel"
+          className={`accesibilidad__panel ${abierto ? 'is-abierto' : ''}`}
           role="dialog"
           aria-modal={abierto}
           aria-labelledby="accesibilidad-titulo"
-          hidden={!abierto}
+          inert={!abierto}
         >
           <header className="accesibilidad__cabecera">
             <span className="accesibilidad__sello" aria-hidden="true">
@@ -469,7 +474,7 @@ export function Accesibilidad() {
           </header>
 
           <div className="accesibilidad__contenido">
-            <fieldset className="accesibilidad__grupo">
+            <fieldset className="accesibilidad__grupo" style={{ '--i': 0 } as CSSProperties}>
               <legend>Lectura en voz alta</legend>
               <Opcion
                 ajuste={ajustes.lectorVoz}
@@ -510,7 +515,7 @@ export function Accesibilidad() {
               </p>
             </fieldset>
 
-            <fieldset className="accesibilidad__grupo">
+            <fieldset className="accesibilidad__grupo" style={{ '--i': 1 } as CSSProperties}>
               <legend>Tamaño y forma de leer</legend>
               <span className="accesibilidad__etiqueta">Tamaño del texto</span>
               <div className="accesibilidad__tamano" role="group" aria-label="Tamaño del texto">
@@ -559,7 +564,7 @@ export function Accesibilidad() {
               />
             </fieldset>
 
-            <fieldset className="accesibilidad__grupo">
+            <fieldset className="accesibilidad__grupo" style={{ '--i': 2 } as CSSProperties}>
               <legend>Color y contraste</legend>
               <Opcion
                 ajuste={ajustes.contraste}
@@ -591,7 +596,7 @@ export function Accesibilidad() {
               <p className="accesibilidad__ayuda">Los filtros de color son una simulación orientativa, no una herramienta de diagnóstico.</p>
             </fieldset>
 
-            <fieldset className="accesibilidad__grupo">
+            <fieldset className="accesibilidad__grupo" style={{ '--i': 3 } as CSSProperties}>
               <legend>Enfoque y orientación</legend>
               <Opcion
                 ajuste={ajustes.cursorGrande}
@@ -627,7 +632,7 @@ export function Accesibilidad() {
               />
             </fieldset>
 
-            <fieldset className="accesibilidad__grupo">
+            <fieldset className="accesibilidad__grupo" style={{ '--i': 4 } as CSSProperties}>
               <legend>Preferencias visuales</legend>
               <Opcion
                 ajuste={ajustes.reducirMovimiento}
@@ -651,6 +656,7 @@ export function Accesibilidad() {
             </button>
           </footer>
         </aside>
+        )}
 
         <button
           ref={boton}
@@ -659,7 +665,7 @@ export function Accesibilidad() {
           aria-label="Opciones de accesibilidad"
           aria-expanded={abierto}
           aria-controls="panel-accesibilidad"
-          onClick={() => setAbierto((estado) => !estado)}
+          onClick={alternarPanel}
         >
           <IconoAccesibilidad />
         </button>

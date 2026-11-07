@@ -9,8 +9,8 @@ import { CODIGOS, TOTAL_PREGUNTAS, cargarPreguntas, type Pregunta, type Resultad
  *  - las preguntas guardadas por la persona.
  */
 
-const CLAVE_REGISTRO = 'ribosoma:aprendizaje'
-const CLAVE_GUARDADAS = 'ribosoma:guardadas'
+const CLAVE_REGISTRO = 'savia:aprendizaje'
+const CLAVE_GUARDADAS = 'savia:guardadas'
 const DIA = 86_400_000
 
 // Repaso espaciado (sistema de cajas de Leitner): al fallar, la pregunta vuelve a la caja 0

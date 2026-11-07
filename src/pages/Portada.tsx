@@ -10,6 +10,9 @@ import petriBoceto from '../assets/bocetos/petri.svg'
 import frascoBoceto from '../assets/bocetos/frasco.svg'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import resumenTemas from 'virtual:resumen-temas'
+import { HojaCuaderno } from '../components/HojaCuaderno'
+import { Cinta } from '../components/Cinta'
+import { MarcoDoble } from '../components/MarcoDoble'
 
 // Boceto a lápiz de cada lámina de tema.
 const BOCETOS: Record<TemaCodigo, string> = {
@@ -35,10 +38,10 @@ export function Portada() {
       <section className="heroe">
         <div className="contenedor heroe__contenido">
           <div className="heroe__copia">
-            <div className="heroe__etiqueta">
+            <Cinta as="div" className="heroe__etiqueta">
               <BookOpenIcon className="heroe__etiqueta-icono" size={18} isAnimated={animarIconos} aria-hidden="true" />
               Cuaderno de estudio
-            </div>
+            </Cinta>
             <h1 className="heroe__titulo">
               Biología,<br /><span className="heroe__resaltado">pregunta por pregunta.</span>
             </h1>
@@ -72,7 +75,7 @@ export function Portada() {
             </ul>
           </div>
           <div className="heroe__escena">
-            <div className="heroe__marco-arte">
+            <HojaCuaderno className="heroe__marco-arte">
               <span className="heroe__numero" aria-hidden="true">01 / 06</span>
               <div className="heroe__arte">
                 <img className="ilustracion-biologia" src={celulaBoceto} alt="Boceto a lápiz de una célula" width={672} height={688} />
@@ -81,9 +84,9 @@ export function Portada() {
                 <AtomIcon className="heroe__sello-icono" size={26} isAnimated={animarIconos} aria-hidden="true" />
                 <span>La vida<br />en estudio</span>
               </span>
-            </div>
-            <span className="heroe__nota heroe__nota--arriba" aria-hidden="true">apuntes de biología</span>
-            <span className="heroe__nota heroe__nota--abajo" aria-hidden="true">lámina 01 · célula</span>
+            </HojaCuaderno>
+            <Cinta as="span" className="heroe__nota heroe__nota--arriba" aria-hidden="true">apuntes de biología</Cinta>
+            <Cinta as="span" className="heroe__nota heroe__nota--abajo" aria-hidden="true">lámina 01 · célula</Cinta>
           </div>
         </div>
         {/* Ola: onda periódica del doble de ancho que se desliza en bucle */}
@@ -100,20 +103,20 @@ export function Portada() {
       <section className="contenedor seccion" aria-labelledby="como-titulo">
         <div className="seccion__cabecera seccion__cabecera--vertical">
           <div>
-            <p className="seccion__kicker">Cómo usar este cuaderno</p>
+            <Cinta className="seccion__kicker">Cómo usar este cuaderno</Cinta>
             <h2 id="como-titulo" className="seccion__titulo">Una práctica en tres pasos</h2>
           </div>
           <p className="seccion__introduccion">Elige una modalidad, responde y usa la revisión para decidir qué estudiar después.</p>
         </div>
-        <ol className="pasos">
+        <ol className="rejilla-3 pasos">
           {PASOS.map((paso, i) => (
-            <li key={paso.titulo} className="paso">
+            <HojaCuaderno as="li" key={paso.titulo} className="paso">
               <span className="paso__numero" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="paso__titulo">{paso.titulo}</h3>
               <p className="paso__texto">{paso.texto}</p>
-            </li>
+            </HojaCuaderno>
           ))}
         </ol>
       </section>
@@ -121,17 +124,17 @@ export function Portada() {
       <section className="contenedor seccion" aria-labelledby="temas-portada">
         <div className="seccion__cabecera">
           <div>
-            <p className="seccion__kicker">Índice de contenidos</p>
+            <Cinta className="seccion__kicker">Índice de contenidos</Cinta>
             <h2 id="temas-portada" className="seccion__titulo">Explora por tema</h2>
           </div>
           <a className="seccion__enlace" href="#/temario">
             Abrir temario completo <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
           </a>
         </div>
-        <ul className="laminas">
+        <ul className="rejilla-3 laminas">
           {CODIGOS.map((t, i) => (
             <li key={t}>
-              <a href="#/temario" className="lamina">
+              <MarcoDoble as="a" interactivo href="#/temario" className="lamina">
                 <span className="lamina__cabecera">
                   <span className="lamina__numero">Lámina {String(i + 1).padStart(2, '0')}</span>
                   <span className="lamina__dato">{resumenTemas[t].preguntas} preguntas</span>
@@ -145,16 +148,16 @@ export function Portada() {
                     <ArrowRightIcon size={16} isAnimated={animarIconos} aria-hidden="true" />
                   </span>
                 </span>
-              </a>
+              </MarcoDoble>
             </li>
           ))}
         </ul>
       </section>
 
       <section className="franja-herbario" aria-labelledby="proyecto-portada">
-        <div className="contenedor herbario">
+        <HojaCuaderno className="contenedor herbario">
           <div className="herbario__copia">
-            <p className="seccion__kicker">De dónde viene</p>
+            <Cinta className="seccion__kicker">De dónde viene</Cinta>
             <h2 id="proyecto-portada" className="herbario__titulo">
               Savia nació en el {PROYECTO.nombreCorto}
             </h2>
@@ -166,7 +169,7 @@ export function Portada() {
             </a>
           </div>
 
-          <div className="herbario__etiqueta">
+          <MarcoDoble className="herbario__etiqueta">
             <p className="herbario__etiqueta-titulo">Etiqueta de herbario</p>
             <dl className="herbario__ficha">
               <div>
@@ -190,32 +193,10 @@ export function Portada() {
                 <dd>{PROYECTO.region}</dd>
               </div>
             </dl>
-            <SelloUcr />
-          </div>
-        </div>
+            <Cinta as="span" className="herbario__cinta" aria-hidden="true" />
+          </MarcoDoble>
+        </HojaCuaderno>
       </section>
     </main>
-  )
-}
-
-// Sello de tinta circular, como el que se estampa en las etiquetas de herbario.
-function SelloUcr() {
-  return (
-    <svg className="herbario__sello" viewBox="0 0 120 120" aria-hidden="true">
-      <defs>
-        <path id="sello-circulo" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" />
-      </defs>
-      <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" strokeWidth="2.2" />
-      <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" strokeWidth="1.2" />
-      <text fontSize="9.5" fill="currentColor" fontWeight="700">
-        <textPath href="#sello-circulo" textLength="268" lengthAdjust="spacing">UNIVERSIDAD DE COSTA RICA · {PROYECTO.codigo} ·</textPath>
-      </text>
-      {/* brote */}
-      <g fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M60 78V56" />
-        <path d="M60 60c0-9-6-14-15-14 0 9 6 14 15 14Z" />
-        <path d="M60 56c0-8 5-13 14-13 0 8-5 13-14 13Z" />
-      </g>
-    </svg>
   )
 }

@@ -82,10 +82,6 @@
     grid-template-columns: 1fr;
   }
 
-  .modos {
-    grid-template-columns: 1fr;
-  }
-
   .calificacion__datos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

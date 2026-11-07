@@ -11,7 +11,6 @@
 .nav__enlace,
 .filtro,
 .opcion,
-.modo,
 .enlace,
 .seccion__enlace,
 .volver-arriba,
@@ -98,33 +97,19 @@
 .enlace:hover,
 .seccion__enlace:hover {
   color: var(--hover-enlace);
-  text-decoration: underline !important;
-  text-decoration-thickness: 2px !important;
-  text-underline-offset: 4px;
 }
 
-.seccion__enlace svg,
-.tema-tarjeta__ir svg {
+.seccion__enlace svg {
   transition: transform var(--hover-duracion) var(--hover-curva);
 }
 
-.seccion__enlace:hover svg,
-.tema-tarjeta:hover .tema-tarjeta__ir svg {
+.seccion__enlace:hover svg {
   transform: translateX(3px);
 }
 
 /* --- tarjeta clicable: solo sube, sin cambiar de color --- */
-.modo:hover {
-  transform: var(--hover-elevar-tarjeta) rotate(0);
-}
 
 /* la tarjeta de modo conserva su fondo y bordes al pasar el mouse */
-.modo,
-.modo:hover {
-  border-color: var(--color-borde);
-  border-top-color: var(--color-marca);
-  background-color: var(--color-superficie);
-}
 
 /* --- opción seleccionable (respuestas del examen): borde y fondo azul suave --- */
 .opcion:hover:not(.is-marcada) {
@@ -133,7 +118,7 @@
 }
 
 /* --- foco con teclado: el mismo anillo para todo lo interactivo --- */
-:is(.boton, .nav__enlace, .filtro, .opcion, .modo, .tema-tarjeta, .enlace, .seccion__enlace, .volver-arriba, .accesibilidad__boton, .nav__menu):focus-visible {
+:is(.boton, .nav__enlace, .filtro, .opcion, .enlace, .seccion__enlace, .volver-arriba, .accesibilidad__boton, .nav__menu):focus-visible {
   outline: 2px solid var(--color-foco);
   outline-offset: 2px;
   box-shadow: var(--foco-anillo);
@@ -141,7 +126,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .boton:hover,
-.modo:hover,
 .volver-arriba:hover,
 .accesibilidad__boton:hover {
     transform: none !important;

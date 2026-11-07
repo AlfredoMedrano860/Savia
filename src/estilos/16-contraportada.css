@@ -96,12 +96,16 @@
   list-style: none;
 }
 
-.contraportada__lista a {
+/*  Enlaces del pie: subrayado celeste que crece al pasar el mouse.  */
+
+.contraportada__lista a,
+.contraportada__autor a {
   padding-bottom: 2px;
   background-image: linear-gradient(var(--celeste-300), var(--celeste-300));
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0 2px;
+  background-position: 50% 100%;
   color: var(--blanco);
   text-decoration: none;
   transition: background-size 0.25s ease, color 0.2s ease;
@@ -123,6 +127,12 @@
   align-items: center;
   gap: 12px;
   overflow-wrap: anywhere;
+}
+
+/* El enlace ocupa solo su texto (no toda la columna), para que el subrayado del hover
+   llegue hasta donde termina el texto. */
+.contraportada__lista--contacto li > a {
+  justify-self: start;
 }
 
 .contraportada__icono {

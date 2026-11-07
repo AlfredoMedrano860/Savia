@@ -1,9 +1,13 @@
-import { ArrowLeftIcon, ArrowUpRightIcon } from '@animateicons/react/lucide'
+import { ArrowUpRightIcon } from '@animateicons/react/lucide'
 import fotoAutor from '../assets/fotos/alfredo-medrano.webp'
 import { IconoContacto } from '../components/IconoContacto'
 import { DESARROLLADOR, PROYECTO } from '../lib/proyecto'
 import { regresar } from '../lib/ruta'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { HojaCuaderno } from '../components/HojaCuaderno'
+import { Cinta } from '../components/Cinta'
+import { BotonRegresar } from '../components/BotonRegresar'
+import { MarcoDoble } from '../components/MarcoDoble'
 
 const ACTIVIDADES = [
   'Talleres educativos y psicoeducativos en comunidades.',
@@ -14,7 +18,7 @@ const ACTIVIDADES = [
   'Creación de materiales, afiches y recursos digitales para talleres y sesiones virtuales.',
 ]
 
-// "Consultorio comunitario: un abordaje…" → título corto y bajada.
+// "Consultorio Comunitario: un abordaje…" → título corto y bajada.
 const [TITULO, BAJADA] = PROYECTO.nombre.split(': ')
 
 export function Proyecto() {
@@ -22,15 +26,12 @@ export function Proyecto() {
 
   return (
     <main className="contenedor pagina proyecto-pagina">
-      <button type="button" className="seccion__enlace proyecto-pagina__regresar" onClick={regresar}>
-        <ArrowLeftIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-        Regresar
-      </button>
+      <BotonRegresar className="proyecto-pagina__regresar" onClick={regresar} />
 
       <header className="proyecto-pagina__cabecera">
-        <p className="seccion__kicker">
+        <Cinta className="seccion__kicker">
           {PROYECTO.codigo} · {PROYECTO.universidad}
-        </p>
+        </Cinta>
         <h1 className="pagina__titulo">{TITULO}</h1>
         {BAJADA && <p className="pagina__texto proyecto-pagina__bajada">{BAJADA.charAt(0).toUpperCase() + BAJADA.slice(1)}.</p>}
       </header>
@@ -51,7 +52,7 @@ export function Proyecto() {
           </p>
         </div>
 
-        <div className="herbario__etiqueta proyecto-pagina__ficha">
+        <MarcoDoble className="herbario__etiqueta proyecto-pagina__ficha">
           <p className="herbario__etiqueta-titulo">Ficha del proyecto</p>
           <dl className="herbario__ficha">
             <div>
@@ -71,10 +72,10 @@ export function Proyecto() {
               <dd>IMAS y MEP</dd>
             </div>
           </dl>
-        </div>
+        </MarcoDoble>
       </section>
 
-      <section className="proyecto-pagina__savia" aria-labelledby="savia-titulo">
+      <HojaCuaderno as="section" className="proyecto-pagina__savia" aria-labelledby="savia-titulo">
         <p className="proyecto-pagina__savia-rotulo">¿Por qué Savia?</p>
         <h2 id="savia-titulo" className="proyecto-pagina__savia-titulo">
           Material de práctica para quien no lo tenía.
@@ -89,13 +90,13 @@ export function Proyecto() {
           <li>No pide registro</li>
           <li>No tiene costo</li>
         </ul>
-      </section>
+      </HojaCuaderno>
 
       <section className="proyecto-pagina__bloque" aria-labelledby="actividades-titulo">
         <h2 id="actividades-titulo" className="practica__subtitulo">
-          ¿Qué actividades realiza?
+          ¿Qué actividades realiza el {PROYECTO.nombreCorto}?
         </h2>
-        <ol className="actividades">
+        <ol className="rejilla-3 actividades">
           {ACTIVIDADES.map((a, i) => (
             <li key={a} className="actividad">
               <span className="actividad__numero" aria-hidden="true">
@@ -109,7 +110,7 @@ export function Proyecto() {
 
       <section className="proyecto-pagina__bloque" aria-labelledby="contacto-titulo">
         <h2 id="contacto-titulo" className="practica__subtitulo">
-          Contacto
+          Contacto del {PROYECTO.nombreCorto}
         </h2>
         <ul className="contacto-tarjetas">
           <li className="contacto-tarjeta">
@@ -144,13 +145,14 @@ export function Proyecto() {
       </section>
 
       <section className="proyecto-pagina__bloque" aria-labelledby="autor-titulo">
-        <div className="autor">
+        <HojaCuaderno className="autor">
           <figure className="autor__polaroid">
+            <Cinta as="span" className="autor__cinta" aria-hidden="true" />
             <img src={fotoAutor} alt={`Foto de ${DESARROLLADOR.nombre}`} width={480} height={600} loading="lazy" decoding="async" />
             <figcaption>{DESARROLLADOR.nombre}</figcaption>
           </figure>
           <div className="autor__texto">
-            <p className="seccion__kicker">Desarrollado por</p>
+            <Cinta className="seccion__kicker">Desarrollado por</Cinta>
             <h2 id="autor-titulo" className="autor__nombre">
               {DESARROLLADOR.nombre}
             </h2>
@@ -168,7 +170,7 @@ export function Proyecto() {
               <ArrowUpRightIcon size={16} isAnimated={animarIconos} aria-hidden="true" />
             </a>
           </div>
-        </div>
+        </HojaCuaderno>
       </section>
     </main>
   )

@@ -3,7 +3,7 @@ import { Accesibilidad } from './Accesibilidad'
 import { Bocetos } from './Bocetos'
 import { VolverArriba } from './VolverArriba'
 import { DESARROLLADOR, PROYECTO } from '../lib/proyecto'
-import { RUTAS, type Ruta } from '../lib/ruta'
+import { abrirLegal, RUTAS, RUTAS_LEGALES, type Ruta } from '../lib/ruta'
 import { MenuIcon, XIcon } from '@animateicons/react/lucide'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import hojaBoceto from '../assets/bocetos/hoja.svg'
@@ -93,8 +93,13 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
             <p className="contraportada__lema">una semilla de aprendizaje</p>
             {instalable && (
               <button type="button" className="contraportada__instalar" onClick={() => void instalar()}>
-                <DownloadIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-                Instalar Savia en este dispositivo
+                <span className="contraportada__instalar-icono" aria-hidden="true">
+                  <DownloadIcon size={20} isAnimated={animarIconos} />
+                </span>
+                <span className="contraportada__instalar-texto">
+                  <strong>Instalar Savia</strong>
+                  <span>Úsala como app, también sin internet</span>
+                </span>
               </button>
             )}
             <p className="contraportada__texto">
@@ -140,10 +145,21 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
         </div>
 
         <div className="contraportada__base">
-          <p>
-            Material de práctica sin fines de lucro. No es una prueba oficial del MEP ni sustituye las convocatorias y los materiales
-            oficiales.
-          </p>
+          <div className="contraportada__aviso">
+            <p>
+              Material de práctica sin fines de lucro. No es una prueba oficial del MEP ni sustituye las convocatorias y los materiales
+              oficiales.
+            </p>
+            <ul className="contraportada__legal" aria-label="Información legal">
+              {RUTAS_LEGALES.map((r) => (
+                <li key={r.id}>
+                  <a href={r.href} onClick={(e) => abrirLegal(e, r.href)}>
+                    {r.nombre}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="contraportada__creditos">
             <p className="contraportada__firma">{PROYECTO.codigo} · Puntarenas</p>
             <p className="contraportada__autor">

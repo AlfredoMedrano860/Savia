@@ -3,17 +3,20 @@
 /* ---------- página El proyecto ----------
    Editorial en vez de paneles: texto corrido con la ficha de herbario al lado, "¿Por qué
    Savia?" destacado en una franja celeste, actividades numeradas y contacto en tarjetas. */
-.proyecto-pagina__regresar {
+/*  Botón "Regresar" (components/BotonRegresar.tsx): solo texto e ícono, sin fondo.  */
+.regresar {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 28px;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
+}
+.proyecto-pagina__regresar {
+  margin-bottom: 28px;
 }
 
 .proyecto-pagina__regresar > div {
@@ -60,9 +63,6 @@
   position: relative;
   margin-top: clamp(48px, 7vw, 80px);
   padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 52px);
-  background:
-    repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.08) 35px, transparent 36px),
-    var(--celeste-50);
 }
 
 .proyecto-pagina__savia-rotulo {
@@ -126,12 +126,7 @@
 
 /* actividades */
 .actividades {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .actividad {
@@ -255,15 +250,7 @@ a.contacto-tarjeta__valor {
   text-decoration-color: color-mix(in srgb, var(--celeste-300) 60%, transparent);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  padding-bottom: 2px;
-  background-image: linear-gradient(var(--celeste-300), var(--celeste-300));
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  background-size: 0 2px;
-  color: var(--blanco);
   font-weight: 400;
-  text-decoration: none;
-  transition: background-size 0.25s ease, color 0.2s ease;
 }
 
 .contraportada__autor a:hover {
@@ -291,15 +278,9 @@ a.contacto-tarjeta__valor {
 }
 
 /* trozo de cinta arriba */
-.autor__polaroid::before {
-  position: absolute;
-  z-index: 1;
+.autor__cinta {
   left: 50%;
-  background: color-mix(in srgb, var(--celeste-200) 85%, transparent);
-  box-shadow: 0 1px 4px -2px rgba(16, 45, 91, 0.35);
-  clip-path: polygon(0 10%, 5% 0, 95% 8%, 100% 0, 97% 50%, 100% 100%, 5% 92%, 0 100%, 3% 50%);
   transform: translateX(-50%) rotate(4deg);
-  content: '';
 }
 
 .autor__polaroid img {
@@ -326,11 +307,6 @@ a.contacto-tarjeta__valor {
   align-items: center;
   gap: clamp(28px, 5vw, 64px);
   margin-inline: auto;
-  border-top: 0;
-  background:
-    linear-gradient(90deg, transparent clamp(22px, 4vw, 52px), color-mix(in srgb, var(--celeste-400) 45%, transparent) 0 calc(clamp(22px, 4vw, 52px) + 2px), transparent 0),
-    repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.12) 35px, transparent 36px),
-    var(--color-superficie);
 }
 
 .autor__polaroid {
@@ -413,19 +389,6 @@ a.contacto-tarjeta__valor {
 .autor {
   gap: clamp(22px, 4vw, 40px);
   padding: 28px 32px 28px 64px;
-  border: 1px solid #d5dfeb;
-  border-radius: 2px;
-  background-color: #fff;
-  background-image:
-    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
-    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
-    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
-  background-size: 20px 52px, auto, auto;
-  background-position: left top, left top, left top;
-  background-repeat: repeat-y, no-repeat, repeat;
-  box-shadow:
-    8px 8px 0 rgba(207, 220, 236, 0.8),
-    16px 16px 0 rgba(23, 60, 120, 0.08);
 }
 
 .autor__polaroid {
@@ -433,7 +396,7 @@ a.contacto-tarjeta__valor {
   padding: 8px 8px 0;
 }
 
-.autor__polaroid::before {
+.autor__cinta {
   top: -10px;
   width: 64px;
   height: 20px;

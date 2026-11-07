@@ -4,11 +4,20 @@
    Cada tema puede abrir sus preguntas debajo de los subtemas: buscador, filtro por subtema y
    tarjetas con la respuesta tapada hasta tocar "Ver respuesta". Los subtemas son botones que
    abren el banco ya filtrado. */
+/* Los dos botones del tema miden lo mismo: columnas iguales (del ancho del más largo) y el
+   botón discreto con la misma letra y alto que el principal. */
 .temario__acciones {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  justify-content: end;
   gap: 8px;
+}
+
+.temario__acciones .boton-discreto {
+  padding: 10px 20px;
+  font-size: inherit;
+  font-weight: 700;
 }
 
 .temario__subtema {
@@ -116,17 +125,6 @@
   cursor: pointer;
 }
 
-.banco__ver:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
-
-.banco__mas {
-  width: 100%;
-  margin-top: 14px;
-}
-
 @media (max-width: 640px) {
   .temario__acciones {
     justify-content: flex-start;
@@ -137,17 +135,19 @@
   }
 }
 
-/* En celular los dos botones del tema van a la par, del mismo ancho. */
+/* En celular los dos botones del tema van uno debajo del otro, ambos a todo el ancho. */
 @media (max-width: 640px) {
   .temario__acciones {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: row;
+    justify-self: stretch;
+    width: 100%;
   }
 
-  .temario__acciones .boton {
+  .temario__acciones > * {
     justify-content: center;
-    padding-inline: 10px;
+    width: 100%;
     text-align: center;
-    white-space: normal;
   }
 }

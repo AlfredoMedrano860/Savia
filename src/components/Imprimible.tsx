@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeftIcon, EyeIcon, EyeOffIcon, PrinterIcon } from '@animateicons/react/lucide'
+import { EyeIcon, EyeOffIcon, PrinterIcon } from '@animateicons/react/lucide'
 import { cargarPreguntas, LETRAS, NOTA_MINIMA, TEMAS, type Pregunta, type Prueba } from '../lib/banco'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { HojaCuaderno } from './HojaCuaderno'
+import { Cinta } from './Cinta'
+import { BotonRegresar } from './BotonRegresar'
 
 interface ImprimibleProps {
   prueba: Prueba
@@ -58,10 +61,7 @@ export function Imprimible({ prueba, codigo, onRegresar }: ImprimibleProps) {
   return (
     <main className="imprimible">
       <div className="imprimible__barra no-imprimir">
-        <button type="button" className="seccion__enlace imprimible__regresar" onClick={onRegresar}>
-          <ArrowLeftIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-          Regresar
-        </button>
+        <BotonRegresar className="imprimible__regresar" onClick={onRegresar} />
         <div className="imprimible__accion">
           <button type="button" className="boton boton--tinta" onClick={() => window.print()} disabled={!items.length}>
             <PrinterIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
@@ -81,7 +81,7 @@ export function Imprimible({ prueba, codigo, onRegresar }: ImprimibleProps) {
         </p>
       ) : (
         <>
-          <article className="papel">
+          <HojaCuaderno as="article" className="papel">
             <header className="papel__cabecera">
               <div>
                 <p className="papel__marca">Savia · EDAD II · Biología</p>
@@ -168,12 +168,12 @@ export function Imprimible({ prueba, codigo, onRegresar }: ImprimibleProps) {
                 ))}
               </ol>
             </section>
-          </article>
+          </HojaCuaderno>
 
           <section className="revelar no-imprimir" aria-labelledby="revelar-titulo">
             <div className="revelar__cabecera">
               <div>
-                <p className="seccion__kicker">Solo en la web</p>
+                <Cinta className="seccion__kicker">Solo en la web</Cinta>
                 <h2 id="revelar-titulo" className="practica__subtitulo">
                   Respuestas
                 </h2>
@@ -187,7 +187,7 @@ export function Imprimible({ prueba, codigo, onRegresar }: ImprimibleProps) {
                       : 'Resuelve la prueba primero. Las respuestas quedan ocultas hasta que las reveles.'}
                 </p>
               </div>
-              <button type="button" className={`boton ${revelada ? '' : 'boton--tinta'}`} onClick={() => setRevelada((r) => !r)} aria-expanded={revelada} aria-controls="clave">
+              <button type="button" className={revelada ? 'boton-discreto' : 'boton boton--tinta'} onClick={() => setRevelada((r) => !r)} aria-expanded={revelada} aria-controls="clave">
                 {revelada ? (
                   <EyeOffIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
                 ) : (

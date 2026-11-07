@@ -1,0 +1,44 @@
+/* Enlaces de texto: al pasar el mouse aparece una línea de 2 px que crece desde el centro,
+   la misma animación de los enlaces del menú (.nav__enlace::after). Se dibuja con un fondo
+   para que funcione en enlaces de varias líneas y en botones con ícono. Va al final para
+   ganarle al "background: none" de los botones que parecen enlace. */
+.enlace,
+.seccion__enlace,
+.banco__ver,
+.revision__temario,
+.contraportada__legal a,
+.practica__nota a,
+a.contacto-tarjeta__valor {
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  text-decoration: none;
+  transition:
+    background-size 0.22s ease,
+    color var(--hover-duracion) var(--hover-curva);
+}
+
+.enlace:hover,
+.seccion__enlace:hover,
+.banco__ver:hover,
+.revision__temario:hover,
+.contraportada__legal a:hover,
+.practica__nota a:hover,
+a.contacto-tarjeta__valor:hover,
+.contacto-tarjeta:hover a.contacto-tarjeta__valor {
+  background-size: 100% 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enlace,
+  .seccion__enlace,
+  .banco__ver,
+  .revision__temario,
+  .contraportada__legal a,
+  .practica__nota a,
+  a.contacto-tarjeta__valor {
+    transition: none;
+  }
+}

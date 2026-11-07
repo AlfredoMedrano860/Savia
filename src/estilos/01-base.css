@@ -16,6 +16,8 @@
   --rojo-claro: #fbeaea;
   --ambar: #438b9a;
   --ambar-claro: #e6f2f3;
+  /* turquesa oscuro para texto sobre --ambar-claro (5.6:1) */
+  --ambar-oscuro: #2c6672;
   --sombra-suave: 0 12px 30px -20px rgba(27, 36, 51, 0.32);
   --sombra-elevar: 0 18px 36px -20px rgba(23, 60, 120, 0.34);
 
@@ -121,4 +123,78 @@ button {
 .nota {
   margin-top: 12px;
   color: var(--tinta-suave);
+}
+
+/* ---------- hoja de cuaderno (components/HojaCuaderno.tsx) ----------
+   La hoja que se usa en toda Savia: agujeros a la izquierda, margen rojo, renglones
+   azules, borde fino y dos hojas apiladas detrás. Se define una sola vez aquí; cada
+   componente solo agrega su relleno y su contenido. El texto debe empezar después del
+   margen rojo (unos 56 px desde la izquierda). */
+.hoja-cuaderno {
+  border: 1px solid #d5dfeb;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow:
+    8px 8px 0 rgba(207, 220, 236, 0.8),
+    16px 16px 0 rgba(23, 60, 120, 0.08);
+}
+
+.hoja-cuaderno,
+.hoja-cuaderno--solo-papel {
+  background-image:
+    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
+    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
+  background-size: 20px 52px, auto, auto;
+  background-position: left top;
+  background-repeat: repeat-y, no-repeat, repeat;
+}
+
+@media (max-width: 720px) {
+  .hoja-cuaderno {
+    box-shadow:
+      5px 5px 0 rgba(207, 220, 236, 0.8),
+      10px 10px 0 rgba(23, 60, 120, 0.08);
+  }
+}
+
+/* ---------- botón discreto ----------
+   Acción secundaria sin borde ni fondo, con ícono opcional ("Mostrar las respuestas",
+   "Repasar las que fallé", "Mantener la que tengo"…). Al pasar el mouse toma el fondo azul
+   suave y el texto de marca de los botones secundarios. */
+.boton-discreto {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  /* mismo borde (transparente) y esquinas que .boton, para que midan igual a su lado */
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-texto-suave);
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--hover-duracion) var(--hover-curva),
+    color var(--hover-duracion) var(--hover-curva);
+}
+
+.boton-discreto:hover {
+  background: var(--hover-secundario-fondo);
+  color: var(--color-marca);
+}
+
+.boton-discreto[aria-pressed='true'],
+.boton-discreto[aria-expanded='true'] {
+  color: var(--color-marca);
+}
+
+.boton-discreto:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
 }

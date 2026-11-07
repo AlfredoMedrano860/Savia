@@ -81,8 +81,8 @@
   max-width: 760px;
 }
 
-/* enlaces dentro de un párrafo (p. ej. "temario" en Practicar): azul, y al pasar el
-   cursor se subrayan como los demás enlaces del sitio */
+/* enlaces dentro de un párrafo (p. ej. "temario" en Practicar): azul; la línea del hover
+   está en 30-enlaces.css, igual que en los demás enlaces */
 .practica__nota a {
   color: var(--azul-700);
   font-weight: 700;
@@ -99,28 +99,9 @@
   outline-offset: 2px;
 }
 
-/* Hay una regla global que quita el subrayado a todos los enlaces con !important; estos
-   hovers necesitan ganarle para que el subrayado se vea. */
-.practica__nota a:hover,
-a.contacto-tarjeta__valor:hover,
-.contacto-tarjeta:hover a.contacto-tarjeta__valor {
-  text-decoration: underline !important;
-  text-decoration-thickness: 2px !important;
-  text-underline-offset: 4px;
-}
-
 /* "Regresar" arriba de la pantalla de resultados */
 .resultados__regresar {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   margin-bottom: 20px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 700;
 }
 
 /* botones flotantes (accesibilidad y volver arriba): azul sólido de marca, sin degradado.
@@ -258,29 +239,11 @@ a.contacto-tarjeta__valor:hover,
   display: none;
 }
 
-.franja-herbario > .herbario,
-.proyecto-pagina__savia {
-  border: 1px solid #d5dfeb;
-  border-radius: 2px;
-  background-color: #fff;
-  background-image:
-    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
-    linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
-    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
-  background-size: 20px 52px, auto, auto;
-  background-position: left top, left top, left top;
-  background-repeat: repeat-y, no-repeat, repeat;
-  box-shadow:
-    8px 8px 0 rgba(207, 220, 236, 0.8),
-    16px 16px 0 rgba(23, 60, 120, 0.08);
-}
-
 .franja-herbario > .herbario {
   padding: clamp(32px, 4.5vw, 56px) clamp(24px, 4vw, 56px) clamp(32px, 4.5vw, 56px) clamp(60px, 6vw, 84px);
 }
 
 .proyecto-pagina__savia {
-  border-left: 1px solid #d5dfeb;
   padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 52px) clamp(28px, 4vw, 44px) clamp(60px, 6vw, 80px);
 }
 
@@ -288,9 +251,6 @@ a.contacto-tarjeta__valor:hover,
   .franja-herbario > .herbario,
   .proyecto-pagina__savia {
     width: min(1120px, 100% - 40px);
-    box-shadow:
-      5px 5px 0 rgba(207, 220, 236, 0.8),
-      10px 10px 0 rgba(23, 60, 120, 0.08);
   }
 
   .franja-herbario > .herbario {
@@ -301,4 +261,20 @@ a.contacto-tarjeta__valor:hover,
     width: auto;
     padding: 24px 18px 24px 56px;
   }
+}
+
+/* La letra siempre al lado del texto: el texto de la opción se ajusta en su propia
+   columna en lugar de bajar debajo de la letra cuando es largo (antes pasaba en celular). */
+.revision__opciones li {
+  flex-wrap: nowrap;
+}
+
+.revision__opciones li > span:nth-child(2) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.revision__letra,
+.revision__etiqueta {
+  flex: none;
 }

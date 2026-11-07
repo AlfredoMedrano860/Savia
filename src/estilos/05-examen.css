@@ -2,16 +2,6 @@
 
 /* ---------- examen ---------- */
 
-.reloj {
-  justify-self: end;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
 .examen__cuerpo {
   width: min(1120px, 100% - 32px);
   margin: 0 auto;
@@ -239,4 +229,21 @@
   justify-content: flex-end;
   gap: 10px;
   margin-top: 22px;
+}
+
+/* En pantallas angostas los dos botones no caben en una línea: en vez de bajar uno,
+   se reparten el ancho por mitades y, si hace falta, el texto parte en dos renglones. */
+@media (max-width: 480px) {
+  .dialogo__acciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dialogo__acciones > * {
+    min-width: 0;
+    padding-inline: 10px;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+  }
 }

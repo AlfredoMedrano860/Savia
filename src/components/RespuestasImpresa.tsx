@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowLeftIcon } from '@animateicons/react/lucide'
 import { cargarPreguntas, LETRAS, type Pregunta, type Prueba } from '../lib/banco'
 import { enlaceTemario } from '../lib/ruta'
-import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { BotonGuardar } from './BotonGuardar'
+import { HojaCuaderno } from './HojaCuaderno'
+import { Cinta } from './Cinta'
+import { BotonRegresar } from './BotonRegresar'
 
 interface RespuestasImpresaProps {
   prueba: Prueba
@@ -21,7 +22,6 @@ const codigoLegible = (codigo: string) => `${codigo.slice(0, 3)} ${codigo.slice(
 export function RespuestasImpresa({ prueba, codigo, onRegresar }: RespuestasImpresaProps) {
   const [preguntas, setPreguntas] = useState<Pregunta[] | null>(null)
   const [errorCarga, setErrorCarga] = useState(false)
-  const animarIconos = useIconosAnimados()
 
   useEffect(() => {
     let vigente = true
@@ -47,13 +47,10 @@ export function RespuestasImpresa({ prueba, codigo, onRegresar }: RespuestasImpr
 
   return (
     <main className="resultados respuestas-impresa">
-      <button type="button" className="seccion__enlace resultados__regresar" onClick={onRegresar}>
-        <ArrowLeftIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-        Regresar
-      </button>
+      <BotonRegresar className="resultados__regresar" onClick={onRegresar} />
 
       <header className="respuestas-impresa__cabecera">
-        <p className="seccion__kicker">Respuestas de tu prueba impresa</p>
+        <Cinta className="seccion__kicker">Respuestas de tu prueba impresa</Cinta>
         <h1 className="respuestas-impresa__titulo">{prueba.nombre.replace(/ para imprimir$/, '')}</h1>
         <p className="respuestas-impresa__datos">
           Código <strong>{codigoLegible(codigo)}</strong> · {prueba.items.length} preguntas
@@ -73,7 +70,7 @@ export function RespuestasImpresa({ prueba, codigo, onRegresar }: RespuestasImpr
         </p>
       ) : (
         <>
-          <section className="hoja-resuelta" aria-labelledby="hoja-resuelta-titulo">
+          <HojaCuaderno as="section" className="hoja-resuelta" aria-labelledby="hoja-resuelta-titulo">
             <h2 id="hoja-resuelta-titulo" className="papel__subtitulo">
               Hoja de respuestas
             </h2>
@@ -99,7 +96,7 @@ export function RespuestasImpresa({ prueba, codigo, onRegresar }: RespuestasImpr
                 )
               })}
             </ol>
-          </section>
+          </HojaCuaderno>
 
           <h2 className="respuestas-impresa__subtitulo">Explicación de cada pregunta</h2>
           <ol className="revision">

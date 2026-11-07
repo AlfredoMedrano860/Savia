@@ -1,7 +1,7 @@
 import { CODIGOS, TOTAL_PREGUNTAS, type ModoId, type Prueba, type Resultado } from './banco'
 
-const CLAVE_PRUEBA = 'ribosoma:prueba'
-const CLAVE_HISTORIAL = 'ribosoma:historial'
+const CLAVE_PRUEBA = 'savia:prueba'
+const CLAVE_HISTORIAL = 'savia:historial'
 const MAX_HISTORIAL = 30
 
 function esObjeto(valor: unknown): valor is Record<string, unknown> {

@@ -1,3 +1,5 @@
+// Primero: pasa los datos guardados con el nombre anterior al nuevo, antes de que la app los lea.
+import './lib/migrarDatos'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/bricolage-grotesque/opsz.css'

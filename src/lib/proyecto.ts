@@ -1,7 +1,7 @@
 export const PROYECTO = {
   codigo: 'TCU-704',
-  nombre: 'Consultorio comunitario: un abordaje preventivo desde la construcción del vínculo',
-  nombreCorto: 'Consultorio comunitario',
+  nombre: 'Consultorio Comunitario: un abordaje preventivo desde la construcción del vínculo',
+  nombreCorto: 'Consultorio Comunitario',
   universidad: 'Universidad de Costa Rica',
   sede: 'Sede del Pacífico, Recinto de Puntarenas',
   region: 'Región Pacífico Central',
