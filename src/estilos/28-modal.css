@@ -79,7 +79,9 @@
 /* Zona con scroll: la barra nativa se oculta y se usa la propia. */
 .modal__contenido {
   position: relative;
-  flex: 1;
+  /* parte de su alto natural y se encoge hasta caber (min-height: 0). Con flex: 1 la
+     base sería 0 y algunos navegadores de celular dejaban el modal casi sin alto. */
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;

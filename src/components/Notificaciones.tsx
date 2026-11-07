@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { BookOpenIcon, CircleCheckIcon, XIcon } from '@animateicons/react/lucide'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
+import { Cinta } from './Cinta'
 
 // Tiempo en pantalla de cada aviso (se pausa con el cursor o el foco encima).
 const DURACION_MS = 4000
@@ -49,6 +50,7 @@ function NotificacionVista({ notificacion, onCerrar }: { notificacion: Notificac
         if (!(destino instanceof Node) || !evento.currentTarget.contains(destino)) setPausada(false)
       }}
     >
+      <Cinta as="span" className="aviso-savia__cinta" aria-hidden="true" />
       <span className="aviso-savia__icono">
         <IconoNotificacion tipo={notificacion.tipo} />
       </span>

@@ -20,6 +20,30 @@
   color: var(--blanco);
 }
 
+/* En celular las pestañas no se acomodan en varias filas: forman una sola fila que se
+   desliza de lado, de borde a borde de la pantalla, como las de My Green Farm.
+   useCarrusel centra la pestaña del documento abierto. */
+@media (max-width: 767px) {
+  .legal__nav {
+    flex-wrap: nowrap;
+    margin-inline: -16px;
+    padding: 4px 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 16px;
+    scrollbar-width: none;
+  }
+
+  .legal__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .legal__nav .filtro {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
 .legal__cabecera {
   display: grid;
   gap: 10px;

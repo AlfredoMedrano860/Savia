@@ -99,7 +99,7 @@ export function Practicar({
           {MODOS.map((modo, i) => (
             <li key={modo.id}>
               <MarcoDoble as="button" interactivo type="button" className={`ficha ficha--${modo.id}`} onClick={() => onEmpezar(modo)}>
-                {modo.id === 'completa' && <span className="ficha__cinta">como la prueba real</span>}
+                {modo.id === 'completa' && <Cinta as="span" className="ficha__cinta">como la prueba real</Cinta>}
                 <span className="ficha__cabecera">
                   <span className="ficha__numero">Ficha {String(i + 1).padStart(2, '0')}</span>
                   <Reloj fraccion={modo.minutos / MINUTOS_MAX} texto={formatoDuracion(modo.minutos * 60, true)} />

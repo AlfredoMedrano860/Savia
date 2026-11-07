@@ -3,6 +3,7 @@ import { PROYECTO } from '../lib/proyecto'
 import { abrirLegal, regresar, RUTAS_LEGALES, type RutaLegal } from '../lib/ruta'
 import { Cinta } from '../components/Cinta'
 import { BotonRegresar } from '../components/BotonRegresar'
+import { useCarrusel } from '../lib/useCarrusel'
 
 // Fecha en que se publicó la versión vigente de estos textos. Si se cambia algo de
 // fondo, se actualiza esta fecha.
@@ -101,9 +102,9 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
             <p>Puedes usar Savia para estudiar, y también imprimir y compartir sus pruebas para estudiar o dar clases, siempre sin fines de lucro.</p>
             <p>No está permitido:</p>
             <ul>
-              <li>vender Savia, sus preguntas o sus pruebas, o cobrar por acceder a ellas;</li>
-              <li>copiar el banco de preguntas para publicarlo en otro lugar o presentarlo como propio;</li>
-              <li>intentar dañar el sitio, saturarlo o usarlo para algo ilegal.</li>
+              <li>Vender Savia, sus preguntas o sus pruebas, o cobrar por acceder a ellas.</li>
+              <li>Copiar el banco de preguntas para publicarlo en otro lugar o presentarlo como propio.</li>
+              <li>Intentar dañar el sitio, saturarlo o usarlo para algo ilegal.</li>
             </ul>
           </>
         ),
@@ -445,12 +446,13 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
 
 export function Legal({ documento }: { documento: RutaLegal }) {
   const doc = DOCUMENTOS[documento]
+  const nav = useCarrusel<HTMLElement>(documento)
 
   return (
     <main className="contenedor pagina legal">
       <BotonRegresar className="proyecto-pagina__regresar" onClick={regresar} />
 
-      <nav className="legal__nav" aria-label="Documentos legales">
+      <nav ref={nav} className="legal__nav" aria-label="Documentos legales">
         {RUTAS_LEGALES.map((r) => (
           <a
             key={r.id}

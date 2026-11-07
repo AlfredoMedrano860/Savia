@@ -51,6 +51,16 @@ html.a11y-contrast .bocetos {
   letter-spacing: 0;
   clip-path: polygon(0 8%, 3% 0, 6% 10%, 9% 0, 100% 0, 97% 12%, 100% 26%, 97% 40%, 100% 54%, 97% 68%, 100% 82%, 97% 100%, 0 100%, 3% 86%, 0 72%, 3% 58%, 0 44%, 3% 30%, 0 16%);
 }
+
+/* Trozo de cinta sin texto (sujeta la etiqueta de herbario, la polaroid y los avisos):
+   va encima de lo que pega y es algo transparente para que se vea el papel debajo.
+   Cada uso solo agrega su tamaño, su posición y su giro. */
+.cinta:empty {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.88;
+  pointer-events: none;
+}
 .heroe__nota {
   padding: 5px 16px 4px;
   border: 0;

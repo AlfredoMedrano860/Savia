@@ -4,7 +4,8 @@ interface CintaProps {
   // etiqueta HTML (p por defecto; span o div donde haga falta)
   as?: ElementType
   className?: string
-  children: ReactNode
+  // sin texto es solo un trozo de cinta que sujeta algo
+  children?: ReactNode
   [atributo: string]: unknown
 }
 
