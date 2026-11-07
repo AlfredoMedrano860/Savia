@@ -4,8 +4,9 @@ import { useIconosAnimados } from '../lib/useIconosAnimados'
 
 // Estrella para guardar una pregunta en "Mis guardadas" y practicarla aparte después.
 // A diferencia de "Marcar para revisar" (que solo vale dentro de la prueba), esto queda
-// guardado en el navegador.
-export function BotonGuardar({ id, compacto = false }: { id: number; compacto?: boolean }) {
+// guardado en el navegador. Es solo la estrella (vacía o rellena); el texto queda para
+// lectores de pantalla.
+export function BotonGuardar({ id }: { id: number }) {
   useAprendizaje()
   const animarIconos = useIconosAnimados()
   const guardada = estaGuardada(id)
@@ -13,13 +14,13 @@ export function BotonGuardar({ id, compacto = false }: { id: number; compacto?: 
   return (
     <button
       type="button"
-      className={`guardar ${guardada ? 'is-guardada' : ''} ${compacto ? 'guardar--compacto' : ''}`}
+      className={`guardar ${guardada ? 'is-guardada' : ''}`}
       aria-pressed={guardada}
       onClick={() => alternarGuardada(id)}
       title={guardada ? 'Quitar de mis guardadas' : 'Guardar para practicar después'}
     >
-      <StarIcon className="guardar__icono" size={16} isAnimated={animarIconos} aria-hidden="true" />
-      <span className={compacto ? 'sr-only' : undefined}>{guardada ? 'Guardada' : 'Guardar'}</span>
+      <StarIcon className="guardar__icono" size={20} isAnimated={animarIconos} aria-hidden="true" />
+      <span className="sr-only">{guardada ? 'Guardada' : 'Guardar'}</span>
     </button>
   )
 }

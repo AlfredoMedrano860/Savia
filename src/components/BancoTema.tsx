@@ -120,7 +120,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
                   <p className="revision__meta">
                     #{p.id} · {p.s}
                   </p>
-                  <BotonGuardar id={p.id} compacto />
+                  <BotonGuardar id={p.id} />
                 </div>
                 <h3 className="revision__enunciado">{p.p}</h3>
                 <ul className="revision__opciones">

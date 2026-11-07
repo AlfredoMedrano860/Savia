@@ -106,7 +106,7 @@ export function RespuestasImpresa({ prueba, codigo, onRegresar }: RespuestasImpr
                   <p className="revision__meta">
                     Pregunta {i + 1} · {pregunta.t} · {pregunta.s}
                   </p>
-                  <BotonGuardar id={id} compacto />
+                  <BotonGuardar id={id} />
                 </div>
                 <h2 className="revision__enunciado">{pregunta.p}</h2>
                 <ul className="revision__opciones">

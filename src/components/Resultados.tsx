@@ -166,7 +166,7 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
                       <p className="revision__meta">
                         Pregunta {numero} · {pregunta.t} · {pregunta.s}
                       </p>
-                      <BotonGuardar id={id} compacto />
+                      <BotonGuardar id={id} />
                     </div>
                     <h3 className="revision__enunciado">{pregunta.p}</h3>
                     <ul className="revision__opciones">

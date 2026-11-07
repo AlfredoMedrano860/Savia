@@ -1,13 +1,13 @@
 import { ArrowRightIcon, ArrowUpRightIcon, AtomIcon, BookOpenIcon, GiftIcon, LayersIcon, ListChecksIcon } from '@animateicons/react/lucide'
 import { CODIGOS, TEMAS, TOTAL_PREGUNTAS, type TemaCodigo } from '../lib/banco'
 import { PROYECTO } from '../lib/proyecto'
-import celulaBoceto from '../assets/bocetos/celula.svg'
-import adnBoceto from '../assets/bocetos/adn.svg'
-import hojaBoceto from '../assets/bocetos/hoja.svg'
-import libroBoceto from '../assets/bocetos/libro.svg'
-import microscopioBoceto from '../assets/bocetos/microscopio.svg'
-import petriBoceto from '../assets/bocetos/petri.svg'
-import frascoBoceto from '../assets/bocetos/frasco.svg'
+import celulaBoceto from '../assets/bocetos/celula.webp'
+import adnBoceto from '../assets/bocetos/adn.webp'
+import balonBoceto from '../assets/bocetos/balon.webp'
+import matrazBoceto from '../assets/bocetos/matraz.webp'
+import microscopioBoceto from '../assets/bocetos/microscopio.webp'
+import petriBoceto from '../assets/bocetos/petri.webp'
+import plantaBoceto from '../assets/bocetos/planta.webp'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import resumenTemas from 'virtual:resumen-temas'
 import { HojaCuaderno } from '../components/HojaCuaderno'
@@ -18,10 +18,10 @@ import { MarcoDoble } from '../components/MarcoDoble'
 const BOCETOS: Record<TemaCodigo, string> = {
   T19: microscopioBoceto,
   T20: petriBoceto,
-  T21: hojaBoceto,
+  T21: plantaBoceto,
   T22: adnBoceto,
-  T23: libroBoceto,
-  T24: frascoBoceto,
+  T23: balonBoceto,
+  T24: matrazBoceto,
 }
 
 const PASOS = [
@@ -78,7 +78,7 @@ export function Portada() {
             <HojaCuaderno className="heroe__marco-arte">
               <span className="heroe__numero" aria-hidden="true">01 / 06</span>
               <div className="heroe__arte">
-                <img className="ilustracion-biologia" src={celulaBoceto} alt="Boceto a lápiz de una célula" width={672} height={688} />
+                <img className="ilustracion-biologia" src={celulaBoceto} alt="Boceto a lápiz de una célula" width={694} height={720} />
               </div>
               <span className="heroe__sello">
                 <AtomIcon className="heroe__sello-icono" size={26} isAnimated={animarIconos} aria-hidden="true" />
