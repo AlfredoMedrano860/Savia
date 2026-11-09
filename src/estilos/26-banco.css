@@ -35,7 +35,7 @@
 }
 
 .temario__subtema:hover span:first-child {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
@@ -118,7 +118,7 @@
   padding: 0;
   border: 0;
   background: none;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font: inherit;
   font-size: var(--texto-detalle);
   font-weight: 700;

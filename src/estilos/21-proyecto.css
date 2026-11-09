@@ -67,7 +67,7 @@
 
 .proyecto-pagina__savia-rotulo {
   margin: 0;
-  color: var(--sol-600);
+  color: var(--hierba-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-size: var(--texto-mano);
   line-height: 1;
@@ -76,7 +76,7 @@
 .proyecto-pagina__savia-titulo {
   max-width: 24ch;
   margin: 8px 0 14px;
-  color: var(--bosque-800);
+  color: var(--puerto-800);
   font-family: var(--fuente-titulo);
   font-size: var(--texto-h3);
   font-weight: 600;
@@ -104,10 +104,10 @@
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  border: 1px solid color-mix(in srgb, var(--sol-500) 35%, transparent);
+  border: 1px solid color-mix(in srgb, var(--hierba-500) 35%, transparent);
   border-radius: 999px;
   background: var(--color-superficie);
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-size: var(--texto-detalle);
   font-weight: 700;
 }
@@ -116,7 +116,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--sol-400);
+  background: var(--hierba-400);
   content: '';
 }
 
@@ -134,7 +134,7 @@
   align-content: start;
   gap: 10px;
   padding: 20px 22px;
-  border: 1px solid color-mix(in srgb, var(--bosque-700) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--puerto-700) 16%, transparent);
   border-radius: 4px;
   background: var(--color-superficie);
   color: var(--color-texto);
@@ -142,7 +142,7 @@
 }
 
 .actividad__numero {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-size: var(--texto-mano);
   line-height: 1;
@@ -163,7 +163,7 @@
   height: 22px;
   margin-bottom: 8px;
   fill: none;
-  stroke: var(--sol-500);
+  stroke: var(--hierba-500);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -178,7 +178,7 @@
 }
 
 .contacto-tarjeta__valor {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-weight: 700;
 }
 
@@ -215,7 +215,7 @@ a.contacto-tarjeta__valor {
   align-content: start;
   gap: 4px;
   padding: 20px 22px;
-  border: 1px solid color-mix(in srgb, var(--bosque-700) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--puerto-700) 16%, transparent);
   border-radius: 4px;
   background: var(--color-superficie);
   overflow-wrap: break-word;
@@ -235,7 +235,7 @@ a.contacto-tarjeta__valor {
 }
 
 .contraportada__autor a:focus-visible {
-  outline: 2px solid var(--sol-200);
+  outline: 2px solid var(--hierba-200);
   outline-offset: 3px;
 }
 
@@ -247,16 +247,16 @@ a.contacto-tarjeta__valor {
 
 /* nombre del autor como los demás enlaces del pie: sin negrita, línea al pasar el cursor */
 .contraportada__autor a {
-  text-decoration-color: color-mix(in srgb, var(--sol-300) 60%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--hierba-300) 60%, transparent);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
   font-weight: 400;
 }
 
 .contraportada__autor a:hover {
-  text-decoration-color: var(--sol-300);
+  text-decoration-color: var(--hierba-300);
   background-size: 100% 2px;
-  color: var(--sol-100);
+  color: var(--hierba-100);
 }
 
 /* más aire entre la franja del proyecto y la ola del pie */
@@ -274,7 +274,7 @@ a.contacto-tarjeta__valor {
   width: clamp(170px, 20vw, 220px);
   margin: 0;
   background: var(--color-superficie);
-  box-shadow: 0 1px 2px rgba(10, 59, 46, 0.12), 0 18px 34px -22px rgba(10, 59, 46, 0.5);
+  box-shadow: 0 1px 2px rgba(42, 89, 150, 0.12), 0 18px 34px -22px rgba(42, 89, 150, 0.5);
 }
 
 /* trozo de cinta arriba */
@@ -328,7 +328,7 @@ a.contacto-tarjeta__valor {
 }
 
 .autor__nota {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   line-height: 1.1;
   transform: rotate(-1.5deg);
@@ -339,10 +339,10 @@ a.contacto-tarjeta__valor {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid color-mix(in srgb, var(--bosque-700) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--puerto-700) 25%, transparent);
   border-radius: 999px;
   background: var(--color-superficie);
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-weight: 700;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
@@ -353,8 +353,8 @@ a.contacto-tarjeta__valor {
 }
 
 .autor__enlace:hover {
-  border-color: var(--bosque-700);
-  background: var(--bosque-700);
+  border-color: var(--puerto-700);
+  background: var(--puerto-700);
   color: var(--blanco);
   transform: translateY(-2px);
 }
@@ -403,7 +403,7 @@ a.contacto-tarjeta__valor {
 }
 
 .autor__polaroid figcaption {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   line-height: 1;
   text-align: center;

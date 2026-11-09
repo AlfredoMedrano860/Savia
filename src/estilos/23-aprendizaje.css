@@ -45,7 +45,7 @@
   height: 40px;
   border-radius: 10px;
   background: var(--color-marca-suave);
-  color: var(--bosque-700);
+  color: var(--puerto-700);
 }
 
 .acceso.is-pendiente .acceso__icono {
@@ -68,12 +68,12 @@
 }
 
 .acceso__texto strong {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
 }
 
 .acceso__dato {
   margin: 0;
-  color: var(--sol-600);
+  color: var(--hierba-600);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -85,14 +85,14 @@
   gap: 10px 14px;
   margin-top: 18px;
   padding: 14px 18px;
-  border-left: 4px solid var(--sol-400);
+  border-left: 4px solid var(--hierba-400);
   border-radius: 4px;
-  background: var(--sol-50);
+  background: var(--hierba-50);
 }
 
 .sugerencia__icono {
   flex: none;
-  color: var(--sol-600);
+  color: var(--hierba-600);
 }
 
 .sugerencia p {
@@ -130,7 +130,7 @@
 
 .avance__dato {
   flex: none;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-weight: 700;
 }
 
@@ -151,7 +151,7 @@
   display: block;
   height: 100%;
   border-radius: 4px;
-  background: var(--sol-400);
+  background: var(--hierba-400);
   transition: width 0.5s ease;
 }
 
@@ -214,19 +214,19 @@
 }
 
 .guardar.is-guardada {
-  border-color: var(--sol-500);
-  background: var(--sol-100);
-  color: var(--sol-800);
+  border-color: var(--hierba-500);
+  background: var(--hierba-100);
+  color: var(--hierba-800);
 }
 
 .guardar.is-guardada:hover {
-  background: var(--sol-200);
+  background: var(--hierba-200);
 }
 
 /* el ícono trae fill="none" en el svg y en el trazo: se rellena el trazo directamente */
 .guardar.is-guardada .guardar__icono path {
-  fill: var(--sol-400);
-  stroke: var(--sol-700);
+  fill: var(--hierba-400);
+  stroke: var(--hierba-700);
 }
 
 .guardar:focus-visible {
@@ -250,7 +250,7 @@
 .revision__temario {
   display: inline-block;
   margin-top: 10px;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-size: var(--texto-detalle);
   font-weight: 700;
   text-decoration: none;
@@ -274,7 +274,7 @@
   margin-inline: -10px;
   padding-inline: 10px;
   border-radius: 4px;
-  background: var(--sol-100);
+  background: var(--hierba-100);
   font-weight: 700;
 }
 
@@ -308,8 +308,8 @@
   margin: 0;
   padding: 4px 12px;
   border-radius: 999px;
-  background: var(--sol-100);
-  color: var(--sol-700);
+  background: var(--hierba-100);
+  color: var(--hierba-700);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -377,9 +377,9 @@
   place-items: center;
   width: 30px;
   height: 30px;
-  border: 1.5px solid var(--bosque-700);
+  border: 1.5px solid var(--puerto-700);
   border-radius: 6px;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -533,7 +533,7 @@
 
 .papel__marca {
   margin: 0;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-size: var(--texto-mini);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -602,7 +602,7 @@
 }
 
 .papel__numero {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
 }
 
 .papel__opciones {
@@ -730,7 +730,7 @@
   border: 0;
   border-radius: 14px;
   background: var(--blanco);
-  color: var(--bosque-800);
+  color: var(--puerto-800);
   box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.55);
   font: inherit;
   text-align: left;
@@ -748,8 +748,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--sol-100);
-  color: var(--bosque-700);
+  background: var(--hierba-100);
+  color: var(--puerto-700);
   line-height: 0;
   transition: background-color var(--hover-duracion) var(--hover-curva);
 }
@@ -771,11 +771,11 @@
 }
 
 .contraportada__instalar:hover {
-  background: var(--sol-50);
+  background: var(--hierba-50);
   box-shadow: 0 16px 30px -16px rgba(0, 0, 0, 0.6);
   transform: var(--hover-elevar-boton);
 }
 
 .contraportada__instalar:hover .contraportada__instalar-icono {
-  background: var(--sol-200);
+  background: var(--hierba-200);
 }

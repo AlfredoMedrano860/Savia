@@ -3,7 +3,7 @@
 /* ---------- identidad visual de Savia ---------- */
 
 .logo__icono {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
 }
 
 .nav__enlace[aria-current='page'] {
@@ -15,11 +15,11 @@
   right: -120px;
   width: 660px;
   height: 660px;
-  border-color: rgba(248, 246, 239, 0.18);
+  border-color: rgba(243, 246, 255, 0.18);
   box-shadow:
-    0 0 0 24px rgba(248, 246, 239, 0.045),
-    0 0 0 58px rgba(248, 246, 239, 0.035),
-    0 0 0 108px rgba(248, 246, 239, 0.025);
+    0 0 0 24px rgba(243, 246, 255, 0.045),
+    0 0 0 58px rgba(243, 246, 255, 0.035),
+    0 0 0 108px rgba(243, 246, 255, 0.025);
 }
 
 .heroe::after {
@@ -28,8 +28,8 @@
   bottom: -192px;
   width: 350px;
   height: 350px;
-  border-color: rgba(255, 210, 63, 0.18);
-  background: rgba(255, 210, 63, 0.12);
+  border-color: rgba(206, 242, 109, 0.18);
+  background: rgba(206, 242, 109, 0.12);
 }
 
 .heroe__contenido {
@@ -46,7 +46,7 @@
 .heroe__titulo em {
   display: block;
   margin-top: 0.12em;
-  color: var(--sol-100);
+  color: var(--hierba-100);
   font-weight: 400;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .boton--contorno {
-  border-color: rgba(248, 246, 239, 0.6);
+  border-color: rgba(243, 246, 255, 0.6);
   color: var(--gris-50);
 }
 
@@ -69,13 +69,13 @@
   flex-wrap: wrap;
   margin: 34px 0 0;
   padding: 18px 0 0;
-  border-top: 1px solid rgba(248, 246, 239, 0.22);
+  border-top: 1px solid rgba(243, 246, 255, 0.22);
   list-style: none;
 }
 
 .heroe__datos li {
   gap: 1px;
-  border-left: 1px solid rgba(248, 246, 239, 0.22);
+  border-left: 1px solid rgba(243, 246, 255, 0.22);
 }
 
 .heroe__datos li:first-child {
@@ -110,7 +110,7 @@
   z-index: -1;
   width: 86%;
   aspect-ratio: 1;
-  border: 1px solid rgba(26, 96, 75, 0.12);
+  border: 1px solid rgba(55, 112, 191, 0.12);
   border-radius: 50%;
   content: '';
 }
@@ -197,7 +197,7 @@
 }
 
 .paso:nth-child(3) .paso__numero {
-  border-color: var(--sol-100);
+  border-color: var(--hierba-100);
 }
 
 .paso__texto {
@@ -221,7 +221,7 @@
 }
 
 .enlace {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
 }
 
 @media (max-width: 900px) {

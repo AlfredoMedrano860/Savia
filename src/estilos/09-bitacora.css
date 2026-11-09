@@ -8,7 +8,7 @@
 
 .nav::after {
   height: 2px;
-  background: var(--bosque-500);
+  background: var(--puerto-500);
   opacity: 1;
 }
 
@@ -38,9 +38,9 @@
 }
 
 .boton--claro {
-  border-color: var(--sol-300);
-  background: var(--sol-300);
-  color: var(--bosque-800);
+  border-color: var(--hierba-300);
+  background: var(--hierba-300);
+  color: var(--puerto-800);
   box-shadow: none;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .heroe__numero {
-  color: var(--bosque-400);
+  color: var(--puerto-400);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: 0.08em;
 }
@@ -72,7 +72,7 @@
 .heroe__nota {
   position: absolute;
   z-index: 2;
-  border-bottom: 1px solid rgba(248, 246, 239, 0.6);
+  border-bottom: 1px solid rgba(243, 246, 255, 0.6);
 }
 
 .seccion__titulo {
@@ -80,7 +80,7 @@
 }
 
 .seccion__enlace {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   text-decoration-color: var(--gris-300);
 }
 
@@ -89,7 +89,7 @@
 }
 
 .paso:hover {
-  border-color: var(--bosque-300);
+  border-color: var(--puerto-300);
 }
 
 .paso__numero {
@@ -146,7 +146,7 @@
 .historial th {
   padding: 10px 8px;
   border-bottom: 2px solid var(--gris-300);
-  background: rgba(248, 246, 239, 0.75);
+  background: rgba(243, 246, 255, 0.75);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -163,11 +163,11 @@
   background-color: #fff;
   background-image:
     linear-gradient(90deg, transparent 48px, rgba(196, 104, 104, 0.28) 49px, transparent 50px),
-    repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.09) 35px, transparent 36px);
+    repeating-linear-gradient(0deg, transparent 0 34px, rgba(99, 160, 236, 0.09) 35px, transparent 36px);
   background-size: 50px 100%, calc(100% - 50px) 100%;
   background-position: left top, 50px top;
   background-repeat: no-repeat, repeat-y;
-  box-shadow: 5px 6px 0 rgba(26, 96, 75, 0.08);
+  box-shadow: 5px 6px 0 rgba(55, 112, 191, 0.08);
 }
 
 .hoja__meta {
@@ -207,12 +207,12 @@
 
 .opcion:hover {
   border-color: var(--gris-300);
-  background: rgba(248, 246, 239, 0.82);
+  background: rgba(243, 246, 255, 0.82);
 }
 
 .opcion.is-marcada {
-  border-color: var(--bosque-300);
-  background: rgba(248, 246, 239, 0.9);
+  border-color: var(--puerto-300);
+  background: rgba(243, 246, 255, 0.9);
 }
 
 .opcion__burbuja {
@@ -220,7 +220,7 @@
   height: 32px;
   border-width: 1px;
   border-radius: 2px;
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
@@ -244,24 +244,24 @@
 }
 
 .celda.is-respondida {
-  border-color: var(--bosque-600);
-  background: var(--bosque-600);
+  border-color: var(--puerto-600);
+  background: var(--puerto-600);
 }
 
 .celda.is-actual {
-  outline: 2px solid var(--sol-700);
+  outline: 2px solid var(--hierba-700);
   outline-offset: 1px;
-  outline-color: var(--sol-700);
+  outline-color: var(--hierba-700);
 }
 
 .dialogo {
   border-radius: 3px;
   background-color: #fff;
-  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.08) 35px, transparent 36px);
+  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(99, 160, 236, 0.08) 35px, transparent 36px);
 }
 
 .dialogo h2 {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
 }
 
 @media (max-width: 640px) {
@@ -269,7 +269,7 @@
   .hoja {
     background-image:
       linear-gradient(90deg, transparent 30px, rgba(196, 104, 104, 0.28) 31px, transparent 32px),
-      repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.09) 35px, transparent 36px);
+      repeating-linear-gradient(0deg, transparent 0 34px, rgba(99, 160, 236, 0.09) 35px, transparent 36px);
     background-size: 32px 100%, calc(100% - 32px) 100%;
     background-position: left top, 32px top;
     background-repeat: no-repeat, repeat-y;
@@ -299,13 +299,13 @@
   margin: 20px 0 0 28px;
   padding: 10px 12px;
   border: 1px solid var(--gris-200);
-  border-left: 3px solid var(--sol-700);
-  background: rgba(248, 246, 239, 0.7);
+  border-left: 3px solid var(--hierba-700);
+  background: rgba(243, 246, 255, 0.7);
   color: var(--gris-600);
 }
 
 .atajos__titulo {
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-weight: 700;
 }
 
@@ -322,7 +322,7 @@
   border-bottom-width: 2px;
   border-radius: 2px;
   background: #fff;
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: 0.75rem;
   text-align: center;
@@ -385,7 +385,7 @@
 .boton--marca.is-activa:hover:not(:disabled) {
   border-color: transparent;
   background: var(--gris-100);
-  color: var(--bosque-400);
+  color: var(--puerto-400);
 }
 
 .boton--marca__icono {

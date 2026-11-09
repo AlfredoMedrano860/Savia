@@ -23,15 +23,15 @@
 }
 
 .tinta__color--verde {
-  flood-color: var(--bosque-600);
+  flood-color: var(--puerto-600);
 }
 
 .tinta__color--clara {
-  flood-color: var(--bosque-200);
+  flood-color: var(--puerto-200);
 }
 
 .ilustracion-biologia {
-  filter: url('#tinta-verde') drop-shadow(0 22px 24px rgba(26, 96, 75, 0.14));
+  filter: url('#tinta-verde') drop-shadow(0 22px 24px rgba(55, 112, 191, 0.14));
 }
 
 .lamina__boceto img,
@@ -91,7 +91,7 @@ html.a11y-contrast .bocetos {
   border: 0;
   border-radius: 0;
   font-style: normal;
-  box-shadow: 0 2px 6px -2px rgba(6, 42, 32, 0.35);
+  box-shadow: 0 2px 6px -2px rgba(29, 64, 109, 0.35);
   backdrop-filter: none;
   /* bordes cortados en zigzag, como cinta rota a mano */
 }
@@ -116,10 +116,10 @@ html.a11y-contrast .bocetos {
   width: auto;
   height: auto;
   padding: 12px 16px 10px;
-  border: 2px solid rgba(26, 96, 75, 0.8);
+  border: 2px solid rgba(55, 112, 191, 0.8);
   border-radius: 58% 42% 55% 45% / 48% 58% 42% 52%;
   background: transparent;
-  color: var(--bosque-600);
+  color: var(--puerto-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-size: 1.15rem;
   font-weight: 700;
@@ -137,7 +137,7 @@ html.a11y-contrast .bocetos {
   content: '';
   position: absolute;
   inset: -4px -2px -2px -5px;
-  border: 1.5px solid rgba(26, 96, 75, 0.45);
+  border: 1.5px solid rgba(55, 112, 191, 0.45);
   border-radius: 45% 55% 48% 52% / 55% 45% 56% 44%;
   pointer-events: none;
 }
@@ -194,7 +194,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
   gap: 8px;
   padding: 6px 18px 5px;
   text-transform: none;
-  box-shadow: 0 2px 6px -2px rgba(6, 42, 32, 0.35);
+  box-shadow: 0 2px 6px -2px rgba(29, 64, 109, 0.35);
   transform: rotate(-2deg);
   transform-origin: left center;
 }
@@ -208,7 +208,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
 /* "pregunta por pregunta." resaltado con un trazo de marcador menta, como en un apunte */
 .heroe__resaltado {
   padding-bottom: 0.04em;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23ffd23f' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23cef26d' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 0 92%;
   background-size: 100% 0.22em;
@@ -244,7 +244,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
   align-items: center;
   min-width: 0;
   padding: 10px 16px 10px 12px;
-  border: 1px solid rgba(248, 246, 239, 0.18);
+  border: 1px solid rgba(243, 246, 255, 0.18);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
 }
@@ -256,8 +256,8 @@ html.a11y-reduce-motion .heroe__ola-capa {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 210, 63, 0.16);
-  color: var(--sol-200);
+  background: rgba(206, 242, 109, 0.16);
+  color: var(--hierba-200);
 }
 
 .heroe__datos strong {
@@ -299,7 +299,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
   margin-bottom: 14px;
   padding: 5px 16px 4px;
   text-transform: none;
-  box-shadow: 0 2px 6px -2px rgba(6, 42, 32, 0.3);
+  box-shadow: 0 2px 6px -2px rgba(29, 64, 109, 0.3);
   transform: rotate(-2deg);
   transform-origin: left center;
 }
@@ -309,7 +309,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
   margin-top: 11px;
   width: 120px;
   height: 10px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23ffd23f' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11C70 4 160 3 296 8' fill='none' stroke='%23cef26d' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
 }
 
 /* huecos de la hoja: los mismos agujeros redondos de la hoja del encabezado */
@@ -325,7 +325,7 @@ html.a11y-reduce-motion .heroe__ola-capa {
 }
 
 .paso__titulo {
-  color: var(--bosque-800);
+  color: var(--puerto-800);
 }
 
 /* ---------- tarjetas de temas como post-its de marca ----------

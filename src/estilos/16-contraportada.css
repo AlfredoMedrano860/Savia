@@ -8,7 +8,7 @@
   isolation: isolate;
   margin-top: clamp(72px, 9vw, 112px);
   padding-top: clamp(40px, 5vw, 64px);
-  background: var(--bosque-800);
+  background: var(--puerto-800);
   color: color-mix(in srgb, var(--blanco) 74%, transparent);
 }
 
@@ -18,7 +18,7 @@
   left: 0;
   width: 100%;
   height: clamp(24px, 3vw, 44px);
-  fill: var(--bosque-800);
+  fill: var(--puerto-800);
 }
 
 .contraportada__boceto {
@@ -62,12 +62,12 @@
 .contraportada__logo svg {
   width: 44px;
   height: 44px;
-  color: var(--bosque-600);
+  color: var(--puerto-600);
 }
 
 .contraportada__lema {
   margin: 10px 0 0 56px;
-  color: var(--sol-200);
+  color: var(--hierba-200);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   line-height: 1;
   transform: rotate(-2deg);
@@ -82,7 +82,7 @@
 
 .contraportada__titulo {
   margin: 6px 0 14px;
-  color: var(--sol-200);
+  color: var(--hierba-200);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -101,7 +101,7 @@
 .contraportada__lista a,
 .contraportada__autor a {
   padding-bottom: 2px;
-  background-image: linear-gradient(var(--sol-300), var(--sol-300));
+  background-image: linear-gradient(var(--hierba-300), var(--hierba-300));
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0 2px;
@@ -113,11 +113,11 @@
 
 .contraportada__lista a:hover {
   background-size: 100% 2px;
-  color: var(--sol-100);
+  color: var(--hierba-100);
 }
 
 .contraportada a:focus-visible {
-  outline: 2px solid var(--sol-200);
+  outline: 2px solid var(--hierba-200);
   outline-offset: 3px;
 }
 
@@ -139,7 +139,7 @@
   width: 18px;
   height: 18px;
   fill: none;
-  stroke: var(--sol-300);
+  stroke: var(--hierba-300);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -162,7 +162,7 @@
 
 .contraportada__firma {
   flex: none;
-  color: var(--sol-200);
+  color: var(--hierba-200);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
 }
 

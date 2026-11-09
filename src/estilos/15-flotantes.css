@@ -47,7 +47,7 @@
   margin-top: clamp(64px, 9vw, 112px);
   padding-block: clamp(48px, 7vw, 84px);
   background-color: var(--gris-100);
-  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.1) 35px, transparent 36px);
+  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(99, 160, 236, 0.1) 35px, transparent 36px);
 }
 
 .franja-herbario::before {
@@ -56,12 +56,12 @@
   bottom: 0;
   left: clamp(18px, 6vw, 96px);
   width: 2px;
-  background: color-mix(in srgb, var(--sol-400) 45%, transparent);
+  background: color-mix(in srgb, var(--hierba-400) 45%, transparent);
   content: '';
 }
 
 .franja-herbario .herbario__etiqueta {
-  box-shadow: 0 26px 44px -30px rgba(10, 59, 46, 0.55);
+  box-shadow: 0 26px 44px -30px rgba(42, 89, 150, 0.55);
 }
 
 
