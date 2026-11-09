@@ -1,14 +1,11 @@
 import { useSyncExternalStore } from 'react'
 
 /*
- * Savia como app instalable y sin conexión.
- *  - registrarServiceWorker(): guarda el sitio en el teléfono (solo en la versión publicada).
- *  - El evento 'savia:sin-conexion-listo' avisa la primera vez que ya funciona sin internet.
+ * Savia como app instalable.
  *  - useInstalable() / instalar(): botón "Instalar Savia" cuando el navegador lo permite.
+ *  - retirarServiceWorker(): Savia ya no funciona sin internet. Quita el service worker y la
+ *    copia de archivos que guardaban las versiones anteriores en los navegadores que la visitaron.
  */
-
-export const EVENTO_LISTO = 'savia:sin-conexion-listo'
-const CLAVE_AVISADO = 'savia:sin-conexion-avisado'
 
 interface EventoInstalar extends Event {
   prompt: () => Promise<void>
@@ -31,32 +28,24 @@ if (typeof window !== 'undefined') {
   })
 }
 
-/** Registra el service worker y avisa una sola vez cuando el sitio quedó guardado. */
-export function registrarServiceWorker() {
-  if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((registro) => {
-        const avisarListo = () => {
-          try {
-            if (localStorage.getItem(CLAVE_AVISADO)) return
-            localStorage.setItem(CLAVE_AVISADO, '1')
-          } catch {
-            return
-          }
-          window.dispatchEvent(new Event(EVENTO_LISTO))
-        }
-        if (registro.active) avisarListo()
-        registro.addEventListener('updatefound', () => {
-          const nuevo = registro.installing
-          nuevo?.addEventListener('statechange', () => {
-            if (nuevo.state === 'activated') avisarListo()
-          })
-        })
-      })
-      .catch((error: unknown) => console.warn('No se pudo activar el modo sin conexión.', error))
-  })
+/** Desinstala el service worker de versiones anteriores y borra su caché y su aviso. */
+export function retirarServiceWorker() {
+  if (!('serviceWorker' in navigator)) return
+  navigator.serviceWorker
+    .getRegistrations()
+    .then((registros) => Promise.all(registros.map((registro) => registro.unregister())))
+    .catch(() => {})
+  if ('caches' in window) {
+    caches
+      .keys()
+      .then((claves) => Promise.all(claves.filter((clave) => clave.startsWith('savia-')).map((clave) => caches.delete(clave))))
+      .catch(() => {})
+  }
+  try {
+    localStorage.removeItem('savia:sin-conexion-avisado')
+  } catch {
+    // sin acceso al almacenamiento: no hay nada que limpiar
+  }
 }
 
 const suscribir = (o: () => void) => {

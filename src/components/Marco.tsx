@@ -98,7 +98,7 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
                 </span>
                 <span className="contraportada__instalar-texto">
                   <strong>Instalar Savia</strong>
-                  <span>Úsala como app, también sin internet</span>
+                  <span>Úsala como app en tu teléfono</span>
                 </span>
               </button>
             )}

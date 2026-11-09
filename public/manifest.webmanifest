@@ -1,7 +1,7 @@
 {
   "name": "Savia · Biología para EDAD II",
   "short_name": "Savia",
-  "description": "Práctica gratuita para la prueba EDAD II de Biología: 1000 preguntas explicadas, también sin internet.",
+  "description": "Práctica gratuita para la prueba EDAD II de Biología: 1000 preguntas explicadas.",
   "lang": "es-CR",
   "start_url": "./",
   "scope": "./",
