@@ -706,7 +706,7 @@
 
 /* Botón "Instalar Savia" en el pie (solo aparece si el navegador permite instalarla).
    Una ficha clara sobre el azul del pie: ícono en un círculo celeste y dos líneas, el
-   nombre de la acción y lo que se gana (usarla como app y sin internet). */
+   nombre de la acción y lo que se gana (usarla como app). */
 .contraportada__instalar {
   display: inline-flex;
   align-items: center;

@@ -8,7 +8,7 @@ Aplicación estática gratuita para practicar Biología de la prueba EDAD II. In
 - **Mi progreso:** pregunta del día con racha, repaso espaciado de las preguntas falladas, preguntas guardadas y avance por tema.
 - **Temario:** los seis temas con sus subtemas y un banco de preguntas por tema, con buscador y respuestas tapadas.
 - **En papel:** pruebas para imprimir o guardar en PDF; las respuestas no se imprimen y se consultan después con el código de la prueba.
-- **Sin internet:** se puede instalar como app y practicar sin conexión después de la primera visita.
+- **App:** se puede instalar en el teléfono desde el navegador.
 - **Accesibilidad:** lector de voz, tamaño de texto, fuente para dislexia, filtros de color, guía y máscara de lectura, entre otras opciones.
 
 ## Desarrollo local
@@ -27,8 +27,6 @@ npm run revisar   # revisa el banco de preguntas (opciones repetidas, duplicados
 ```
 
 El sitio generado en `dist/` se puede publicar en un hosting estático gratuito, como Cloudflare Pages o Render Static Sites. No requiere servidor de aplicación ni base de datos. Para Cloudflare Pages, conecta el repositorio y configura `npm run build` como comando de compilación y `dist` como directorio de salida.
-
-El modo sin internet (service worker) solo funciona en la versión compilada, no con `npm run dev`.
 
 ## Información legal
 

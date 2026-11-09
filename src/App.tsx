@@ -8,7 +8,6 @@ import { Notificaciones, type Notificacion } from './components/Notificaciones'
 import { Resultados } from './components/Resultados'
 import { agregarAlHistorial, borrarHistorial, cargarHistorial, cargarPrueba, guardarPrueba } from './lib/almacen'
 import { registrarResultado } from './lib/aprendizaje'
-import { EVENTO_LISTO } from './lib/pwa'
 import { calificar, nuevaPrueba, nuevoCodigo, pruebaDeRepaso, pruebaDeTema, pruebaImprimible, type Prueba, type Resultado } from './lib/banco'
 import { esRutaLegal, irA, RUTAS, RUTAS_LEGALES, useRuta } from './lib/ruta'
 import { Portada } from './pages/Portada'
@@ -45,13 +44,6 @@ export default function App() {
   const cerrarNotificacion = useCallback((id: number) => {
     setNotificaciones((actuales) => actuales.filter((notificacion) => notificacion.id !== id))
   }, [])
-
-  // Aviso único cuando Savia ya quedó guardada para usarse sin internet.
-  useEffect(() => {
-    const alListo = () => notificar('success', 'Lista para usar sin internet', 'Savia quedó guardada en este dispositivo. Puedes practicar aunque no tengas conexión.')
-    window.addEventListener(EVENTO_LISTO, alListo)
-    return () => window.removeEventListener(EVENTO_LISTO, alListo)
-  }, [notificar])
 
   const avisos = (
     <>
