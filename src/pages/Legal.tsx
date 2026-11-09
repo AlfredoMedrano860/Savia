@@ -7,7 +7,7 @@ import { useCarrusel } from '../lib/useCarrusel'
 
 // Fecha en que se publicó la versión vigente de estos textos. Si se cambia algo de
 // fondo, se actualiza esta fecha.
-const VIGENCIA = '6 de noviembre de 2026'
+const VIGENCIA = '8 de noviembre de 2026'
 
 const correo = (
   <a className="enlace" href={`mailto:${PROYECTO.correo}`}>
@@ -16,7 +16,7 @@ const correo = (
 )
 
 // Lo que Savia guarda en el navegador. Es la lista real de claves que usa el código
-// (lib/almacen.ts, lib/aprendizaje.ts, PreguntaDelDia, Accesibilidad y lib/pwa.ts; las anteriores "ribosoma:…" se migran en lib/migrarDatos.ts).
+// (lib/almacen.ts, lib/aprendizaje.ts, PreguntaDelDia, Accesibilidad; las anteriores "ribosoma:…" se migran en lib/migrarDatos.ts).
 const DATOS_LOCALES = [
   ['savia:prueba', 'La práctica que dejaste a medias, para poder retomarla.'],
   ['savia:historial', 'Tus intentos anteriores: fecha, nota y respuestas, para revisarlos.'],
@@ -24,7 +24,6 @@ const DATOS_LOCALES = [
   ['savia:guardadas', 'Las preguntas que marcaste con la estrella.'],
   ['savia:diaria', 'La pregunta del día que respondiste y tu racha de días seguidos.'],
   ['savia:accesibilidad', 'Tus preferencias del panel de accesibilidad (tamaño de letra, filtros, etc.).'],
-  ['savia:sin-conexion-avisado', 'Si ya te avisamos que Savia funciona sin internet, para no repetirlo.'],
 ]
 
 // Fuentes y bibliotecas de terceros incluidas en Savia, con su licencia.
@@ -145,8 +144,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         contenido: (
           <p>
             Ofrecemos Savia tal como está, de forma gratuita y sin garantía de que esté siempre disponible o libre de fallas. Podemos
-            cambiarla, actualizarla o dejar de ofrecerla en cualquier momento. La versión instalada sin conexión se actualiza cuando
-            vuelves a abrirla con internet.
+            cambiarla, actualizarla o dejar de ofrecerla en cualquier momento. Necesita conexión a internet para funcionar.
           </p>
         ),
       },
@@ -221,10 +219,6 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
                 Cookies y almacenamiento
               </a>
               .
-            </p>
-            <p>
-              Además, para funcionar sin internet, Savia guarda en tu navegador una copia de sus propios archivos (páginas, estilos y
-              el banco de preguntas). Esa copia no contiene información sobre ti.
             </p>
           </>
         ),
@@ -308,8 +302,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
     titulo: 'Cookies y almacenamiento',
     resumen: (
       <>
-        Savia no usa cookies ni rastreo. Solo guarda en tu navegador lo necesario para que funcionen las prácticas, tu progreso y el
-        modo sin conexión.
+        Savia no usa cookies ni rastreo. Solo guarda en tu navegador lo necesario para que funcionen las prácticas y tu progreso.
       </>
     ),
     bloques: [
@@ -355,16 +348,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '3. Copia para usar sin internet',
-        contenido: (
-          <p>
-            Cuando abres Savia, un service worker guarda en la caché del navegador una copia de los archivos del sitio para que
-            funcione sin conexión. Esa copia no contiene información sobre ti y se renueva cuando publicamos una versión nueva.
-          </p>
-        ),
-      },
-      {
-        titulo: '4. Alojamiento',
+        titulo: '3. Alojamiento',
         contenido: (
           <p>
             El proveedor de alojamiento (Cloudflare) podría usar, solo en casos de seguridad como la protección contra ataques,
@@ -373,7 +357,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '5. Cómo borrarlo',
+        titulo: '4. Cómo borrarlo',
         contenido: (
           <ul>
             <li>Tus intentos: “Borrar historial” en Practicar.</li>

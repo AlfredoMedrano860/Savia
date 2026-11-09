@@ -435,13 +435,13 @@ html.a11y-short-line :is(.pagina__texto, .prosa, .nota, .revision__explicacion, 
   margin-right: auto;
 }
 
-html.a11y-headings :is(h1, h2, h3):not([data-a11y-ui] *) {
+html.a11y-headings :is(h1, h2, h3) {
   outline: 2px dashed #438b9a;
   outline-offset: 5px;
   border-radius: 4px;
 }
 
-html.a11y-align-left :is(p, h1, h2, h3, li, .seccion__cabecera):not([data-a11y-ui] *) {
+html.a11y-align-left :is(p, h1, h2, h3, li, .seccion__cabecera) {
   text-align: left !important;
 }
 
@@ -459,31 +459,31 @@ html.a11y-big-cursor * {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath d='M5 2.5 20 12l-6.2 1.4 3.7 7.6-2.7 1.2-3.7-7.6L6.6 19z' fill='%23fff' stroke='%231b2433' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 5 3, auto !important;
 }
 
-html[data-a11y-color='monocromo'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='monocromo'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: grayscale(1);
 }
 
-html[data-a11y-color='saturacion-baja'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='saturacion-baja'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: saturate(0.55);
 }
 
-html[data-a11y-color='saturacion-alta'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='saturacion-alta'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: saturate(1.8);
 }
 
-html[data-a11y-color='calido'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='calido'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: sepia(0.3) saturate(1.05) hue-rotate(-6deg);
 }
 
-html[data-a11y-color='protanopia'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='protanopia'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: url(#savia-protanopia);
 }
 
-html[data-a11y-color='deuteranopia'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='deuteranopia'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: url(#savia-deuteranopia);
 }
 
-html[data-a11y-color='tritanopia'] :is(.contenido, .nav, .pie, .examen) {
+html[data-a11y-color='tritanopia'] :is(.contenido, .nav, .pie, .examen, .accesibilidad__panel, .accesibilidad__boton) {
   filter: url(#savia-tritanopia);
 }
 

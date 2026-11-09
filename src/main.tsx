@@ -9,9 +9,9 @@ import '@fontsource/caveat/latin-700.css'
 import './tokens.css'
 import './index.css'
 import App from './App.tsx'
-import { registrarServiceWorker } from './lib/pwa'
+import { retirarServiceWorker } from './lib/pwa'
 
-registrarServiceWorker()
+retirarServiceWorker()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
