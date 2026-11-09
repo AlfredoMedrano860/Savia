@@ -171,7 +171,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--sol-700);
+  background: var(--hierba-700);
 }
 
 .tarjeta__leyenda {
@@ -203,7 +203,7 @@
 
 .punto--marcada {
   border-radius: 50%;
-  background: var(--sol-700);
+  background: var(--hierba-700);
 }
 
 .dialogo {
