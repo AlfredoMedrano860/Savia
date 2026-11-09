@@ -16,25 +16,25 @@
 }
 
 .aviso-savia {
-  --aviso-acento: var(--celeste-600);
-  --aviso-suave: var(--celeste-50);
+  --aviso-acento: var(--sol-600);
+  --aviso-suave: var(--sol-50);
   position: relative;
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) 28px;
   align-items: start;
   gap: 12px;
   padding: 16px 12px 16px 16px;
-  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bosque-700) 16%, transparent);
   border-radius: 6px;
   background: var(--color-superficie);
-  box-shadow: 0 18px 38px -22px rgba(16, 45, 91, 0.5);
+  box-shadow: 0 18px 38px -22px rgba(10, 59, 46, 0.5);
   pointer-events: auto;
   animation: aviso-savia-entrar 360ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
 }
 
 .aviso-savia--info {
-  --aviso-acento: var(--azul-600);
-  --aviso-suave: var(--azul-50);
+  --aviso-acento: var(--bosque-600);
+  --aviso-suave: var(--bosque-50);
 }
 
 /* trozo de cinta */
@@ -73,7 +73,7 @@
 
 .aviso-savia__titulo {
   margin: 0;
-  color: var(--azul-800);
+  color: var(--bosque-800);
   font-family: var(--fuente-titulo);
   font-size: 1.02rem;
   font-weight: 600;
@@ -104,8 +104,8 @@
 }
 
 .aviso-savia__cerrar:hover {
-  background: var(--azul-50);
-  color: var(--azul-700);
+  background: var(--bosque-50);
+  color: var(--bosque-700);
 }
 
 .aviso-savia__cerrar:focus-visible {

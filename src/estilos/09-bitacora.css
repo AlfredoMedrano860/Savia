@@ -2,13 +2,13 @@
 
 /* La portada usa recursos de bitácora: papel rayado, tinta y referencias de lámina. */
 .nav {
-  border-bottom-color: #cbd6e4;
-  background: #fff;
+  border-bottom-color: var(--gris-200);
+  background: var(--color-superficie);
 }
 
 .nav::after {
   height: 2px;
-  background: #2b679b;
+  background: var(--bosque-500);
   opacity: 1;
 }
 
@@ -38,9 +38,9 @@
 }
 
 .boton--claro {
-  border-color: #fff;
-  background: #fff;
-  color: #173c78;
+  border-color: var(--sol-300);
+  background: var(--sol-300);
+  color: var(--bosque-800);
   box-shadow: none;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .heroe__numero {
-  color: #536e9b;
+  color: var(--bosque-400);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: 0.08em;
 }
@@ -72,7 +72,7 @@
 .heroe__nota {
   position: absolute;
   z-index: 2;
-  border-bottom: 1px solid rgba(230, 240, 250, 0.6);
+  border-bottom: 1px solid rgba(248, 246, 239, 0.6);
 }
 
 .seccion__titulo {
@@ -80,8 +80,8 @@
 }
 
 .seccion__enlace {
-  color: #1f4e9c;
-  text-decoration-color: #a8c7e5;
+  color: var(--bosque-600);
+  text-decoration-color: var(--gris-300);
 }
 
 .paso:nth-child(2) {
@@ -89,7 +89,7 @@
 }
 
 .paso:hover {
-  border-color: #668fbd;
+  border-color: var(--bosque-300);
 }
 
 .paso__numero {
@@ -145,8 +145,8 @@
 
 .historial th {
   padding: 10px 8px;
-  border-bottom: 2px solid #9db4ce;
-  background: rgba(233, 239, 249, 0.75);
+  border-bottom: 2px solid var(--gris-300);
+  background: rgba(248, 246, 239, 0.75);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -163,11 +163,11 @@
   background-color: #fff;
   background-image:
     linear-gradient(90deg, transparent 48px, rgba(196, 104, 104, 0.28) 49px, transparent 50px),
-    repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.09) 35px, transparent 36px);
+    repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.09) 35px, transparent 36px);
   background-size: 50px 100%, calc(100% - 50px) 100%;
   background-position: left top, 50px top;
   background-repeat: no-repeat, repeat-y;
-  box-shadow: 5px 6px 0 rgba(31, 78, 156, 0.08);
+  box-shadow: 5px 6px 0 rgba(26, 96, 75, 0.08);
 }
 
 .hoja__meta {
@@ -183,8 +183,8 @@
 
 .hoja__tema {
   padding: 2px 7px;
-  border: 1px solid #cbd6e4;
-  background: #f5f8fc;
+  border: 1px solid var(--gris-200);
+  background: var(--gris-50);
 }
 
 .hoja__enunciado {
@@ -206,13 +206,13 @@
 }
 
 .opcion:hover {
-  border-color: #9ab8da;
-  background: rgba(244, 248, 253, 0.82);
+  border-color: var(--gris-300);
+  background: rgba(248, 246, 239, 0.82);
 }
 
 .opcion.is-marcada {
-  border-color: #7d9ec2;
-  background: rgba(233, 239, 249, 0.9);
+  border-color: var(--bosque-300);
+  background: rgba(248, 246, 239, 0.9);
 }
 
 .opcion__burbuja {
@@ -220,7 +220,7 @@
   height: 32px;
   border-width: 1px;
   border-radius: 2px;
-  color: #244b7f;
+  color: var(--bosque-600);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 }
 
@@ -235,7 +235,7 @@
 
 .tarjeta__titulo {
   padding: 0 0 8px;
-  border-bottom: 1px solid #b8c9dc;
+  border-bottom: 1px solid var(--gris-300);
 }
 
 .celda {
@@ -244,24 +244,24 @@
 }
 
 .celda.is-respondida {
-  border-color: #1f4e9c;
-  background: #1f4e9c;
+  border-color: var(--bosque-600);
+  background: var(--bosque-600);
 }
 
 .celda.is-actual {
-  outline: 2px solid #438b9a;
+  outline: 2px solid var(--sol-700);
   outline-offset: 1px;
-  outline-color: #438b9a;
+  outline-color: var(--sol-700);
 }
 
 .dialogo {
   border-radius: 3px;
   background-color: #fff;
-  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.08) 35px, transparent 36px);
+  background-image: repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.08) 35px, transparent 36px);
 }
 
 .dialogo h2 {
-  color: #173c78;
+  color: var(--bosque-700);
 }
 
 @media (max-width: 640px) {
@@ -269,7 +269,7 @@
   .hoja {
     background-image:
       linear-gradient(90deg, transparent 30px, rgba(196, 104, 104, 0.28) 31px, transparent 32px),
-      repeating-linear-gradient(0deg, transparent 0 34px, rgba(82, 133, 181, 0.09) 35px, transparent 36px);
+      repeating-linear-gradient(0deg, transparent 0 34px, rgba(74, 147, 122, 0.09) 35px, transparent 36px);
     background-size: 32px 100%, calc(100% - 32px) 100%;
     background-position: left top, 32px top;
     background-repeat: no-repeat, repeat-y;
@@ -298,14 +298,14 @@
   gap: 8px 14px;
   margin: 20px 0 0 28px;
   padding: 10px 12px;
-  border: 1px solid #d5dfeb;
-  border-left: 3px solid #438b9a;
-  background: rgba(233, 239, 249, 0.7);
-  color: #4c5d73;
+  border: 1px solid var(--gris-200);
+  border-left: 3px solid var(--sol-700);
+  background: rgba(248, 246, 239, 0.7);
+  color: var(--gris-600);
 }
 
 .atajos__titulo {
-  color: #244b7f;
+  color: var(--bosque-600);
   font-weight: 700;
 }
 
@@ -318,11 +318,11 @@
 .atajos kbd {
   min-width: 23px;
   padding: 1px 5px;
-  border: 1px solid #b7c8dc;
+  border: 1px solid var(--gris-300);
   border-bottom-width: 2px;
   border-radius: 2px;
   background: #fff;
-  color: #244b7f;
+  color: var(--bosque-600);
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: 0.75rem;
   text-align: center;
@@ -372,20 +372,20 @@
 }
 
 .boton--marca:hover:not(:disabled) {
-  background-color: #f5f8fc;
+  background-color: var(--gris-50);
 }
 
 .boton--marca.is-activa {
   border-color: transparent;
-  background: #f2f5f9;
-  color: #53657b;
+  background: var(--gris-50);
+  color: var(--gris-600);
   box-shadow: none;
 }
 
 .boton--marca.is-activa:hover:not(:disabled) {
   border-color: transparent;
-  background: #eaf0f7;
-  color: #405c7e;
+  background: var(--gris-100);
+  color: var(--bosque-400);
 }
 
 .boton--marca__icono {
@@ -416,7 +416,7 @@
   left: 28px;
   display: block;
   height: 1px;
-  background: #b8c9dc;
+  background: var(--gris-300);
   content: '';
 }
 

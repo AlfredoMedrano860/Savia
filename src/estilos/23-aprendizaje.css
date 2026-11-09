@@ -45,7 +45,7 @@
   height: 40px;
   border-radius: 10px;
   background: var(--color-marca-suave);
-  color: var(--azul-700);
+  color: var(--bosque-700);
 }
 
 .acceso.is-pendiente .acceso__icono {
@@ -68,12 +68,12 @@
 }
 
 .acceso__texto strong {
-  color: var(--azul-700);
+  color: var(--bosque-700);
 }
 
 .acceso__dato {
   margin: 0;
-  color: var(--celeste-600);
+  color: var(--sol-600);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -85,14 +85,14 @@
   gap: 10px 14px;
   margin-top: 18px;
   padding: 14px 18px;
-  border-left: 4px solid var(--celeste-400);
+  border-left: 4px solid var(--sol-400);
   border-radius: 4px;
-  background: var(--celeste-50);
+  background: var(--sol-50);
 }
 
 .sugerencia__icono {
   flex: none;
-  color: var(--celeste-600);
+  color: var(--sol-600);
 }
 
 .sugerencia p {
@@ -130,7 +130,7 @@
 
 .avance__dato {
   flex: none;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-weight: 700;
 }
 
@@ -151,7 +151,7 @@
   display: block;
   height: 100%;
   border-radius: 4px;
-  background: var(--celeste-400);
+  background: var(--sol-400);
   transition: width 0.5s ease;
 }
 
@@ -182,48 +182,62 @@
 
 
 
-/* Estrella para guardar: solo el ícono, sin borde ni fondo. Vacía si no está guardada;
-   rellena de celeste de marca si lo está. El área táctil es de 40 px aunque se vea
-   solo la estrella. */
+/* Botón para guardar: estrella y texto, con borde, para que se vea a primera vista.
+   Vacío y con texto de marca si no está guardada; relleno de amarillo sol si lo está. */
 .guardar {
-  display: inline-grid;
+  display: inline-flex;
   flex: none;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-texto-suave);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px 0 10px;
+  border: 1px solid var(--color-borde-marca);
+  border-radius: 4px;
+  background: var(--color-superficie);
+  color: var(--color-marca);
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
-  transition: color var(--hover-duracion) var(--hover-curva), transform var(--hover-duracion) var(--hover-curva);
+  transition:
+    background-color var(--hover-duracion) var(--hover-curva),
+    border-color var(--hover-duracion) var(--hover-curva),
+    transform var(--hover-duracion) var(--hover-curva);
 }
 
 .guardar:hover {
-  color: var(--color-marca);
-  transform: scale(1.12);
+  border-color: var(--color-marca);
+  background: var(--color-marca-suave);
+  transform: var(--hover-elevar-boton);
 }
 
 .guardar.is-guardada {
-  color: var(--celeste-700);
+  border-color: var(--sol-500);
+  background: var(--sol-100);
+  color: var(--sol-800);
+}
+
+.guardar.is-guardada:hover {
+  background: var(--sol-200);
 }
 
 /* el ícono trae fill="none" en el svg y en el trazo: se rellena el trazo directamente */
 .guardar.is-guardada .guardar__icono path {
-  fill: var(--celeste-400);
+  fill: var(--sol-400);
+  stroke: var(--sol-700);
 }
 
 .guardar:focus-visible {
   outline: 2px solid var(--color-foco);
-  outline-offset: 0;
+  outline-offset: 2px;
 }
 
-/* centrada con la etiqueta del tema; el margen negativo evita que el área táctil de
-   40 px agrande la fila */
+/* a la derecha de la etiqueta del tema; el margen negativo evita que agrande la fila */
 .hoja__meta .guardar {
   align-self: center;
-  margin: -8px 0 -8px auto;
+  margin: -6px 0 -6px auto;
 }
 
 .revision__cabecera {
@@ -236,7 +250,7 @@
 .revision__temario {
   display: inline-block;
   margin-top: 10px;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-size: var(--texto-detalle);
   font-weight: 700;
   text-decoration: none;
@@ -260,7 +274,7 @@
   margin-inline: -10px;
   padding-inline: 10px;
   border-radius: 4px;
-  background: var(--celeste-100);
+  background: var(--sol-100);
   font-weight: 700;
 }
 
@@ -294,8 +308,8 @@
   margin: 0;
   padding: 4px 12px;
   border-radius: 999px;
-  background: var(--celeste-100);
-  color: var(--celeste-700);
+  background: var(--sol-100);
+  color: var(--sol-700);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -363,9 +377,9 @@
   place-items: center;
   width: 30px;
   height: 30px;
-  border: 1.5px solid var(--azul-700);
+  border: 1.5px solid var(--bosque-700);
   border-radius: 6px;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-size: var(--texto-mini);
   font-weight: 700;
 }
@@ -514,12 +528,12 @@
   justify-content: space-between;
   gap: 18px 28px;
   padding-bottom: 16px;
-  border-bottom: 2px solid #1f2a3c;
+  border-bottom: 2px solid var(--gris-800);
 }
 
 .papel__marca {
   margin: 0;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-size: var(--texto-mini);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -577,7 +591,7 @@
 
 .papel__pregunta {
   padding: 12px 0;
-  border-bottom: 1px dashed #c9d2de;
+  border-bottom: 1px dashed var(--gris-200);
   break-inside: avoid;
 }
 
@@ -588,7 +602,7 @@
 }
 
 .papel__numero {
-  color: var(--azul-700);
+  color: var(--bosque-700);
 }
 
 .papel__opciones {
@@ -621,7 +635,7 @@
 .papel__subtitulo {
   margin: 0 0 14px;
   padding-bottom: 8px;
-  border-bottom: 2px solid #1f2a3c;
+  border-bottom: 2px solid var(--gris-800);
   font-family: var(--fuente-titulo);
   font-size: var(--texto-h4);
   font-weight: 600;
@@ -716,7 +730,7 @@
   border: 0;
   border-radius: 14px;
   background: var(--blanco);
-  color: var(--azul-800);
+  color: var(--bosque-800);
   box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.55);
   font: inherit;
   text-align: left;
@@ -734,8 +748,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--celeste-100);
-  color: var(--azul-700);
+  background: var(--sol-100);
+  color: var(--bosque-700);
   line-height: 0;
   transition: background-color var(--hover-duracion) var(--hover-curva);
 }
@@ -757,11 +771,11 @@
 }
 
 .contraportada__instalar:hover {
-  background: var(--celeste-50);
+  background: var(--sol-50);
   box-shadow: 0 16px 30px -16px rgba(0, 0, 0, 0.6);
   transform: var(--hover-elevar-boton);
 }
 
 .contraportada__instalar:hover .contraportada__instalar-icono {
-  background: var(--celeste-200);
+  background: var(--sol-200);
 }

@@ -1,5 +1,5 @@
 /* Sistema de diseño de Savia
-   Tres colores de marca: blanco, azul (#173c78) y celeste (#d6e9e2), cada uno con su escala.
+   Tres colores de marca: blanco hueso (#f8f6ef), verde bosque (#0f4d3c) y amarillo sol (#ffd23f), cada uno con su escala.
    Primero las escalas (primitivos) y después los usos (tokens semánticos): en los componentes
    se usan los semánticos, así un cambio de marca se hace en un solo lugar. */
 
@@ -7,69 +7,69 @@
   /* ---------- primitivos ---------- */
   --blanco: #ffffff;
 
-  /* azul de marca (base: 700) */
-  --azul-50: #eff3fb;
-  --azul-100: #dae5f6;
-  --azul-200: #b5caee;
-  --azul-300: #7ca2de;
-  --azul-400: #4277cd;
-  --azul-500: #2859a9;
-  --azul-600: #1d4990;
-  --azul-700: #173c78;
-  --azul-800: #102d5b;
-  --azul-900: #0a1e3d;
+  /* verde bosque de marca (base: 700, #0f4d3c) */
+  --bosque-50: #e7f6ee;
+  --bosque-100: #c6ecd9;
+  --bosque-200: #93d8b6;
+  --bosque-300: #57bf8d;
+  --bosque-400: #26a36b;
+  --bosque-500: #11875a;
+  --bosque-600: #0b6c4a;
+  --bosque-700: #0f4d3c;
+  --bosque-800: #0a3b2e;
+  --bosque-900: #062a20;
 
-  /* celeste de marca (base: 100) */
-  --celeste-50: #f1f8f6;
-  --celeste-100: #d6e9e2;
-  --celeste-200: #b6d8cb;
-  --celeste-300: #8ec2af;
-  --celeste-400: #60a98e;
-  --celeste-500: #458c72;
-  --celeste-600: #33715a;
-  --celeste-700: #255b47;
-  --celeste-800: #194333;
-  --celeste-900: #0f2e23;
+  /* amarillo sol de acento (base: 300, #ffd23f). Como texto sobre claro se usa de 700 para arriba. */
+  --sol-50: #fffbea;
+  --sol-100: #fff3c4;
+  --sol-200: #ffe170;
+  --sol-300: #ffd23f;
+  --sol-400: #ffc20d;
+  --sol-500: #dba10b;
+  --sol-600: #b07e07;
+  --sol-700: #85600a;
+  --sol-800: #5f450c;
+  --sol-900: #3f2e0a;
 
-  /* grises neutros con un toque del azul, para texto, bordes y fondos */
-  --gris-50: #f5f7f9;
-  --gris-100: #eaecf1;
-  --gris-200: #d6dae1;
-  --gris-300: #b4bbc5;
-  --gris-400: #8f97a3;
-  --gris-500: #6c7584;
-  --gris-600: #555e6d;
-  --gris-700: #3e4756;
-  --gris-800: #28303e;
-  --gris-900: #181f2a;
+  /* blanco hueso: neutros cálidos para fondos, bordes y texto (base: 50, #f8f6ef) */
+  --gris-50: #f8f6ef;
+  --gris-100: #f0ecdf;
+  --gris-200: #e4ddc8;
+  --gris-300: #c7c2b2;
+  --gris-400: #9f9a8a;
+  --gris-500: #78756a;
+  --gris-600: #5b5950;
+  --gris-700: #43423b;
+  --gris-800: #2d2d28;
+  --gris-900: #1b1c19;
 
   /* ---------- semánticos ---------- */
   /* marca */
-  --color-marca: var(--azul-700);
-  --color-marca-hover: var(--azul-800);
-  --color-marca-suave: var(--azul-50);
-  --color-acento: var(--celeste-100);
-  --color-acento-fuerte: var(--celeste-300);
-  --color-sobre-acento: var(--azul-800);
+  --color-marca: var(--bosque-700);
+  --color-marca-hover: var(--bosque-800);
+  --color-marca-suave: var(--bosque-50);
+  --color-acento: var(--sol-300);
+  --color-acento-fuerte: var(--sol-300);
+  --color-sobre-acento: var(--bosque-800);
 
   /* superficies */
   --color-fondo: var(--gris-50);
   --color-superficie: var(--blanco);
-  --color-superficie-marca: var(--azul-700);
-  --color-superficie-acento: var(--celeste-50);
+  --color-superficie-marca: var(--bosque-700);
+  --color-superficie-acento: var(--sol-50);
 
   /* texto */
   --color-texto: var(--gris-900);
   --color-texto-suave: var(--gris-600);
   --color-texto-sobre-marca: var(--blanco);
   --color-texto-sobre-marca-suave: rgba(255, 255, 255, 0.9);
-  --color-enlace: var(--azul-600);
+  --color-enlace: var(--bosque-600);
 
   /* bordes */
   --color-borde: var(--gris-200);
   --color-borde-suave: var(--gris-100);
-  --color-borde-marca: var(--azul-300);
-  --color-foco: var(--azul-500);
+  --color-borde-marca: var(--bosque-300);
+  --color-foco: var(--bosque-500);
 
   /* ---------- interacción (hover y foco) ----------
      Un comportamiento por tipo de componente, no uno para todo:
@@ -90,13 +90,13 @@
   --hover-primario-fondo: var(--color-marca-hover);
   --hover-secundario-fondo: var(--color-marca-suave);
   --hover-secundario-borde: var(--color-borde-marca);
-  --hover-sobre-marca-claro: var(--color-acento);
+  --hover-sobre-marca-claro: var(--sol-400);
   --hover-sobre-marca-contorno: rgba(255, 255, 255, 0.12);
   --hover-pestana-fondo: var(--color-marca-suave);
   --hover-enlace: var(--color-marca-hover);
   --hover-opcion-fondo: var(--color-marca-suave);
   --hover-opcion-borde: var(--color-borde-marca);
-  --foco-anillo: 0 0 0 3px var(--azul-200);
+  --foco-anillo: 0 0 0 3px var(--bosque-200);
 
   /* ---------- escala tipográfica ----------
      Un solo juego de tamaños para todo el sitio. Los grandes se ajustan al ancho de la
