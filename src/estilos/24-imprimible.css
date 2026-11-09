@@ -31,7 +31,7 @@
   gap: 4px 16px;
   margin-top: 16px;
   padding: 12px 16px;
-  border: 1.5px dashed #1f2a3c;
+  border: 1.5px dashed var(--gris-800);
   border-radius: 6px;
 }
 
@@ -98,8 +98,8 @@ button.papel__burbuja:disabled {
 }
 
 .papel__burbuja.is-elegida {
-  border-color: var(--azul-700);
-  background: var(--azul-700);
+  border-color: var(--bosque-700);
+  background: var(--bosque-700);
   color: #fff;
 }
 

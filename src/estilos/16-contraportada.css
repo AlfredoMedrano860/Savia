@@ -8,7 +8,7 @@
   isolation: isolate;
   margin-top: clamp(72px, 9vw, 112px);
   padding-top: clamp(40px, 5vw, 64px);
-  background: var(--azul-800);
+  background: var(--bosque-800);
   color: color-mix(in srgb, var(--blanco) 74%, transparent);
 }
 
@@ -18,7 +18,7 @@
   left: 0;
   width: 100%;
   height: clamp(24px, 3vw, 44px);
-  fill: var(--azul-800);
+  fill: var(--bosque-800);
 }
 
 .contraportada__boceto {
@@ -27,8 +27,8 @@
   right: max(2%, calc((100% - 1240px) / 2));
   bottom: 24px;
   width: clamp(150px, 16vw, 230px);
-  filter: invert(1);
-  opacity: 0.07;
+  filter: url('#tinta-clara');
+  opacity: 0.16;
   transform: rotate(18deg);
   pointer-events: none;
 }
@@ -62,12 +62,12 @@
 .contraportada__logo svg {
   width: 44px;
   height: 44px;
-  color: var(--azul-600);
+  color: var(--bosque-600);
 }
 
 .contraportada__lema {
   margin: 10px 0 0 56px;
-  color: var(--celeste-200);
+  color: var(--sol-200);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   line-height: 1;
   transform: rotate(-2deg);
@@ -82,7 +82,7 @@
 
 .contraportada__titulo {
   margin: 6px 0 14px;
-  color: var(--celeste-200);
+  color: var(--sol-200);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -101,7 +101,7 @@
 .contraportada__lista a,
 .contraportada__autor a {
   padding-bottom: 2px;
-  background-image: linear-gradient(var(--celeste-300), var(--celeste-300));
+  background-image: linear-gradient(var(--sol-300), var(--sol-300));
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0 2px;
@@ -113,11 +113,11 @@
 
 .contraportada__lista a:hover {
   background-size: 100% 2px;
-  color: var(--celeste-100);
+  color: var(--sol-100);
 }
 
 .contraportada a:focus-visible {
-  outline: 2px solid var(--celeste-200);
+  outline: 2px solid var(--sol-200);
   outline-offset: 3px;
 }
 
@@ -139,7 +139,7 @@
   width: 18px;
   height: 18px;
   fill: none;
-  stroke: var(--celeste-300);
+  stroke: var(--sol-300);
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -162,7 +162,7 @@
 
 .contraportada__firma {
   flex: none;
-  color: var(--celeste-200);
+  color: var(--sol-200);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
 }
 

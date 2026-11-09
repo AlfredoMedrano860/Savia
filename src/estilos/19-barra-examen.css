@@ -55,7 +55,7 @@
   justify-self: end;
   gap: 8px;
   padding: 7px 14px 7px 11px;
-  border: 1px solid color-mix(in srgb, var(--azul-700) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bosque-700) 16%, transparent);
   border-radius: 999px;
   font-size: 1.15rem;
   font-weight: 700;
@@ -147,8 +147,8 @@ html.a11y-reduce-motion .examen-barra__reloj--critico {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--azul-700);
-  box-shadow: 0 10px 24px -18px rgba(16, 45, 91, 0.6);
+  background: var(--bosque-700);
+  box-shadow: 0 10px 24px -18px rgba(10, 59, 46, 0.6);
   backdrop-filter: none;
 }
 
@@ -165,7 +165,7 @@ html.a11y-reduce-motion .examen-barra__reloj--critico {
 .examen-barra__reloj:focus-visible {
   outline: 2px solid var(--color-foco);
   outline-offset: 2px;
-  outline-color: var(--celeste-200);
+  outline-color: var(--sol-200);
 }
 
 .examen-barra__modo {
@@ -177,7 +177,7 @@ html.a11y-reduce-motion .examen-barra__reloj--critico {
 }
 
 .examen-barra__progreso strong {
-  color: var(--celeste-200);
+  color: var(--sol-200);
 }
 
 .examen-barra__reloj {
@@ -192,7 +192,7 @@ html.a11y-reduce-motion .examen-barra__reloj--critico {
 }
 
 .examen-barra__avance span {
-  background: var(--celeste-300);
+  background: var(--sol-300);
 }
 
 /* "Salir" como enlace, sin forma de botón */
