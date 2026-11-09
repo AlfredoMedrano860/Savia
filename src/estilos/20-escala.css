@@ -160,7 +160,7 @@
 
 /* línea del menú: azul sólido y crece desde el centro */
 .nav__enlace::after {
-  background: var(--bosque-700);
+  background: var(--puerto-700);
   transform-origin: center;
 }
 
@@ -171,8 +171,8 @@
   top: calc(var(--guia-y) - 18px);
   height: 36px;
   border-top: 0;
-  border-bottom: 3px solid var(--bosque-600);
-  background: color-mix(in srgb, var(--sol-200) 30%, transparent);
+  border-bottom: 3px solid var(--puerto-600);
+  background: color-mix(in srgb, var(--hierba-200) 30%, transparent);
   mix-blend-mode: multiply;
 }
 
@@ -189,7 +189,7 @@
   position: fixed;
   right: 0;
   left: 0;
-  background: rgba(6, 42, 32, 0.62);
+  background: rgba(29, 64, 109, 0.62);
 }
 
 .mascara-lectura__superior {
@@ -208,5 +208,5 @@
   right: 0;
   left: 0;
   height: 112px;
-  box-shadow: inset 0 2px 0 var(--sol-300), inset 0 -2px 0 var(--sol-300);
+  box-shadow: inset 0 2px 0 var(--hierba-300), inset 0 -2px 0 var(--hierba-300);
 }

@@ -11,8 +11,8 @@
   border-radius: 2px;
   background: #fff;
   box-shadow:
-    8px 8px 0 rgba(199, 194, 178, 0.8),
-    16px 16px 0 rgba(15, 77, 60, 0.08);
+    8px 8px 0 rgba(183, 194, 218, 0.8),
+    16px 16px 0 rgba(55, 112, 191, 0.08);
 }
 
 .en-papel__hoja {
@@ -56,7 +56,7 @@
   border-radius: 4px;
   background:
     linear-gradient(225deg, var(--fondo) 0 12px, var(--gris-200) 12px 13px, #fff 13px) no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 18px, rgba(74, 147, 122, 0.1) 19px, transparent 20px);
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(99, 160, 236, 0.1) 19px, transparent 20px);
   color: var(--color-texto);
   font: inherit;
   text-align: left;
@@ -68,7 +68,7 @@
 }
 
 .mini-hoja__nombre {
-  color: var(--sol-600);
+  color: var(--hierba-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-size: var(--texto-mano-chico);
   line-height: 1;
@@ -76,7 +76,7 @@
 
 .mini-hoja__numero {
   margin-top: 6px;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-family: var(--fuente-titulo);
   font-size: 2.6rem;
   font-weight: 600;
@@ -96,7 +96,7 @@
   margin-top: 14px;
   padding-top: 10px;
   border-top: 1px dashed var(--linea);
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-size: var(--texto-detalle);
   font-weight: 700;
 }
@@ -117,7 +117,7 @@
   border-color: var(--color-borde-marca);
   background:
     linear-gradient(225deg, var(--fondo) 0 12px, var(--gris-200) 12px 13px, var(--color-marca-suave) 13px) no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 18px, rgba(74, 147, 122, 0.12) 19px, transparent 20px);
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(99, 160, 236, 0.12) 19px, transparent 20px);
 }
 
 /* talón desprendible */
@@ -128,7 +128,7 @@
   gap: 10px;
   padding: clamp(24px, 3.5vw, 34px) clamp(22px, 3vw, 32px);
   border-left: 2px dashed var(--gris-300);
-  background: var(--sol-50);
+  background: var(--hierba-50);
 }
 
 /* muescas de la perforación, arriba y abajo */
@@ -155,7 +155,7 @@
 
 .en-papel__talon-rotulo {
   margin: 0;
-  color: var(--sol-600);
+  color: var(--hierba-600);
   font-size: var(--texto-mini);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -183,7 +183,7 @@
   border: 1.5px solid var(--color-borde-marca);
   border-radius: 6px;
   background: #fff;
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
   font-size: 1.35rem;
   font-weight: 700;
@@ -245,8 +245,8 @@
 @media (max-width: 560px) {
   .en-papel {
     box-shadow:
-      5px 5px 0 rgba(199, 194, 178, 0.8),
-      10px 10px 0 rgba(15, 77, 60, 0.08);
+      5px 5px 0 rgba(183, 194, 218, 0.8),
+      10px 10px 0 rgba(55, 112, 191, 0.08);
   }
 
   .en-papel__hoja {
@@ -311,7 +311,7 @@
 }
 
 .respuestas-impresa__datos strong {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
   letter-spacing: 0.1em;
 }
@@ -356,7 +356,7 @@
 }
 
 .hoja-resuelta .papel__grilla-n:hover {
-  color: var(--bosque-700);
+  color: var(--puerto-700);
   text-decoration: underline !important;
   text-underline-offset: 3px;
 }

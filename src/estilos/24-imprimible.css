@@ -98,8 +98,8 @@ button.papel__burbuja:disabled {
 }
 
 .papel__burbuja.is-elegida {
-  border-color: var(--bosque-700);
-  background: var(--bosque-700);
+  border-color: var(--puerto-700);
+  background: var(--puerto-700);
   color: #fff;
 }
 

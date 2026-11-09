@@ -7,19 +7,19 @@
   --tinta-suave: var(--color-texto-suave);
   --linea: var(--color-borde);
   --linea-suave: var(--color-borde-suave);
-  --azul: var(--bosque-600);
+  --azul: var(--puerto-600);
   --azul-oscuro: var(--color-marca);
   --azul-claro: var(--color-marca-suave);
   --verde: #2e7d32;
   --verde-claro: #e8f3e9;
   --rojo: #c62828;
   --rojo-claro: #fbeaea;
-  --ambar: var(--sol-700);
-  --ambar-claro: var(--sol-50);
+  --ambar: var(--hierba-700);
+  --ambar-claro: var(--hierba-50);
   /* turquesa oscuro para texto sobre --ambar-claro (5.6:1) */
-  --ambar-oscuro: var(--sol-800);
+  --ambar-oscuro: var(--hierba-800);
   --sombra-suave: 0 12px 30px -20px rgba(27, 36, 51, 0.32);
-  --sombra-elevar: 0 18px 36px -20px rgba(15, 77, 60, 0.34);
+  --sombra-elevar: 0 18px 36px -20px rgba(55, 112, 191, 0.34);
 
   --fuente: 'Bricolage Grotesque Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --fuente-titulo: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
@@ -145,8 +145,8 @@ button {
   border-radius: 2px;
   background-color: #fff;
   box-shadow:
-    8px 8px 0 rgba(199, 194, 178, 0.8),
-    16px 16px 0 rgba(15, 77, 60, 0.08);
+    8px 8px 0 rgba(183, 194, 218, 0.8),
+    16px 16px 0 rgba(55, 112, 191, 0.08);
 }
 
 .hoja-cuaderno,
@@ -154,7 +154,7 @@ button {
   background-image:
     radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, var(--gris-200) 4.5px 5.5px, transparent 6px),
     linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
-    repeating-linear-gradient(0deg, transparent 0 30px, rgba(74, 147, 122, 0.12) 31px, transparent 32px);
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(99, 160, 236, 0.12) 31px, transparent 32px);
   background-size: 20px 52px, auto, auto;
   background-position: left top;
   background-repeat: repeat-y, no-repeat, repeat;
@@ -163,8 +163,8 @@ button {
 @media (max-width: 720px) {
   .hoja-cuaderno {
     box-shadow:
-      5px 5px 0 rgba(199, 194, 178, 0.8),
-      10px 10px 0 rgba(15, 77, 60, 0.08);
+      5px 5px 0 rgba(183, 194, 218, 0.8),
+      10px 10px 0 rgba(55, 112, 191, 0.08);
   }
 }
 

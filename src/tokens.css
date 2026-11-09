@@ -1,5 +1,5 @@
 /* Sistema de diseño de Savia
-   Tres colores de marca: blanco hueso (#f8f6ef), verde bosque (#0f4d3c) y amarillo sol (#ffd23f), cada uno con su escala.
+   Colores de marca: tinte lunar (#f3f6ff), azul puerto (#3770bf), azul hielo (#8dc2ff) y verde hierba (#cef26d).
    Primero las escalas (primitivos) y después los usos (tokens semánticos): en los componentes
    se usan los semánticos, así un cambio de marca se hace en un solo lugar. */
 
@@ -7,69 +7,69 @@
   /* ---------- primitivos ---------- */
   --blanco: #ffffff;
 
-  /* verde bosque de marca (base: 700, #0f4d3c) */
-  --bosque-50: #e7f6ee;
-  --bosque-100: #c6ecd9;
-  --bosque-200: #93d8b6;
-  --bosque-300: #57bf8d;
-  --bosque-400: #26a36b;
-  --bosque-500: #11875a;
-  --bosque-600: #0b6c4a;
-  --bosque-700: #0f4d3c;
-  --bosque-800: #0a3b2e;
-  --bosque-900: #062a20;
+  /* azul puerto de marca (base: 700, #3770bf; 300 es el azul hielo #8dc2ff) */
+  --puerto-50: #edf4ff;
+  --puerto-100: #dcebff;
+  --puerto-200: #b9d8ff;
+  --puerto-300: #8dc2ff;
+  --puerto-400: #63a0ec;
+  --puerto-500: #4a87d6;
+  --puerto-600: #3a74c3;
+  --puerto-700: #3770bf;
+  --puerto-800: #2a5996;
+  --puerto-900: #1d406d;
 
-  /* amarillo sol de acento (base: 300, #ffd23f). Como texto sobre claro se usa de 700 para arriba. */
-  --sol-50: #fffbea;
-  --sol-100: #fff3c4;
-  --sol-200: #ffe170;
-  --sol-300: #ffd23f;
-  --sol-400: #ffc20d;
-  --sol-500: #dba10b;
-  --sol-600: #b07e07;
-  --sol-700: #85600a;
-  --sol-800: #5f450c;
-  --sol-900: #3f2e0a;
+  /* verde hierba de acento (base: 300, #cef26d). Como texto sobre claro se usa de 700 para arriba. */
+  --hierba-50: #f8fde8;
+  --hierba-100: #f0fbcf;
+  --hierba-200: #e2f7a3;
+  --hierba-300: #cef26d;
+  --hierba-400: #b8e043;
+  --hierba-500: #9cc52a;
+  --hierba-600: #7a9d1d;
+  --hierba-700: #5b7618;
+  --hierba-800: #435716;
+  --hierba-900: #2e3c11;
 
-  /* blanco hueso: neutros cálidos para fondos, bordes y texto (base: 50, #f8f6ef) */
-  --gris-50: #f8f6ef;
-  --gris-100: #f0ecdf;
-  --gris-200: #e4ddc8;
-  --gris-300: #c7c2b2;
-  --gris-400: #9f9a8a;
-  --gris-500: #78756a;
-  --gris-600: #5b5950;
-  --gris-700: #43423b;
-  --gris-800: #2d2d28;
-  --gris-900: #1b1c19;
+  /* tinte lunar: neutros fríos para fondos, bordes y texto (base: 50, #f3f6ff) */
+  --gris-50: #f3f6ff;
+  --gris-100: #e8edf9;
+  --gris-200: #d6deef;
+  --gris-300: #b7c2da;
+  --gris-400: #8e9ab6;
+  --gris-500: #6b7792;
+  --gris-600: #525d76;
+  --gris-700: #3c4559;
+  --gris-800: #272e3d;
+  --gris-900: #171c27;
 
   /* ---------- semánticos ---------- */
   /* marca */
-  --color-marca: var(--bosque-700);
-  --color-marca-hover: var(--bosque-800);
-  --color-marca-suave: var(--bosque-50);
-  --color-acento: var(--sol-300);
-  --color-acento-fuerte: var(--sol-300);
-  --color-sobre-acento: var(--bosque-800);
+  --color-marca: var(--puerto-700);
+  --color-marca-hover: var(--puerto-800);
+  --color-marca-suave: var(--puerto-50);
+  --color-acento: var(--hierba-300);
+  --color-acento-fuerte: var(--hierba-300);
+  --color-sobre-acento: var(--puerto-800);
 
   /* superficies */
   --color-fondo: var(--gris-50);
   --color-superficie: var(--blanco);
-  --color-superficie-marca: var(--bosque-700);
-  --color-superficie-acento: var(--sol-50);
+  --color-superficie-marca: var(--puerto-700);
+  --color-superficie-acento: var(--hierba-50);
 
   /* texto */
   --color-texto: var(--gris-900);
   --color-texto-suave: var(--gris-600);
   --color-texto-sobre-marca: var(--blanco);
   --color-texto-sobre-marca-suave: rgba(255, 255, 255, 0.9);
-  --color-enlace: var(--bosque-600);
+  --color-enlace: var(--puerto-600);
 
   /* bordes */
   --color-borde: var(--gris-200);
   --color-borde-suave: var(--gris-100);
-  --color-borde-marca: var(--bosque-300);
-  --color-foco: var(--bosque-500);
+  --color-borde-marca: var(--puerto-300);
+  --color-foco: var(--puerto-500);
 
   /* ---------- interacción (hover y foco) ----------
      Un comportamiento por tipo de componente, no uno para todo:
@@ -90,13 +90,13 @@
   --hover-primario-fondo: var(--color-marca-hover);
   --hover-secundario-fondo: var(--color-marca-suave);
   --hover-secundario-borde: var(--color-borde-marca);
-  --hover-sobre-marca-claro: var(--sol-400);
+  --hover-sobre-marca-claro: var(--hierba-400);
   --hover-sobre-marca-contorno: rgba(255, 255, 255, 0.12);
   --hover-pestana-fondo: var(--color-marca-suave);
   --hover-enlace: var(--color-marca-hover);
   --hover-opcion-fondo: var(--color-marca-suave);
   --hover-opcion-borde: var(--color-borde-marca);
-  --foco-anillo: 0 0 0 3px var(--bosque-200);
+  --foco-anillo: 0 0 0 3px var(--puerto-200);
 
   /* ---------- escala tipográfica ----------
      Un solo juego de tamaños para todo el sitio. Los grandes se ajustan al ancho de la
