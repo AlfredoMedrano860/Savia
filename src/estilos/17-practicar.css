@@ -36,7 +36,7 @@
 }
 
 .practica__nota strong {
-  color: var(--azul-700);
+  color: var(--bosque-700);
 }
 
 /* --- seguir con la prueba abierta --- */
@@ -47,10 +47,10 @@
   gap: 20px 32px;
   margin-bottom: clamp(36px, 5vw, 52px);
   padding: 20px 24px;
-  border: 1px solid color-mix(in srgb, var(--azul-700) 22%, transparent);
-  border-left: 5px solid var(--celeste-400);
+  border: 1px solid color-mix(in srgb, var(--bosque-700) 22%, transparent);
+  border-left: 5px solid var(--sol-400);
   border-radius: 4px;
-  background: var(--celeste-50);
+  background: var(--sol-50);
 }
 
 .retomar__info {
@@ -60,14 +60,14 @@
 
 .retomar__rotulo {
   margin: 0;
-  color: var(--celeste-600);
+  color: var(--sol-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   line-height: 1;
 }
 
 .retomar__titulo {
   margin: 4px 0 12px;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-family: var(--fuente-titulo);
 }
 
@@ -75,14 +75,14 @@
   height: 8px;
   overflow: hidden;
   border-radius: 99px;
-  background: color-mix(in srgb, var(--azul-700) 12%, transparent);
+  background: color-mix(in srgb, var(--bosque-700) 12%, transparent);
 }
 
 .retomar__barra span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: var(--celeste-500);
+  background: var(--sol-500);
 }
 
 .retomar__dato {
@@ -147,7 +147,7 @@
   gap: 12px;
   margin-top: auto;
   padding-top: 16px;
-  border-top: 1px solid color-mix(in srgb, var(--azul-700) 14%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--bosque-700) 14%, transparent);
 }
 
 
@@ -157,7 +157,7 @@
 
 .ficha__preguntas strong {
   margin-right: 2px;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-family: var(--fuente-titulo);
   font-weight: 600;
   line-height: 1;
@@ -169,7 +169,7 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid color-mix(in srgb, var(--azul-700) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bosque-700) 25%, transparent);
   border-radius: 50%;
   transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
@@ -179,8 +179,8 @@
 }
 
 .ficha:hover .ficha__flecha {
-  border-color: var(--azul-700);
-  background: var(--azul-700);
+  border-color: var(--bosque-700);
+  background: var(--bosque-700);
   color: var(--blanco);
   transform: translateX(3px);
 }
@@ -209,17 +209,17 @@
 }
 
 .anillo__fondo {
-  stroke: color-mix(in srgb, var(--azul-700) 10%, transparent);
+  stroke: color-mix(in srgb, var(--bosque-700) 10%, transparent);
 }
 
 .anillo__arco {
-  stroke: var(--celeste-400);
+  stroke: var(--sol-400);
   stroke-linecap: round;
 }
 
 .anillo__texto {
   position: relative;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   white-space: nowrap;
 }
 

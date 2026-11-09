@@ -7,12 +7,12 @@
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
   margin-top: clamp(40px, 6vw, 64px);
-  border: 1px solid #d5dfeb;
+  border: 1px solid var(--gris-200);
   border-radius: 2px;
   background: #fff;
   box-shadow:
-    8px 8px 0 rgba(207, 220, 236, 0.8),
-    16px 16px 0 rgba(23, 60, 120, 0.08);
+    8px 8px 0 rgba(199, 194, 178, 0.8),
+    16px 16px 0 rgba(15, 77, 60, 0.08);
 }
 
 .en-papel__hoja {
@@ -55,8 +55,8 @@
   border: 1px solid var(--linea);
   border-radius: 4px;
   background:
-    linear-gradient(225deg, var(--fondo) 0 12px, #d5dfeb 12px 13px, #fff 13px) no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 18px, rgba(82, 133, 181, 0.1) 19px, transparent 20px);
+    linear-gradient(225deg, var(--fondo) 0 12px, var(--gris-200) 12px 13px, #fff 13px) no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(74, 147, 122, 0.1) 19px, transparent 20px);
   color: var(--color-texto);
   font: inherit;
   text-align: left;
@@ -68,7 +68,7 @@
 }
 
 .mini-hoja__nombre {
-  color: var(--celeste-600);
+  color: var(--sol-600);
   font-family: 'Caveat', var(--fuente-titulo), cursive;
   font-size: var(--texto-mano-chico);
   line-height: 1;
@@ -76,7 +76,7 @@
 
 .mini-hoja__numero {
   margin-top: 6px;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-family: var(--fuente-titulo);
   font-size: 2.6rem;
   font-weight: 600;
@@ -96,7 +96,7 @@
   margin-top: 14px;
   padding-top: 10px;
   border-top: 1px dashed var(--linea);
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-size: var(--texto-detalle);
   font-weight: 700;
 }
@@ -116,8 +116,8 @@
 .mini-hoja--completa {
   border-color: var(--color-borde-marca);
   background:
-    linear-gradient(225deg, var(--fondo) 0 12px, #d5dfeb 12px 13px, var(--color-marca-suave) 13px) no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 18px, rgba(82, 133, 181, 0.12) 19px, transparent 20px);
+    linear-gradient(225deg, var(--fondo) 0 12px, var(--gris-200) 12px 13px, var(--color-marca-suave) 13px) no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 18px, rgba(74, 147, 122, 0.12) 19px, transparent 20px);
 }
 
 /* talón desprendible */
@@ -127,8 +127,8 @@
   align-content: center;
   gap: 10px;
   padding: clamp(24px, 3.5vw, 34px) clamp(22px, 3vw, 32px);
-  border-left: 2px dashed #b9c6d8;
-  background: var(--celeste-50);
+  border-left: 2px dashed var(--gris-300);
+  background: var(--sol-50);
 }
 
 /* muescas de la perforación, arriba y abajo */
@@ -145,17 +145,17 @@
 
 .en-papel__talon::before {
   top: -11px;
-  box-shadow: inset 0 -1px 0 #d5dfeb;
+  box-shadow: inset 0 -1px 0 var(--gris-200);
 }
 
 .en-papel__talon::after {
   bottom: -11px;
-  box-shadow: inset 0 1px 0 #d5dfeb;
+  box-shadow: inset 0 1px 0 var(--gris-200);
 }
 
 .en-papel__talon-rotulo {
   margin: 0;
-  color: var(--celeste-600);
+  color: var(--sol-600);
   font-size: var(--texto-mini);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -183,7 +183,7 @@
   border: 1.5px solid var(--color-borde-marca);
   border-radius: 6px;
   background: #fff;
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
   font-size: 1.35rem;
   font-weight: 700;
@@ -193,7 +193,7 @@
 }
 
 .en-papel__codigo::placeholder {
-  color: #b9c6d8;
+  color: var(--gris-300);
 }
 
 .en-papel__codigo:focus-visible {
@@ -222,7 +222,7 @@
   }
 
   .en-papel__talon {
-    border-top: 2px dashed #b9c6d8;
+    border-top: 2px dashed var(--gris-300);
     border-left: 0;
   }
 
@@ -245,8 +245,8 @@
 @media (max-width: 560px) {
   .en-papel {
     box-shadow:
-      5px 5px 0 rgba(207, 220, 236, 0.8),
-      10px 10px 0 rgba(23, 60, 120, 0.08);
+      5px 5px 0 rgba(199, 194, 178, 0.8),
+      10px 10px 0 rgba(15, 77, 60, 0.08);
   }
 
   .en-papel__hoja {
@@ -311,7 +311,7 @@
 }
 
 .respuestas-impresa__datos strong {
-  color: var(--azul-700);
+  color: var(--bosque-700);
   font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
   letter-spacing: 0.1em;
 }
@@ -323,11 +323,19 @@
   font-size: var(--texto-detalle);
 }
 
-/* el ícono animado viene envuelto en un contenedor con alto de línea propio (16×21 px): sin
-   esto la estrella queda corrida hacia arriba dentro del botón */
+/* el ícono animado viene envuelto en un contenedor con alto de línea propio: sin esto la
+   estrella queda corrida hacia arriba dentro del botón */
 .guardar__icono {
   display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
   line-height: 0;
+}
+
+.guardar__icono svg {
+  display: block;
 }
 
 /* hoja de respuestas resuelta (arriba de las explicaciones, al entrar con el código) */
@@ -348,7 +356,7 @@
 }
 
 .hoja-resuelta .papel__grilla-n:hover {
-  color: var(--azul-700);
+  color: var(--bosque-700);
   text-decoration: underline !important;
   text-underline-offset: 3px;
 }

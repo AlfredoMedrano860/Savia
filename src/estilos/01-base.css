@@ -7,19 +7,19 @@
   --tinta-suave: var(--color-texto-suave);
   --linea: var(--color-borde);
   --linea-suave: var(--color-borde-suave);
-  --azul: var(--azul-600);
+  --azul: var(--bosque-600);
   --azul-oscuro: var(--color-marca);
   --azul-claro: var(--color-marca-suave);
   --verde: #2e7d32;
   --verde-claro: #e8f3e9;
   --rojo: #c62828;
   --rojo-claro: #fbeaea;
-  --ambar: #438b9a;
-  --ambar-claro: #e6f2f3;
+  --ambar: var(--sol-700);
+  --ambar-claro: var(--sol-50);
   /* turquesa oscuro para texto sobre --ambar-claro (5.6:1) */
-  --ambar-oscuro: #2c6672;
+  --ambar-oscuro: var(--sol-800);
   --sombra-suave: 0 12px 30px -20px rgba(27, 36, 51, 0.32);
-  --sombra-elevar: 0 18px 36px -20px rgba(23, 60, 120, 0.34);
+  --sombra-elevar: 0 18px 36px -20px rgba(15, 77, 60, 0.34);
 
   --fuente: 'Bricolage Grotesque Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --fuente-titulo: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
@@ -71,6 +71,16 @@ button {
 }
 
 /* ---------- piezas comunes ---------- */
+/* Contenedor que la librería de íconos animados pone alrededor de cada svg (trae la clase
+   inline-flex de Tailwind, que aquí no existe). Sin esto es un bloque con el alto de línea
+   del texto y el ícono queda corrido hacia arriba dentro de su caja. */
+.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
 .boton {
   display: inline-flex;
   align-items: center;
@@ -131,20 +141,20 @@ button {
    componente solo agrega su relleno y su contenido. El texto debe empezar después del
    margen rojo (unos 56 px desde la izquierda). */
 .hoja-cuaderno {
-  border: 1px solid #d5dfeb;
+  border: 1px solid var(--gris-200);
   border-radius: 2px;
   background-color: #fff;
   box-shadow:
-    8px 8px 0 rgba(207, 220, 236, 0.8),
-    16px 16px 0 rgba(23, 60, 120, 0.08);
+    8px 8px 0 rgba(199, 194, 178, 0.8),
+    16px 16px 0 rgba(15, 77, 60, 0.08);
 }
 
 .hoja-cuaderno,
 .hoja-cuaderno--solo-papel {
   background-image:
-    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, #cbd6e4 4.5px 5.5px, transparent 6px),
+    radial-gradient(circle at 10px 22px, var(--fondo) 0 4px, var(--gris-200) 4.5px 5.5px, transparent 6px),
     linear-gradient(90deg, transparent 38px, rgba(196, 104, 104, 0.25) 39px, transparent 40px),
-    repeating-linear-gradient(0deg, transparent 0 30px, rgba(82, 133, 181, 0.12) 31px, transparent 32px);
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(74, 147, 122, 0.12) 31px, transparent 32px);
   background-size: 20px 52px, auto, auto;
   background-position: left top;
   background-repeat: repeat-y, no-repeat, repeat;
@@ -153,8 +163,8 @@ button {
 @media (max-width: 720px) {
   .hoja-cuaderno {
     box-shadow:
-      5px 5px 0 rgba(207, 220, 236, 0.8),
-      10px 10px 0 rgba(23, 60, 120, 0.08);
+      5px 5px 0 rgba(199, 194, 178, 0.8),
+      10px 10px 0 rgba(15, 77, 60, 0.08);
   }
 }
 
