@@ -150,10 +150,6 @@
   text-underline-offset: 3px;
 }
 
-.contraportada__legal a:hover {
-  color: var(--blanco);
-}
-
 .contraportada__aviso {
   display: grid;
   gap: 10px;
