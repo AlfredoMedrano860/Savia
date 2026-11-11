@@ -1,4 +1,4 @@
-import { ArrowRightIcon, ArrowUpRightIcon, AtomIcon, BookOpenIcon, GiftIcon, LayersIcon, ListChecksIcon } from '@animateicons/react/lucide'
+import { ArrowRightIcon, ArrowUpRightIcon, AtomIcon, GiftIcon, LayersIcon, ListChecksIcon } from '@animateicons/react/lucide'
 import { CODIGOS, TEMAS, TOTAL_PREGUNTAS, type TemaCodigo } from '../lib/banco'
 import { PROYECTO } from '../lib/proyecto'
 // la portada conserva la célula detallada de la versión anterior
@@ -41,7 +41,6 @@ export function Portada() {
         <div className="contenedor heroe__contenido">
           <div className="heroe__copia">
             <Cinta as="div" className="heroe__etiqueta">
-              <BookOpenIcon className="heroe__etiqueta-icono" size={18} isAnimated={animarIconos} aria-hidden="true" />
               Cuaderno de estudio
             </Cinta>
             <h1 className="heroe__titulo">
