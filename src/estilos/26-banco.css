@@ -34,11 +34,9 @@
   cursor: pointer;
 }
 
+/* el nombre toma la línea animada de los enlaces (30-enlaces.css) */
 .temario__subtema:hover span:first-child {
   color: var(--puerto-700);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
 }
 
 .temario__subtema:focus-visible {

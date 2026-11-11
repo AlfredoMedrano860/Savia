@@ -8,7 +8,8 @@
 .revision__temario,
 .contraportada__legal a,
 .practica__nota a,
-a.contacto-tarjeta__valor {
+a.contacto-tarjeta__valor,
+.temario__subtema > span:first-child {
   padding-bottom: 2px;
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 50% 100%;
@@ -27,8 +28,19 @@ a.contacto-tarjeta__valor {
 .contraportada__legal a:hover,
 .practica__nota a:hover,
 a.contacto-tarjeta__valor:hover,
-.contacto-tarjeta:hover a.contacto-tarjeta__valor {
+.contacto-tarjeta:hover a.contacto-tarjeta__valor,
+.temario__subtema:hover > span:first-child {
   background-size: 100% 2px;
+}
+
+/* En el pie, los enlaces legales llevan la misma línea verde hierba que los demás enlaces del
+   pie (Explora, contacto y el nombre del autor) y se aclaran igual al pasar el mouse. */
+.contraportada__legal a {
+  background-image: linear-gradient(var(--hierba-300), var(--hierba-300));
+}
+
+.contraportada__legal a:hover {
+  color: var(--hierba-100);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -38,7 +50,8 @@ a.contacto-tarjeta__valor:hover,
   .revision__temario,
   .contraportada__legal a,
   .practica__nota a,
-  a.contacto-tarjeta__valor {
+  a.contacto-tarjeta__valor,
+  .temario__subtema > span:first-child {
     transition: none;
   }
 }
