@@ -216,7 +216,7 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
           </fieldset>
 
           <div className="hoja__acciones">
-            <button type="button" className="boton" onClick={() => ir(prueba.actual - 1)} disabled={prueba.actual === 0}>
+            <button type="button" className="boton-discreto" onClick={() => ir(prueba.actual - 1)} disabled={prueba.actual === 0}>
               <ArrowLeftIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
               Anterior
             </button>
@@ -317,7 +317,7 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
           )}
         </p>
         <div className="dialogo__acciones">
-          <button type="button" className="boton" onClick={() => setConfirmar(false)}>
+          <button type="button" className="boton-discreto" onClick={() => setConfirmar(false)}>
             Seguir respondiendo
           </button>
           <button type="button" className="boton boton--tinta" onClick={onEntregar}>

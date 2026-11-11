@@ -194,7 +194,7 @@ button {
     color var(--hover-duracion) var(--hover-curva);
 }
 
-.boton-discreto:hover {
+.boton-discreto:hover:not(:disabled) {
   background: var(--hover-secundario-fondo);
   color: var(--color-marca);
 }
@@ -202,6 +202,11 @@ button {
 .boton-discreto[aria-pressed='true'],
 .boton-discreto[aria-expanded='true'] {
   color: var(--color-marca);
+}
+
+.boton-discreto:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .boton-discreto:focus-visible {
