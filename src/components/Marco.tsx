@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { Accesibilidad } from './Accesibilidad'
 import { Bocetos } from './Bocetos'
 import { VolverArriba } from './VolverArriba'
-import { DESARROLLADOR, PROYECTO } from '../lib/proyecto'
+import { DESARROLLADOR, PROYECTO, SOPORTE } from '../lib/proyecto'
 import { abrirLegal, RUTAS, RUTAS_LEGALES, type Ruta } from '../lib/ruta'
 import { MenuIcon, XIcon } from '@animateicons/react/lucide'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
@@ -145,16 +145,8 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
             <p className="contraportada__titulo">Contacto</p>
             <ul className="contraportada__lista contraportada__lista--contacto">
               <li>
-                <IconoPie tipo="persona" />
-                <span>{PROYECTO.docente}</span>
-              </li>
-              <li>
                 <IconoPie tipo="correo" />
-                <a href={`mailto:${PROYECTO.correo}`}>{PROYECTO.correo}</a>
-              </li>
-              <li>
-                <IconoPie tipo="telefono" />
-                <a href={`tel:+506${PROYECTO.telefono}`}>{PROYECTO.telefonoVisible}</a>
+                <a href={`mailto:${SOPORTE.correo}`}>{SOPORTE.correo}</a>
               </li>
               <li>
                 <IconoPie tipo="facebook" />
