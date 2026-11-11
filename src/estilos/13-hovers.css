@@ -117,8 +117,25 @@
   background: var(--hover-opcion-fondo);
 }
 
+/* --- opciones del panel de accesibilidad (tamaño del texto y filtro de color): el mismo hover
+   que una opción seleccionable; la que ya está elegida no cambia --- */
+.accesibilidad__tamano button,
+.accesibilidad__color {
+  transition:
+    background-color var(--hover-duracion) var(--hover-curva),
+    border-color var(--hover-duracion) var(--hover-curva),
+    color var(--hover-duracion) var(--hover-curva);
+}
+
+.accesibilidad__tamano button:hover:not([aria-pressed='true']),
+.accesibilidad__color:hover:not([aria-pressed='true']) {
+  border-color: var(--hover-opcion-borde);
+  background: var(--hover-opcion-fondo);
+  color: var(--color-marca);
+}
+
 /* --- foco con teclado: el mismo anillo para todo lo interactivo --- */
-:is(.boton, .nav__enlace, .filtro, .opcion, .enlace, .seccion__enlace, .volver-arriba, .accesibilidad__boton, .nav__menu):focus-visible {
+:is(.boton, .nav__enlace, .filtro, .opcion, .enlace, .seccion__enlace, .volver-arriba, .accesibilidad__boton, .nav__menu, .accesibilidad__tamano button, .accesibilidad__color):focus-visible {
   outline: 2px solid var(--color-foco);
   outline-offset: 2px;
   box-shadow: var(--foco-anillo);
