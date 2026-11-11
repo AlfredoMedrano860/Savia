@@ -456,11 +456,6 @@ h3:not(.revision__enunciado) {
   font-family: var(--fuente-titulo);
 }
 
-.logo__sub {
-  font-family: var(--fuente);
-  letter-spacing: normal;
-}
-
 .heroe__titulo {
   letter-spacing: -0.035em;
 }
