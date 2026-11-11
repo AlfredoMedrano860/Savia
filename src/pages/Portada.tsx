@@ -3,7 +3,8 @@ import { CODIGOS, TEMAS, TOTAL_PREGUNTAS, type TemaCodigo } from '../lib/banco'
 import { PROYECTO } from '../lib/proyecto'
 // la portada conserva la célula detallada de la versión anterior
 import celulaBoceto from '../assets/bocetos/celula-portada.webp'
-import adnBoceto from '../assets/bocetos/adn.webp'
+// El archivo no se llama adn.webp: los bloqueadores de anuncios bloquean rutas que empiezan con "adn-".
+import adnBoceto from '../assets/bocetos/doble-helice.webp'
 import balonBoceto from '../assets/bocetos/balon.webp'
 import matrazBoceto from '../assets/bocetos/matraz.webp'
 import microscopioBoceto from '../assets/bocetos/microscopio.webp'
