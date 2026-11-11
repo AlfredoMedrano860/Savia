@@ -199,10 +199,6 @@ html.a11y-reduce-motion .heroe__ola-capa {
   transform-origin: left center;
 }
 
-.heroe__etiqueta-icono {
-  color: var(--color-sobre-acento);
-}
-
 /* título: líneas más juntas para que se lea como una sola idea */
 
 /* "pregunta por pregunta." resaltado con un trazo de marcador menta, como en un apunte */

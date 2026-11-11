@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { Ruta } from '../lib/ruta'
-import adn from '../assets/bocetos/adn.webp'
+import adn from '../assets/bocetos/doble-helice.webp'
 import balon from '../assets/bocetos/balon.webp'
 import celula from '../assets/bocetos/celula.webp'
 import matraz from '../assets/bocetos/matraz.webp'
