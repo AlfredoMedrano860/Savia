@@ -76,7 +76,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 72px;
+  /* mismo alto que la barra de My Green Farm */
+  min-height: 64px;
 }
 
 .logo {
@@ -89,16 +90,17 @@
 }
 
 .logo__icono {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   transition:
     color 0.2s ease,
     transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* el nombre un paso más grande que los enlaces, para que se lea como marca y no compitan */
 .logo__texto {
   display: grid;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.1;
 }
@@ -113,7 +115,8 @@
   position: relative;
   padding: 8px 12px;
   color: var(--tinta);
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
 }
 
