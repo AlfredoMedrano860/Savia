@@ -68,7 +68,6 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
             <Logo />
             <span className="logo__texto">
               Savia
-              <span className="logo__sub">EDAD II · Biología</span>
             </span>
           </a>
           <button

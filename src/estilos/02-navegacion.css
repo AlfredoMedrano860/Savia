@@ -103,12 +103,6 @@
   line-height: 1.1;
 }
 
-.logo__sub {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--tinta-suave);
-}
-
 .nav__enlaces {
   display: flex;
   align-items: center;
