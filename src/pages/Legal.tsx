@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { PROYECTO } from '../lib/proyecto'
+import { PROYECTO, SOPORTE } from '../lib/proyecto'
 import { abrirLegal, regresar, RUTAS_LEGALES, type RutaLegal } from '../lib/ruta'
 import { Cinta } from '../components/Cinta'
 import { BotonRegresar } from '../components/BotonRegresar'
@@ -7,11 +7,11 @@ import { useCarrusel } from '../lib/useCarrusel'
 
 // Fecha en que se publicó la versión vigente de estos textos. Si se cambia algo de
 // fondo, se actualiza esta fecha.
-const VIGENCIA = '8 de noviembre de 2026'
+const VIGENCIA = '10 de noviembre de 2026'
 
 const correo = (
-  <a className="enlace" href={`mailto:${PROYECTO.correo}`}>
-    {PROYECTO.correo}
+  <a className="enlace" href={`mailto:${SOPORTE.correo}`}>
+    {SOPORTE.correo}
   </a>
 )
 
@@ -251,7 +251,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         titulo: '6. Si nos escribes',
         contenido: (
           <p>
-            Si nos contactas por correo, teléfono o Facebook, usaremos tus datos de contacto solo para responderte y no los
+            Si nos escribes al correo de soporte, usaremos tu dirección de correo solo para responderte y no la
             compartiremos con nadie.
           </p>
         ),

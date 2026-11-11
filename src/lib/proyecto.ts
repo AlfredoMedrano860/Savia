@@ -12,6 +12,12 @@ export const PROYECTO = {
   facebook: 'https://www.facebook.com/ConsultorioComunitarioPacificoUCR',
 }
 
+// Correo de soporte de Savia: consultas, errores en las preguntas y temas legales o de
+// privacidad. El correo de la docente del TCU solo aparece en la página del proyecto.
+export const SOPORTE = {
+  correo: 'savia.edad.soporte@gmail.com',
+}
+
 export const DESARROLLADOR = {
   nombre: 'Alfredo Medrano',
   linkedin: 'https://www.linkedin.com/in/josealfredomedrano',
