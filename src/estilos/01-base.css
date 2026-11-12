@@ -33,6 +33,13 @@
   box-sizing: border-box;
 }
 
+/* On the phone, tapping two answers quickly counted as a double tap and Safari zoomed the page in
+   (the test was left half out of the screen). This turns off only the double-tap zoom: pinching
+   to zoom still works for anyone who needs bigger text. */
+html {
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
