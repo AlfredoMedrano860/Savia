@@ -88,7 +88,7 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
           </button>
           {falladas.length > 0 && (
             <button type="button" className="boton-discreto" onClick={() => onRepasar(falladas)}>
-              Repasar las {falladas.length} que fallé
+              {falladas.length === 1 ? 'Repasar la que fallé' : `Repasar las ${falladas.length} que fallé`}
             </button>
           )}
         </div>

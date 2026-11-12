@@ -84,7 +84,7 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                       Practicar este tema
                     </button>
                     <button type="button" className="boton-discreto" aria-haspopup="dialog" onClick={() => abrirBanco(t, null)}>
-                      Ver las {total} preguntas
+                      {total === 1 ? 'Ver la pregunta' : `Ver las ${total} preguntas`}
                     </button>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                         className="temario__subtema"
                         aria-haspopup="dialog"
                         onClick={() => abrirBanco(t, s.nombre)}
-                        aria-label={`Ver las ${s.total} preguntas de ${s.nombre}`}
+                        aria-label={s.total === 1 ? `Ver la pregunta de ${s.nombre}` : `Ver las ${s.total} preguntas de ${s.nombre}`}
                       >
                         <span>{s.nombre}</span>
                         <span className="temario__conteo">{s.total}</span>
