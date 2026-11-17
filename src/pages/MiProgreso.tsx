@@ -1,16 +1,19 @@
 import { PreguntaDelDia } from '../components/PreguntaDelDia'
 import { Progreso } from '../components/Progreso'
+import { RespaldoProgreso } from '../components/RespaldoProgreso'
 import type { TemaCodigo } from '../lib/banco'
 
 interface MiProgresoProps {
   onRepasar: (ids: number[]) => void
   onGuardadas: (ids: number[]) => void
+  onPuntosDebiles: () => void
   onPracticarTema: (tema: TemaCodigo) => void
 }
 
-// Sección personal: la pregunta del día y el tablero de progreso (repaso del día, preguntas
-// guardadas, recomendación y avance por tema). Todo se guarda solo en este navegador.
-export function MiProgreso({ onRepasar, onGuardadas, onPracticarTema }: MiProgresoProps) {
+// Sección personal: la pregunta del día, el tablero de progreso (repaso del día, preguntas
+// guardadas, puntos débiles, recomendación y avance por tema) y el respaldo del progreso,
+// que se guarda solo en este navegador.
+export function MiProgreso({ onRepasar, onGuardadas, onPuntosDebiles, onPracticarTema }: MiProgresoProps) {
   return (
     <main className="contenedor pagina mi-progreso">
       <header className="pagina__cabecera">
@@ -23,7 +26,9 @@ export function MiProgreso({ onRepasar, onGuardadas, onPracticarTema }: MiProgre
 
       <PreguntaDelDia />
 
-      <Progreso onRepasar={onRepasar} onGuardadas={onGuardadas} onPracticarTema={onPracticarTema} />
+      <Progreso onRepasar={onRepasar} onGuardadas={onGuardadas} onPuntosDebiles={onPuntosDebiles} onPracticarTema={onPracticarTema} />
+
+      <RespaldoProgreso />
     </main>
   )
 }

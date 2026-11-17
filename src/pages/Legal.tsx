@@ -24,6 +24,7 @@ const DATOS_LOCALES = [
   ['savia:guardadas', 'Las preguntas que marcaste con la estrella.'],
   ['savia:diaria', 'La pregunta del día que respondiste y tu racha de días seguidos.'],
   ['savia:accesibilidad', 'Tus preferencias del panel de accesibilidad (tamaño de letra, filtros, etc.).'],
+  ['savia:invitacion-respaldo', 'Que ya viste el aviso para respaldar tu progreso, para no repetirlo.'],
 ]
 
 // Fuentes y bibliotecas de terceros incluidas en Savia, con su licencia.
@@ -219,6 +220,10 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
                 Cookies y almacenamiento
               </a>
               .
+            </p>
+            <p>
+              En Mi progreso puedes descargar un respaldo: es un archivo con esa misma información que se guarda donde tú elijas. Savia
+              no lo envía a ningún lado; solo se usa si tú lo vuelves a cargar para restaurar tu avance.
             </p>
           </>
         ),

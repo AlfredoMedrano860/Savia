@@ -7,7 +7,7 @@ import { Marco } from './components/Marco'
 import { Notificaciones, type Notificacion } from './components/Notificaciones'
 import { Resultados } from './components/Resultados'
 import { agregarAlHistorial, borrarHistorial, cargarHistorial, cargarPrueba, guardarPrueba } from './lib/almacen'
-import { registrarResultado } from './lib/aprendizaje'
+import { idsPuntosDebiles, registrarResultado } from './lib/aprendizaje'
 import { calificar, nuevaPrueba, nuevoCodigo, pruebaDeRepaso, pruebaDeTema, pruebaImprimible, type Prueba, type Resultado } from './lib/banco'
 import { esRutaLegal, irA, RUTAS, RUTAS_LEGALES, useRuta } from './lib/ruta'
 import { Portada } from './pages/Portada'
@@ -18,6 +18,19 @@ import { Proyecto } from './pages/Proyecto'
 import { Temario } from './pages/Temario'
 
 type Vista = { tipo: 'sitio' } | { tipo: 'examen' } | { tipo: 'resultado'; resultado: Resultado } | { tipo: 'imprimir'; prueba: Prueba; codigo: string; soloRespuestas: boolean }
+
+// Después de la primera prueba entregada se avisa una sola vez que el progreso vive solo en
+// este dispositivo y cómo protegerlo (respaldo o instalar la app).
+const CLAVE_INVITACION = 'savia:invitacion-respaldo'
+function tocaInvitarARespaldar() {
+  try {
+    if (localStorage.getItem(CLAVE_INVITACION)) return false
+    localStorage.setItem(CLAVE_INVITACION, '1')
+    return true
+  } catch {
+    return false
+  }
+}
 
 function estadoInicial(): { prueba: Prueba | null; vista: Vista } {
   return { prueba: cargarPrueba(), vista: { tipo: 'sitio' } }
@@ -201,6 +214,9 @@ export default function App() {
         setVista({ tipo: 'resultado', resultado })
         setErrorOperacion('')
         window.scrollTo({ top: 0 })
+        if (tocaInvitarARespaldar()) {
+          notificar('info', 'Tu avance vive en este dispositivo', 'Para no perderlo, en Mi progreso puedes descargar un respaldo o instalar Savia.')
+        }
       })
       .catch((error: unknown) => {
         console.error('No se pudo calificar la prueba.', error)
@@ -210,7 +226,7 @@ export default function App() {
         setOcupado(false)
         entregando.current = false
       })
-  }, [prueba])
+  }, [prueba, notificar])
 
   const borrarTodosLosIntentos = async () => {
     if (
@@ -337,6 +353,13 @@ export default function App() {
           <MiProgreso
             onRepasar={(ids) => empezar(() => pruebaDeRepaso(ids, 'Repaso del día'))}
             onGuardadas={(ids) => empezar(() => pruebaDeRepaso(ids, 'Mis preguntas guardadas'))}
+            onPuntosDebiles={() =>
+              void idsPuntosDebiles().then((ids) =>
+                ids.length
+                  ? empezar(() => pruebaDeRepaso(ids, 'Mis puntos débiles'))
+                  : notificar('info', 'Nada que reforzar por ahora', 'Ya viste todas las preguntas de tus temas más difíciles. Prueba el repaso del día.'),
+              )
+            }
             onPracticarTema={(t) => empezar(() => pruebaDeTema(t))}
           />
         )}

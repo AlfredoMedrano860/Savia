@@ -131,3 +131,52 @@ describe('preguntas guardadas', () => {
     expect(a.idsGuardadas()).toEqual([7])
   })
 })
+
+describe('puntos débiles', () => {
+  const delSubtema = (tema: string) => {
+    const lista = banco.filter((p) => p.t === tema)
+    const subtema = lista[0].s
+    return lista.filter((p) => p.s === subtema)
+  }
+
+  it('sin respuestas no hay puntos débiles', async () => {
+    const a = await nuevoAprendizaje()
+    expect(a.preguntasDebiles()).toEqual([])
+    expect(await a.idsPuntosDebiles()).toEqual([])
+  })
+
+  it('incluye las preguntas que falla la mitad de las veces o más, de la peor a la mejor', async () => {
+    const a = await nuevoAprendizaje()
+    const [siempre, mitad, casiNunca] = banco.filter((p) => p.t === 'T24')
+    a.registrarRespuesta(siempre, mal(siempre))
+    a.registrarRespuesta(siempre, mal(siempre))
+    a.registrarRespuesta(mitad, mal(mitad))
+    a.registrarRespuesta(mitad, mitad.r)
+    a.registrarRespuesta(casiNunca, mal(casiNunca))
+    a.registrarRespuesta(casiNunca, casiNunca.r)
+    a.registrarRespuesta(casiNunca, casiNunca.r)
+    expect(a.preguntasDebiles()).toEqual([siempre.id, mitad.id])
+  })
+
+  it('completa con preguntas nuevas del subtema más débil', async () => {
+    const a = await nuevoAprendizaje()
+    const subtema = delSubtema('T19')
+    const [p1, p2] = subtema
+    a.registrarRespuesta(p1, mal(p1))
+    a.registrarRespuesta(p2, mal(p2))
+    expect(a.subtemasDebiles()).toEqual([{ tema: 'T19', subtema: p1.s }])
+    const ids = await a.idsPuntosDebiles()
+    expect(ids.slice(0, 2).sort()).toEqual([p1.id, p2.id].sort())
+    expect(ids.length).toBe(Math.min(a.MAX_PUNTOS_DEBILES, subtema.length))
+    expect(new Set(ids).size).toBe(ids.length)
+    expect(ids.every((id) => subtema.some((p) => p.id === id))).toBe(true)
+  })
+
+  it('un subtema con 70 % o más de aciertos no cuenta como débil', async () => {
+    const a = await nuevoAprendizaje()
+    const subtema = delSubtema('T22')
+    for (const p of subtema.slice(0, 7)) a.registrarRespuesta(p, p.r)
+    for (const p of subtema.slice(7, 10)) a.registrarRespuesta(p, mal(p))
+    expect(a.subtemasDebiles()).toEqual([])
+  })
+})

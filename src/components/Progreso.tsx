@@ -1,6 +1,14 @@
-import { ArrowRightIcon, RepeatIcon, StarIcon, TrendingUpIcon } from '@animateicons/react/lucide'
+import { ArrowRightIcon, BicepsFlexedIcon, RepeatIcon, StarIcon, TrendingUpIcon } from '@animateicons/react/lucide'
 import resumenTemas from 'virtual:resumen-temas'
-import { estadoRepaso, idsGuardadas, pendientesDeRepaso, progresoPorTema, useAprendizaje } from '../lib/aprendizaje'
+import {
+  estadoRepaso,
+  idsGuardadas,
+  pendientesDeRepaso,
+  preguntasDebiles,
+  progresoPorTema,
+  subtemasDebiles,
+  useAprendizaje,
+} from '../lib/aprendizaje'
 import { NOTA_MINIMA, TEMAS, type TemaCodigo } from '../lib/banco'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { Cinta } from './Cinta'
@@ -8,19 +16,22 @@ import { Cinta } from './Cinta'
 interface ProgresoProps {
   onRepasar: (ids: number[]) => void
   onGuardadas: (ids: number[]) => void
+  onPuntosDebiles: () => void
   onPracticarTema: (tema: TemaCodigo) => void
 }
 
 const fechaCorta = (ms: number) => new Date(ms).toLocaleDateString('es-CR', { weekday: 'long', day: 'numeric', month: 'long' })
 
-// Tablero personal: repaso del día, preguntas guardadas, recomendación y avance por tema.
-export function Progreso({ onRepasar, onGuardadas, onPracticarTema }: ProgresoProps) {
+// Tablero personal: repaso del día, preguntas guardadas, puntos débiles, recomendación y avance por tema.
+export function Progreso({ onRepasar, onGuardadas, onPuntosDebiles, onPracticarTema }: ProgresoProps) {
   useAprendizaje()
   const animarIconos = useIconosAnimados()
   const temas = progresoPorTema()
   const repaso = estadoRepaso()
   const pendientes = pendientesDeRepaso()
   const guardadas = idsGuardadas()
+  const debiles = preguntasDebiles()
+  const subtemaMasDebil = subtemasDebiles()[0]
   const conDatos = temas.filter((t) => t.dominio !== null)
 
   // Recomendación: el tema con menor dominio (con al menos 3 respuestas); si aún no hay
@@ -83,6 +94,30 @@ export function Progreso({ onRepasar, onGuardadas, onPracticarTema }: ProgresoPr
             </>
           ) : (
             <p className="acceso__texto">Durante una prueba o al revisarla, toca la estrella para guardar las preguntas que quieras repasar.</p>
+          )}
+        </article>
+
+        <article className="acceso">
+          <span className="acceso__icono" aria-hidden="true">
+            <BicepsFlexedIcon size={22} isAnimated={animarIconos} aria-hidden="true" />
+          </span>
+          <h3 className="acceso__titulo">Puntos débiles</h3>
+          {debiles.length || subtemaMasDebil ? (
+            <>
+              <p className="acceso__texto">
+                {debiles.length > 0 && (
+                  <>
+                    Hay <strong>{debiles.length}</strong> {debiles.length === 1 ? 'pregunta que te ha costado' : 'preguntas que te han costado'}.{' '}
+                  </>
+                )}
+                {subtemaMasDebil && <>Lo que más te cuesta: {subtemaMasDebil.subtema}.</>}
+              </p>
+              <button type="button" className="boton" onClick={onPuntosDebiles}>
+                Practicar puntos débiles <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
+              </button>
+            </>
+          ) : (
+            <p className="acceso__texto">Cuando falles algunas preguntas, aquí podrás practicar justo lo que más te cuesta, sin esperar al repaso.</p>
           )}
         </article>
       </div>

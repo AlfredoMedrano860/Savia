@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { CODIGOS, TOTAL_PREGUNTAS, cargarPreguntas, type Pregunta, type Resultado, type TemaCodigo } from './banco'
+import { CODIGOS, TOTAL_PREGUNTAS, cargarPreguntas, mezclar, type Pregunta, type Resultado, type TemaCodigo } from './banco'
 
 /*
  * Registro de aprendizaje: cómo le ha ido a la persona con cada pregunta. Se guarda solo en
@@ -168,6 +168,53 @@ export function progresoPorTema(): ProgresoTema[] {
       subtemaDebil: peor && peor[1].aciertos / peor[1].vistas < 1 ? peor[0] : null,
     }
   })
+}
+
+// ---------- puntos débiles ----------
+// A diferencia del repaso espaciado (que espera días entre repasos), esto junta ya mismo lo
+// que más le cuesta a la persona: las preguntas que falla la mitad de las veces o más y,
+// si faltan, preguntas que todavía no ha visto de sus subtemas con menos aciertos.
+export const MAX_PUNTOS_DEBILES = 15
+const UMBRAL_SUBTEMA = 0.7
+
+/** Preguntas que falla la mitad de las veces o más, de la que más le cuesta a la que menos. */
+export function preguntasDebiles() {
+  const tasa = (r: RegistroPregunta) => r.fallos / r.vistas
+  return Object.entries(registro)
+    .filter(([, r]) => r.vistas > 0 && r.fallos > 0 && tasa(r) >= 0.5)
+    .sort(([, a], [, b]) => tasa(b) - tasa(a) || b.fallos - a.fallos || b.ultima - a.ultima)
+    .map(([id]) => Number(id))
+}
+
+/** Subtemas con menos del 70 % de aciertos (con al menos 2 respuestas), del peor al mejor. */
+export function subtemasDebiles(): { tema: TemaCodigo; subtema: string }[] {
+  const porSubtema = new Map<string, { tema: TemaCodigo; subtema: string; vistas: number; aciertos: number }>()
+  for (const r of Object.values(registro)) {
+    const clave = `${r.t}|${r.s}`
+    const s = porSubtema.get(clave) ?? { tema: r.t, subtema: r.s, vistas: 0, aciertos: 0 }
+    s.vistas += r.vistas
+    s.aciertos += r.aciertos
+    porSubtema.set(clave, s)
+  }
+  return [...porSubtema.values()]
+    .filter((s) => s.vistas >= 2 && s.aciertos / s.vistas < UMBRAL_SUBTEMA)
+    .sort((a, b) => a.aciertos / a.vistas - b.aciertos / b.vistas)
+    .map(({ tema, subtema }) => ({ tema, subtema }))
+}
+
+/** Preguntas para practicar los puntos débiles (vacía si todavía no hay ninguno). */
+export async function idsPuntosDebiles(max = MAX_PUNTOS_DEBILES): Promise<number[]> {
+  const ids = preguntasDebiles().slice(0, max)
+  const debiles = subtemasDebiles()
+  if (ids.length >= max || !debiles.length) return ids
+  const preguntas = await cargarPreguntas()
+  for (const { tema, subtema } of debiles) {
+    for (const p of mezclar(preguntas.filter((p) => p.t === tema && p.s === subtema && !registro[p.id]))) {
+      if (ids.length >= max) return ids
+      ids.push(p.id)
+    }
+  }
+  return ids
 }
 
 /** Borra el registro de aprendizaje (no toca las preguntas guardadas). */

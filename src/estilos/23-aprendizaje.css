@@ -18,7 +18,7 @@
 
 .progreso__accesos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 18px;
 }
 
@@ -778,4 +778,32 @@
 
 .contraportada__instalar:hover .contraportada__instalar-icono {
   background: var(--hierba-200);
+}
+
+/* respaldo del progreso e invitación a instalar */
+.respaldo {
+  margin-top: clamp(48px, 7vw, 72px);
+}
+
+.respaldo__intro {
+  max-width: 62ch;
+  margin: 8px 0 18px;
+}
+
+.respaldo__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.respaldo__estado {
+  margin: 0;
+  color: var(--verde);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.respaldo__estado.is-error {
+  color: var(--rojo);
 }
