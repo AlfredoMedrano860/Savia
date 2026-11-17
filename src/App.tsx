@@ -1,8 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useConfirmacion } from './components/Confirmacion'
 import { Examen } from './components/Examen'
-import { Imprimible } from './components/Imprimible'
-import { RespuestasImpresa } from './components/RespuestasImpresa'
 import { Marco } from './components/Marco'
 import { Notificaciones, type Notificacion } from './components/Notificaciones'
 import { Resultados } from './components/Resultados'
@@ -13,9 +11,32 @@ import { esRutaLegal, irA, RUTAS, RUTAS_LEGALES, useRuta } from './lib/ruta'
 import { Portada } from './pages/Portada'
 import { MiProgreso } from './pages/MiProgreso'
 import { Practicar } from './pages/Practicar'
-import { Legal } from './pages/Legal'
-import { Proyecto } from './pages/Proyecto'
-import { Temario } from './pages/Temario'
+
+// Vistas que no se ven al entrar: se descargan aparte para que la primera carga sea más
+// liviana, y se precargan en cuanto el navegador queda libre para que abrirlas siga siendo
+// instantáneo.
+const cargarLegal = () => import('./pages/Legal')
+const cargarProyecto = () => import('./pages/Proyecto')
+const cargarTemario = () => import('./pages/Temario')
+const cargarImprimible = () => import('./components/Imprimible')
+const cargarRespuestasImpresa = () => import('./components/RespuestasImpresa')
+const Legal = lazy(() => cargarLegal().then((m) => ({ default: m.Legal })))
+const Proyecto = lazy(() => cargarProyecto().then((m) => ({ default: m.Proyecto })))
+const Temario = lazy(() => cargarTemario().then((m) => ({ default: m.Temario })))
+const Imprimible = lazy(() => cargarImprimible().then((m) => ({ default: m.Imprimible })))
+const RespuestasImpresa = lazy(() => cargarRespuestasImpresa().then((m) => ({ default: m.RespuestasImpresa })))
+
+function precargarVistas() {
+  const cargar = () => [cargarTemario, cargarProyecto, cargarImprimible, cargarRespuestasImpresa, cargarLegal].forEach((c) => void c().catch(() => {}))
+  if ('requestIdleCallback' in window) window.requestIdleCallback(cargar, { timeout: 4000 })
+  else setTimeout(cargar, 2000)
+}
+
+const cargandoVista = (
+  <main className="contenedor pagina" aria-live="polite">
+    <p className="pagina__texto">Cargando…</p>
+  </main>
+)
 
 type Vista = { tipo: 'sitio' } | { tipo: 'examen' } | { tipo: 'resultado'; resultado: Resultado } | { tipo: 'imprimir'; prueba: Prueba; codigo: string; soloRespuestas: boolean }
 
@@ -48,6 +69,8 @@ export default function App() {
   const idNotificacion = useRef(0)
   const entregando = useRef(false)
   const [confirmar, dialogoConfirmacion] = useConfirmacion()
+
+  useEffect(precargarVistas, [])
 
   const notificar = useCallback((tipo: Notificacion['tipo'], titulo: string, mensaje: string) => {
     const id = ++idNotificacion.current
@@ -278,6 +301,7 @@ export default function App() {
     return (
       <>
         <Marco ruta={null}>
+          <Suspense fallback={cargandoVista}>
           {vista.soloRespuestas ? (
             <RespuestasImpresa
               prueba={vista.prueba}
@@ -297,6 +321,7 @@ export default function App() {
               }}
             />
           )}
+          </Suspense>
         </Marco>
         {avisos}
       </>
@@ -330,7 +355,11 @@ export default function App() {
           </p>
         )}
         {ruta === 'inicio' && <Portada />}
-        {esRutaLegal(ruta) && <Legal documento={ruta} />}
+        <Suspense fallback={cargandoVista}>
+          {esRutaLegal(ruta) && <Legal documento={ruta} />}
+          {ruta === 'temario' && <Temario onPracticarTema={(t) => empezar(() => pruebaDeTema(t))} />}
+          {ruta === 'proyecto' && <Proyecto />}
+        </Suspense>
         {ruta === 'practicar' && (
           <Practicar
             enCurso={prueba}
@@ -363,8 +392,6 @@ export default function App() {
             onPracticarTema={(t) => empezar(() => pruebaDeTema(t))}
           />
         )}
-        {ruta === 'temario' && <Temario onPracticarTema={(t) => empezar(() => pruebaDeTema(t))} />}
-        {ruta === 'proyecto' && <Proyecto />}
       </Marco>
       {avisos}
     </>
