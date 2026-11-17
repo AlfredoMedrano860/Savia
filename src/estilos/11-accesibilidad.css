@@ -222,8 +222,8 @@ body {
 
 .accesibilidad__opcion.is-activa .accesibilidad__estado {
   border-color: var(--hierba-100);
-  background: #e8f3e9;
-  color: #28673a;
+  background: var(--verde-claro);
+  color: var(--verde);
 }
 
 .accesibilidad__acciones-voz {

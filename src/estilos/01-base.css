@@ -10,10 +10,11 @@
   --azul: var(--puerto-600);
   --azul-oscuro: var(--color-marca);
   --azul-claro: var(--color-marca-suave);
-  --verde: #2e7d32;
-  --verde-claro: #e8f3e9;
-  --rojo: #c62828;
-  --rojo-claro: #fbeaea;
+  /* the most saturated red and green that still reach 4.5:1 on white, the page and their own tint */
+  --verde: #0e8239;
+  --verde-claro: #ecfaf1;
+  --rojo: #db1623;
+  --rojo-claro: #fff0f1;
   --ambar: var(--hierba-700);
   --ambar-claro: var(--hierba-50);
   /* turquesa oscuro para texto sobre --ambar-claro (5.6:1) */
