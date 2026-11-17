@@ -807,3 +807,35 @@
 .respaldo__estado.is-error {
   color: var(--rojo);
 }
+
+/* pie de cada pregunta en la revisión y el banco: enlace al temario o "ver respuesta" a la
+   izquierda y "Reportar un error" a la derecha, discreto para no competir con el estudio */
+.revision__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 18px;
+  margin-top: 10px;
+}
+
+.revision__pie .revision__temario,
+.revision__pie .banco__ver {
+  margin-top: 0;
+}
+
+.reportar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--hover-duracion) var(--hover-curva);
+}
+
+.reportar:hover {
+  color: var(--rojo);
+}
