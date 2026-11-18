@@ -5,7 +5,7 @@ Aplicación gratuita para practicar Biología de la prueba EDAD II. Incluye 1000
 ## Funciones
 
 - **Practicar:** prueba completa (60 preguntas), prueba corta (30) y quiz (15), con reloj, hoja de respuestas, preguntas marcadas para revisar antes de entregar y revisión explicada de cada intento.
-- **Mi progreso:** pregunta del día con racha, repaso espaciado de las preguntas falladas, puntos débiles, preguntas guardadas, avance por tema y respaldo del progreso en un archivo.
+- **Mi progreso:** pregunta del día con racha, repaso espaciado de las preguntas falladas, puntos débiles, preguntas guardadas y avance por tema.
 - **Temario:** los seis temas con sus subtemas y un banco de preguntas por tema, con buscador y respuestas tapadas.
 - **En papel:** pruebas para imprimir o guardar en PDF; las respuestas no se imprimen y se consultan después con el código de la prueba.
 - **Cuenta (opcional):** entrar con Google o con correo y contraseña para guardar el progreso en la nube y usarlo en varios dispositivos.
@@ -45,7 +45,7 @@ Las cuentas son opcionales. Si no se configuran, Savia funciona igual que siempr
 
 ### Cómo funciona
 
-- El progreso de cada persona se guarda en el documento `usuarios/{uid}` de Firestore, como el mismo respaldo que se descarga en Mi progreso (`src/lib/respaldo.ts`).
+- El progreso de cada persona se guarda en el documento `usuarios/{uid}` de Firestore, en el mismo formato con el que se guarda en el navegador (`src/lib/respaldo.ts`).
 - Al entrar, y cada vez que se abre Savia con la sesión iniciada, se combina el progreso del dispositivo con el de la cuenta sin perder nada (`src/lib/combinar.ts`). Cuando cambia el progreso, se sube unos segundos después (`src/lib/cuenta.ts`).
 - Firebase solo se descarga cuando alguien inicia sesión o ya tenía una sesión abierta. Se usa Firestore Lite, que pesa menos.
 - Al cerrar sesión, el progreso se borra del dispositivo (puede ser un equipo compartido) y queda en la cuenta. «Borrar mi cuenta» elimina la cuenta y su progreso.
@@ -56,4 +56,4 @@ Las páginas Términos de uso, Privacidad, Cookies y almacenamiento, y Licencias
 
 ## Progreso
 
-Sin cuenta, los intentos, la prueba en curso, el progreso por tema y las preguntas guardadas se guardan solo en el almacenamiento local del navegador; borrar los datos del navegador los elimina, por eso Mi progreso permite descargar y restaurar un respaldo. Con cuenta, además se guardan en Firestore y se sincronizan entre dispositivos.
+Sin cuenta, los intentos, la prueba en curso, el progreso por tema y las preguntas guardadas se guardan solo en el almacenamiento local del navegador; borrar los datos del navegador los elimina. Con cuenta, además se guardan en Firestore y se sincronizan entre dispositivos.

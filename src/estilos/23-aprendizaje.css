@@ -780,34 +780,6 @@
   background: var(--hierba-200);
 }
 
-/* respaldo del progreso e invitación a instalar */
-.respaldo {
-  margin-top: clamp(48px, 7vw, 72px);
-}
-
-.respaldo__intro {
-  max-width: 62ch;
-  margin: 8px 0 18px;
-}
-
-.respaldo__acciones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.respaldo__estado {
-  margin: 0;
-  color: var(--verde);
-  font-size: var(--texto-detalle);
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.respaldo__estado.is-error {
-  color: var(--rojo);
-}
-
 /* pie de cada pregunta en la revisión y el banco: enlace al temario o "ver respuesta" a la
    izquierda y "Reportar un error" a la derecha, discreto para no competir con el estudio */
 .revision__pie {

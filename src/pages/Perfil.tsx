@@ -4,9 +4,10 @@ import { useGaze } from '@blobatar/react/gaze'
 import { happy } from 'blobatar/expression'
 import 'blobatar/motion.css'
 import 'blobatar/gaze.css'
-import { LogOutIcon, PencilIcon, Trash2Icon } from '@animateicons/react/lucide'
+import { CloudIcon, CloudOffIcon, LogOutIcon, PencilIcon, Trash2Icon } from '@animateicons/react/lucide'
 import { useConfirmacion } from '../components/Confirmacion'
 import { Cinta } from '../components/Cinta'
+import { GraficoNotas, GraficoTemas } from '../components/GraficosAvance'
 import { cargarHistorial } from '../lib/almacen'
 import { idsGuardadas, progresoPorTema, useAprendizaje } from '../lib/aprendizaje'
 import { NOTA_MINIMA, TOTAL_PREGUNTAS, porcentaje } from '../lib/banco'
@@ -16,6 +17,8 @@ import { useIconosAnimados } from '../lib/useIconosAnimados'
 
 const fecha = (ms: number) => new Date(ms).toLocaleDateString('es-CR', { day: 'numeric', month: 'long', year: 'numeric' })
 const hora = (ms: number) => new Date(ms).toLocaleTimeString('es-CR', { hour: 'numeric', minute: '2-digit' })
+// «p. m.» ya termina en punto: no se le agrega otro
+const conPunto = (texto: string) => (texto.endsWith('.') ? texto : `${texto}.`)
 const plural = (n: number, uno: string, varios: string) => `${n} ${n === 1 ? uno : varios}`
 
 /** Racha de la pregunta del día que sigue vigente (respondió hoy o ayer). */
@@ -38,7 +41,8 @@ function Estadisticas() {
   useAprendizaje()
   const historial = cargarHistorial()
   const notas = historial.map(porcentaje)
-  const vistas = progresoPorTema().reduce((s, t) => s + t.distintas, 0)
+  const temas = progresoPorTema()
+  const vistas = temas.reduce((s, t) => s + t.distintas, 0)
   const datos: [string, string, string?][] = [
     ['Intentos', String(historial.length), historial[0] ? `el último el ${fecha(historial[0].fecha)}` : 'todavía ninguno'],
     ['Mejor nota', notas.length ? `${Math.max(...notas)}` : '—', notas.length ? (Math.max(...notas) >= NOTA_MINIMA ? 'aprobada' : `necesitas ${NOTA_MINIMA}`) : undefined],
@@ -49,9 +53,14 @@ function Estadisticas() {
   ]
   return (
     <section className="perfil__bloque" aria-labelledby="perfil-avance">
+      <Cinta className="seccion__kicker">Tus números</Cinta>
       <h2 id="perfil-avance" className="practica__subtitulo">
         Tu avance
       </h2>
+      <div className="perfil__graficos">
+        <GraficoNotas historial={historial} />
+        <GraficoTemas temas={temas} />
+      </div>
       <ul className="perfil__datos">
         {datos.map(([rotulo, valor, detalle]) => (
           <li key={rotulo} className="perfil__dato">
@@ -92,7 +101,7 @@ function Ficha({ usuario }: { usuario: Usuario }) {
   return (
     <section className="perfil__ficha" aria-label="Tus datos">
       <div className="perfil__avatar">
-        <Blobatar ref={mirada} name={avatar} size={132} animate="always" expression={happy} title="Tu blobatar" />
+        <Blobatar ref={mirada} name={avatar} size={180} animate="always" expression={happy} title="Tu blobatar" />
       </div>
       <div className="perfil__identidad">
         {editando ? (
@@ -109,12 +118,12 @@ function Ficha({ usuario }: { usuario: Usuario }) {
             </button>
           </form>
         ) : (
-          <h1 className="perfil__nombre">
+          <h2 className="perfil__nombre">
             {usuario.nombre}
             <button type="button" className="perfil__editar" onClick={() => setEditando(true)} aria-label="Cambiar tu nombre">
               <PencilIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
             </button>
-          </h1>
+          </h2>
         )}
         {error && (
           <p className="perfil__mensaje is-error" role="alert">
@@ -143,7 +152,7 @@ function Ficha({ usuario }: { usuario: Usuario }) {
               className="perfil__opcion"
               onClick={() => elegirAvatar(opcion)}
             >
-              <Blobatar name={opcion} size={64} animate="hover" />
+              <Blobatar name={opcion} size={72} animate="hover" />
             </button>
           ))}
         </div>
@@ -180,32 +189,52 @@ function AccionesCuenta() {
   }
 
   const estado = cuenta.sincronizando
-    ? 'Guardando tu progreso en tu cuenta…'
-    : (cuenta.error ?? (cuenta.sincronizado ? `Tu progreso está guardado en tu cuenta (última vez a las ${hora(cuenta.sincronizado)}).` : 'Tu progreso se guarda en tu cuenta.'))
+    ? 'Guardando tu progreso…'
+    : cuenta.error
+      ? 'No se pudo guardar tu progreso'
+      : 'Tu progreso está guardado en tu cuenta'
+  const detalleEstado = cuenta.error
+    ? cuenta.error
+    : `${cuenta.sincronizado ? `Última vez a las ${conPunto(hora(cuenta.sincronizado))} ` : ''}Al cerrar sesión se borra de este dispositivo y sigue en tu cuenta.`
 
   return (
     <section className="perfil__bloque" aria-labelledby="perfil-cuenta">
       {dialogo}
+      <Cinta className="seccion__kicker">Tu sesión</Cinta>
       <h2 id="perfil-cuenta" className="practica__subtitulo">
         Tu cuenta
       </h2>
-      <p className={`perfil__mensaje ${cuenta.error ? 'is-error' : ''}`} role="status">
-        {estado}
-      </p>
+      <ul className="ajustes">
+        <li className="ajustes__fila">
+          <span className={`ajustes__icono ${cuenta.error ? 'is-error' : 'is-ok'}`} aria-hidden="true">
+            {cuenta.error ? <CloudOffIcon size={22} isAnimated={animarIconos} /> : <CloudIcon size={22} isAnimated={animarIconos} />}
+          </span>
+          <div className="ajustes__texto" role="status">
+            <p className="ajustes__titulo">{estado}</p>
+            <p className="ajustes__detalle">{detalleEstado}</p>
+          </div>
+          <button type="button" className="boton-discreto ajustes__accion" disabled={ocupado} onClick={() => void ejecutar(cerrarSesion)}>
+            <LogOutIcon size={18} isAnimated={animarIconos} aria-hidden="true" /> Cerrar sesión
+          </button>
+        </li>
+        <li className="ajustes__fila">
+          <span className="ajustes__icono is-peligro" aria-hidden="true">
+            <Trash2Icon size={22} isAnimated={animarIconos} />
+          </span>
+          <div className="ajustes__texto">
+            <p className="ajustes__titulo">Borrar tu cuenta</p>
+            <p className="ajustes__detalle">Se borran tu cuenta y todo el progreso guardado en ella. No se puede deshacer.</p>
+          </div>
+          <button type="button" className="boton-discreto ajustes__accion perfil__borrar" disabled={ocupado} onClick={() => void borrar()}>
+            Borrar cuenta
+          </button>
+        </li>
+      </ul>
       {error && (
         <p className="perfil__mensaje is-error" role="alert">
           {error}
         </p>
       )}
-      <div className="perfil__acciones">
-        <button type="button" className="boton-discreto" disabled={ocupado} onClick={() => void ejecutar(cerrarSesion)}>
-          <LogOutIcon size={18} isAnimated={animarIconos} aria-hidden="true" /> Cerrar sesión
-        </button>
-        <button type="button" className="boton-discreto perfil__borrar" disabled={ocupado} onClick={() => void borrar()}>
-          <Trash2Icon size={18} isAnimated={animarIconos} aria-hidden="true" /> Borrar mi cuenta
-        </button>
-      </div>
-      <p className="perfil__nota">Al cerrar sesión, tu progreso se borra de este dispositivo y queda guardado en tu cuenta.</p>
     </section>
   )
 }
@@ -227,7 +256,7 @@ export function Perfil() {
         </header>
         {cuenta.estado === 'fuera' && (
           <a className="boton boton--tinta" href="#/entrar">
-            Entrar
+            Iniciar sesión
           </a>
         )}
       </main>
@@ -236,7 +265,9 @@ export function Perfil() {
 
   return (
     <main className="contenedor pagina perfil">
-      <Cinta className="seccion__kicker">Mi perfil</Cinta>
+      <header className="pagina__cabecera">
+        <h1 className="pagina__titulo">Mi perfil</h1>
+      </header>
       <Ficha usuario={usuario} />
       <Estadisticas />
       <AccionesCuenta />

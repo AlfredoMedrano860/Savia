@@ -33,13 +33,6 @@ export interface Respaldo {
   datos: Partial<Record<Seccion, unknown>>
 }
 
-export interface ResumenRespaldo {
-  fecha: number
-  intentos: number
-  preguntasVistas: number
-  guardadas: number
-}
-
 const esObjeto = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v)
 const esIdPregunta = (v: unknown) => Number.isInteger(v) && (v as number) > 0 && (v as number) <= TOTAL_PREGUNTAS
 const esConteo = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && v >= 0
@@ -71,17 +64,6 @@ export function crearRespaldo(ahora = Date.now()): Respaldo {
     if (valor !== null) datos[seccion] = valor
   }
   return { app: 'savia', version: VERSION_RESPALDO, fecha: ahora, datos }
-}
-
-/** Cuánto progreso trae un respaldo, para mostrarlo antes de restaurarlo. */
-export function resumirRespaldo(respaldo: Respaldo): ResumenRespaldo {
-  const { historial, aprendizaje, guardadas } = respaldo.datos
-  return {
-    fecha: respaldo.fecha,
-    intentos: Array.isArray(historial) ? historial.length : 0,
-    preguntasVistas: esObjeto(aprendizaje) ? Object.keys(aprendizaje).length : 0,
-    guardadas: Array.isArray(guardadas) ? guardadas.length : 0,
-  }
 }
 
 /**
@@ -144,22 +126,3 @@ export function borrarProgresoLocal() {
   localStorage.removeItem('savia:prueba')
 }
 
-/** Nombre del archivo, con la fecha local: savia-progreso-2026-11-16.json */
-export function nombreArchivo(fecha = new Date()) {
-  const dos = (n: number) => String(n).padStart(2, '0')
-  return `savia-progreso-${fecha.getFullYear()}-${dos(fecha.getMonth() + 1)}-${dos(fecha.getDate())}.json`
-}
-
-/** Descarga el respaldo como archivo. */
-export function descargarRespaldo() {
-  const respaldo = crearRespaldo()
-  const url = URL.createObjectURL(new Blob([JSON.stringify(respaldo)], { type: 'application/json' }))
-  const enlace = document.createElement('a')
-  enlace.href = url
-  enlace.download = nombreArchivo(new Date(respaldo.fecha))
-  document.body.appendChild(enlace)
-  enlace.click()
-  enlace.remove()
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
-  return resumirRespaldo(respaldo)
-}

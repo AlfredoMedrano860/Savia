@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react'
 import type { Auth, User } from 'firebase/auth'
 import type { Firestore } from 'firebase/firestore/lite'
 import { alCambiarProgreso } from './cambios'
-import { combinarRespaldos, mismoProgreso } from './combinar'
+import { combinarRespaldos, mismoProgreso, sinAccesibilidad } from './combinar'
 import { borrarProgresoLocal, crearRespaldo, leerRespaldo, restaurarRespaldo, type Respaldo } from './respaldo'
 
 /*
@@ -174,7 +174,8 @@ async function leerNube(s: Servicios, uid: string): Promise<Respaldo | null> {
 
 async function escribirNube(s: Servicios, uid: string, respaldo: Respaldo) {
   await s.f.setDoc(s.f.doc(s.db, 'usuarios', uid), {
-    progreso: JSON.stringify(respaldo),
+    // la accesibilidad es de cada dispositivo: no se sube
+    progreso: JSON.stringify(sinAccesibilidad(respaldo)),
     actualizado: s.f.serverTimestamp(),
     version: VERSION_DOCUMENTO,
   })

@@ -24,7 +24,6 @@ const DATOS_LOCALES = [
   ['savia:guardadas', 'Las preguntas que marcaste con la estrella.'],
   ['savia:diaria', 'La pregunta del día que respondiste y tu racha de días seguidos.'],
   ['savia:accesibilidad', 'Tus preferencias del panel de accesibilidad (tamaño de letra, filtros, etc.).'],
-  ['savia:invitacion-respaldo', 'Que ya viste el aviso para respaldar tu progreso, para no repetirlo.'],
   ['savia:perfil', 'El blobatar que elegiste para tu perfil.'],
   ['savia:sesion', 'Solo si iniciaste sesión: que hay una sesión abierta, para recuperarla al abrir Savia.'],
   ['firebaseLocalStorageDb', 'Solo si iniciaste sesión: la sesión de tu cuenta, que guarda Firebase en el navegador (IndexedDB).'],
@@ -42,6 +41,7 @@ const LICENCIAS = [
   ['Lucide', 'Diseño de los íconos', 'ISC'],
   ['Motion', 'Animaciones de los íconos', 'MIT'],
   ['Blobatar (@blobatar/react)', 'Avatares de perfil', 'MIT'],
+  ['Recharts', 'Gráficos de tu avance en Mi perfil', 'MIT'],
   ['Firebase JavaScript SDK', 'Cuentas y progreso en la nube (opcional)', 'Apache 2.0'],
 ]
 
@@ -229,10 +229,6 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
               </a>
               .
             </p>
-            <p>
-              En Mi progreso puedes descargar un respaldo: es un archivo con esa misma información que se guarda donde tú elijas. Savia
-              no lo envía a ningún lado; solo se usa si tú lo vuelves a cargar para restaurar tu avance.
-            </p>
           </>
         ),
       },
@@ -246,8 +242,8 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
             <ul>
               <li>Tu correo y tu nombre (y tu foto de perfil, si entras con Google), para identificar tu cuenta.</li>
               <li>
-                Tu progreso: intentos y respuestas, avance por tema, repaso, preguntas guardadas, pregunta del día y preferencias de
-                accesibilidad.
+                Tu progreso: intentos y respuestas, avance por tema, repaso, preguntas guardadas, y pregunta del día. Tus
+                preferencias de accesibilidad se quedan solo en cada dispositivo.
               </li>
             </ul>
             <p>
@@ -304,11 +300,11 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         contenido: (
           <>
             <p>
-              Tú decides sobre tus datos: puedes verlos en Savia, descargarlos (respaldo en Mi progreso), borrarlos o dejar de usarla
+              Tú decides sobre tus datos: puedes verlos en Savia, borrarlos o dejar de usarla
               cuando quieras.
             </p>
             <ul>
-              <li>Si tienes cuenta, usa “Borrar mi cuenta” en “Tu cuenta”: se borran la cuenta y todo tu progreso guardado en ella.</li>
+              <li>Si tienes cuenta, usa “Borrar cuenta” en Mi perfil: se borran la cuenta y todo tu progreso guardado en ella.</li>
               <li>Para borrar tus intentos, usa “Borrar historial” en Practicar.</li>
               <li>
                 Para borrar todo, elimina los datos del sitio en la configuración de tu navegador o desinstala la app de tu

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { startTransition, useEffect, useState } from 'react'
 
 export type RutaLegal = 'terminos' | 'privacidad' | 'cookies' | 'licencias'
 export type RutaCuenta = 'entrar' | 'perfil'
@@ -22,7 +22,7 @@ export const RUTAS_LEGALES: { id: RutaLegal; nombre: string; href: string }[] = 
 
 // Páginas de la cuenta: se abren desde el botón de la cuenta en la barra, no desde el menú.
 export const RUTAS_CUENTA: { id: RutaCuenta; nombre: string; href: string }[] = [
-  { id: 'entrar', nombre: 'Entrar', href: '#/entrar' },
+  { id: 'entrar', nombre: 'Iniciar sesión', href: '#/entrar' },
   { id: 'perfil', nombre: 'Mi perfil', href: '#/perfil' },
 ]
 
@@ -65,7 +65,9 @@ export function useRuta() {
   const [ruta, setRuta] = useState(leer)
   useEffect(() => {
     const onCambio = () => {
-      setRuta(leer())
+      // como transición: si la página nueva se descarga aparte, se queda la actual hasta que
+      // esté lista en vez de mostrar «Cargando…» (con la precarga eso es casi instantáneo)
+      startTransition(() => setRuta(leer()))
       window.scrollTo({ top: 0 })
     }
     window.addEventListener('hashchange', onCambio)

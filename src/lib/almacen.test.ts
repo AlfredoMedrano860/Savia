@@ -14,10 +14,13 @@ beforeEach(() => {
   vi.spyOn(console, 'warn').mockImplementation(() => {})
 })
 
-const resultadoDePrueba = async (fecha = Date.now()): Promise<Resultado> => {
+// La fecha de entrega se calcula desde el inicio de la prueba (un minuto después) y no con el
+// reloj: si se tomara antes de crear la prueba, en una máquina lenta la duración podía salir
+// negativa y el intento se descartaba como inválido.
+const resultadoDePrueba = async (fecha?: number): Promise<Resultado> => {
   const prueba = pruebaDeRepaso([banco[0].id, banco[1].id])
   prueba.respuestas = [banco[0].r, null]
-  return calificar(prueba, fecha)
+  return calificar(prueba, fecha ?? prueba.inicio + 60_000)
 }
 
 describe('prueba en curso', () => {
