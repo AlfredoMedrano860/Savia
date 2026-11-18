@@ -1,6 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Accesibilidad } from './Accesibilidad'
 import { Bocetos } from './Bocetos'
+import { BotonCuenta } from './Cuenta'
 import { VolverArriba } from './VolverArriba'
 import { DESARROLLADOR, PROYECTO, SOPORTE } from '../lib/proyecto'
 import { abrirLegal, RUTAS, RUTAS_LEGALES, type Ruta } from '../lib/ruta'
@@ -16,7 +17,7 @@ function IconoPie({ tipo }: { tipo: TipoContacto }) {
 }
 
 // Símbolo de Savia (kit en src/assets/logo). El cuadrado toma el color del CSS para conservar el hover.
-function Logo() {
+export function Logo() {
   return (
     <svg className="logo__icono" viewBox="0 0 64 64" aria-hidden="true">
       <rect width="64" height="64" rx="14" fill="currentColor" />
@@ -62,6 +63,8 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
       <a href="#contenido" className="saltar">
         Saltar al contenido
       </a>
+      {/* la página para entrar es una pantalla propia, sin la barra: así el formulario tiene todo el alto */}
+      {ruta !== 'entrar' && (
       <header className="nav">
         <div className="nav__contenedor">
           <a href="#/" className="logo">
@@ -91,8 +94,10 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
               </a>
             ))}
           </nav>
+          <BotonCuenta />
         </div>
       </header>
+      )}
 
       <div id="contenido" tabIndex={-1} className="contenido">
         <Bocetos ruta={ruta} />

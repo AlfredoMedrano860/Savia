@@ -10,8 +10,10 @@ import './tokens.css'
 import './index.css'
 import App from './App.tsx'
 import { retirarServiceWorker } from './lib/pwa'
+import { iniciarCuenta } from './lib/cuenta'
 
 retirarServiceWorker()
+iniciarCuenta()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

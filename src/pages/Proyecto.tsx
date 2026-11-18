@@ -123,22 +123,24 @@ export function Proyecto() {
             <span className="contacto-tarjeta__rotulo">Correo</span>
             <a className="contacto-tarjeta__valor" href={`mailto:${PROYECTO.correo}`}>
               {/* si no cabe, se parte después de la arroba y no a mitad de palabra */}
-              {PROYECTO.correo.split('@')[0]}
-              <wbr />@{PROYECTO.correo.split('@')[1]}
+              <span className="contacto-tarjeta__texto">
+                {PROYECTO.correo.split('@')[0]}
+                <wbr />@{PROYECTO.correo.split('@')[1]}
+              </span>
             </a>
           </li>
           <li className="contacto-tarjeta">
             <IconoContacto tipo="telefono" className="contacto-tarjeta__icono" />
             <span className="contacto-tarjeta__rotulo">Teléfono</span>
             <a className="contacto-tarjeta__valor" href={`tel:+506${PROYECTO.telefono}`}>
-              {PROYECTO.telefonoVisible}
+              <span className="contacto-tarjeta__texto">{PROYECTO.telefonoVisible}</span>
             </a>
           </li>
           <li className="contacto-tarjeta">
             <IconoContacto tipo="facebook" className="contacto-tarjeta__icono" />
             <span className="contacto-tarjeta__rotulo">Redes</span>
             <a className="contacto-tarjeta__valor" href={PROYECTO.facebook} target="_blank" rel="noopener noreferrer">
-              Facebook del consultorio
+              <span className="contacto-tarjeta__texto">Facebook del consultorio</span>
             </a>
           </li>
         </ul>

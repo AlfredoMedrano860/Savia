@@ -1,4 +1,5 @@
 import { CODIGOS, TOTAL_PREGUNTAS, type ModoId, type Prueba, type Resultado } from './banco'
+import { avisarCambioDeProgreso } from './cambios'
 
 const CLAVE_PRUEBA = 'savia:prueba'
 const CLAVE_HISTORIAL = 'savia:historial'
@@ -87,6 +88,8 @@ function escribir(clave: string, valor: unknown) {
   try {
     if (valor === null) localStorage.removeItem(clave)
     else localStorage.setItem(clave, JSON.stringify(valor))
+    // la prueba en curso no se sube a la cuenta; el historial sí
+    if (clave !== CLAVE_PRUEBA) avisarCambioDeProgreso()
   } catch (error: unknown) {
     console.warn(`No se pudo guardar el almacenamiento local (${clave}).`, error)
   }

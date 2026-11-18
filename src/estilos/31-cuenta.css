@@ -1,0 +1,969 @@
+/* Cuenta: botón de la barra, página para entrar o crear cuenta, y Mi perfil. */
+
+/* ---------- botón en la barra ----------
+   En pantallas grandes: logo a la izquierda y, a la derecha, los enlaces y la cuenta.
+   En el teléfono: logo, cuenta y el botón del menú. */
+.nav__enlaces {
+  margin-left: auto;
+}
+
+.nav__cuenta {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px 0 10px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--tinta);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color var(--hover-duracion) var(--hover-curva),
+    border-color var(--hover-duracion) var(--hover-curva);
+}
+
+.nav__cuenta:hover {
+  border-color: var(--color-borde-marca);
+  background: var(--color-marca-suave);
+}
+
+.nav__cuenta[aria-disabled='true'] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.nav__cuenta:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.nav__cuenta-avatar {
+  flex: none;
+  border-radius: 50%;
+}
+
+.nav__cuenta-texto {
+  max-width: 12ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .nav__cuenta {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .nav__menu {
+    order: 3;
+  }
+}
+
+@media (max-width: 420px) {
+  /* con sesión, en pantallas muy angostas basta el blobatar */
+  .nav__cuenta:has(.nav__cuenta-avatar) {
+    padding: 5px;
+  }
+
+  .nav__cuenta:has(.nav__cuenta-avatar) .nav__cuenta-texto {
+    display: none;
+  }
+}
+
+/* ---------- página para entrar ----------
+   Una tarjeta con dos lados que cabe en la pantalla: el panel de la marca (el azul de la
+   portada, con sus círculos de línea fina y las pestañas encajadas en el borde derecho) y el
+   formulario, con los botones, campos y títulos de siempre de Savia. */
+/* pantalla propia, sin la barra de arriba: la tarjeta tiene todo el alto de la ventana */
+.entrar {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: 16px;
+}
+
+.entrar__tarjeta {
+  --entrar-papel: var(--panel);
+  --entrar-curva: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  max-width: 1080px;
+  height: min(760px, calc(100svh - 32px));
+  min-height: 560px;
+  margin: 0 auto;
+  padding: 12px;
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: var(--entrar-papel);
+  box-shadow: var(--sombra-suave);
+}
+
+.entrar__marca {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(24px, 3.5vw, 40px);
+  border-radius: 10px;
+  background: var(--color-superficie-marca);
+  color: var(--color-texto-sobre-marca);
+}
+
+/* Solo los círculos se recortan al borde del panel: la pestaña activa tiene que poder
+   sobresalir un poco hacia el lado blanco para que no quede una raya en la unión. */
+.entrar__circulos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* los mismos círculos de línea fina que el encabezado de la portada */
+.entrar__circulo {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.entrar__circulo--1 {
+  top: -12%;
+  left: -10%;
+  width: 62%;
+  aspect-ratio: 1;
+}
+
+.entrar__circulo--2 {
+  top: 6%;
+  left: 18%;
+  width: 40%;
+  aspect-ratio: 1;
+}
+
+.entrar__circulo--3 {
+  right: -14%;
+  bottom: -10%;
+  width: 56%;
+  aspect-ratio: 1;
+}
+
+/* pestañas encajadas en el borde derecho del panel */
+.entrar__pestanas {
+  --entrar-alto-pestana: 56px;
+  --entrar-separacion: 8px;
+  --entrar-deslizar: 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  position: absolute;
+  top: 56px;
+  right: 0;
+  z-index: 1;
+  display: grid;
+  gap: var(--entrar-separacion);
+  width: 176px;
+}
+
+.entrar__pestana {
+  position: relative;
+  z-index: 1;
+  min-height: var(--entrar-alto-pestana);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--entrar-curva) 0 0 var(--entrar-curva);
+  background: transparent;
+  color: var(--color-texto-sobre-marca-suave);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.35s ease;
+}
+
+.entrar__pestana:hover {
+  color: var(--hover-sobre-marca-claro);
+}
+
+.entrar__pestana[aria-selected='true'] {
+  color: var(--color-marca);
+  cursor: default;
+}
+
+.entrar__pestana:focus-visible {
+  outline: 2px solid var(--hierba-300);
+  outline-offset: -4px;
+}
+
+/* La forma blanca de la pestaña activa es un solo elemento detrás de las dos pestañas: al
+   cambiar se desliza de una a otra, con sus esquinas curvas hacia afuera que la unen con el
+   formulario. Sobresale 2 px hacia el lado blanco y las esquinas se montan 1 px sobre ella,
+   para que no se vean rayas en las uniones. */
+.entrar__indicador {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: calc(100% + 2px);
+  height: var(--entrar-alto-pestana);
+  border-radius: var(--entrar-curva) 0 0 var(--entrar-curva);
+  background: var(--entrar-papel);
+  transition: transform var(--entrar-deslizar);
+  will-change: transform;
+}
+
+.entrar__pestanas[data-activa='crear'] .entrar__indicador {
+  transform: translateY(calc(var(--entrar-alto-pestana) + var(--entrar-separacion)));
+}
+
+.entrar__indicador::before,
+.entrar__indicador::after {
+  position: absolute;
+  right: 0;
+  width: var(--entrar-curva);
+  height: calc(var(--entrar-curva) + 1px);
+  content: '';
+}
+
+.entrar__indicador::before {
+  bottom: calc(100% - 1px);
+  background: radial-gradient(circle at 0 0, transparent calc(var(--entrar-curva) - 0.5px), var(--entrar-papel) var(--entrar-curva));
+}
+
+.entrar__indicador::after {
+  top: calc(100% - 1px);
+  background: radial-gradient(circle at 0 100%, transparent calc(var(--entrar-curva) - 0.5px), var(--entrar-papel) var(--entrar-curva));
+}
+
+/* logo, cinta y titular con la misma separación entre ellos */
+.entrar__lema {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 26rem;
+}
+
+.entrar__lema > * {
+  margin: 0;
+}
+
+/* la cinta va girada y su punta sube hacia el logo: un poco más de aire arriba compensa el
+   giro para que, a la vista, quede a la misma distancia del logo que del titular */
+.entrar__lema > .seccion__kicker {
+  margin-top: 6px;
+}
+
+/* salida de la página (no lleva la barra de arriba) */
+.entrar__volver {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-texto-sobre-marca-suave);
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--hover-duracion) var(--hover-curva),
+    color var(--hover-duracion) var(--hover-curva);
+}
+
+.entrar__volver:hover {
+  background: var(--hover-sobre-marca-contorno);
+  color: var(--blanco);
+}
+
+.entrar__volver:focus-visible {
+  outline: 2px solid var(--hierba-300);
+  outline-offset: 2px;
+}
+
+.entrar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  color: var(--blanco);
+  text-decoration: none;
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.entrar__logo .logo__icono {
+  width: 40px;
+  height: 40px;
+  color: var(--puerto-500);
+}
+
+.entrar__titular {
+  color: var(--blanco);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h2);
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* formulario */
+.entrar__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 420px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 16px clamp(12px, 2.5vw, 24px);
+  overflow-y: auto;
+}
+
+/* el blobatar arriba y centrado; el título y el texto, alineados a la izquierda con los
+   campos (en el teléfono van centrados) */
+.entrar__encabezado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.entrar__titulo {
+  align-self: stretch;
+}
+
+/* el blobatar va suelto, sin marco */
+.entrar__avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+
+.entrar__titulo {
+  margin: 0;
+  color: var(--tinta);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h3);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.entrar__texto {
+  margin: 8px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  line-height: 1.45;
+}
+
+/* el título y el texto entran con un fundido corto al cambiar de pestaña */
+.entrar__cambio {
+  min-width: 0;
+  animation: entrar-aparecer 0.4s ease both;
+}
+
+.entrar__formulario {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.entrar__formulario .entrar__campo {
+  animation: entrar-aparecer 0.4s ease both;
+}
+
+
+@keyframes entrar-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.entrar__campo {
+  display: grid;
+  gap: 6px;
+}
+
+.entrar__campo > span:first-child {
+  color: var(--tinta);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+}
+
+.entrar__rotulo-clave {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.entrar__rotulo-clave small {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 400;
+}
+
+.entrar__campo input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--tinta);
+  font: inherit;
+  transition: border-color var(--hover-duracion) var(--hover-curva);
+}
+
+.entrar__campo input:hover {
+  border-color: var(--color-borde-marca);
+}
+
+.entrar__campo input:focus-visible {
+  border-color: var(--color-foco);
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.entrar__clave {
+  position: relative;
+  display: block;
+}
+
+.entrar__clave input {
+  padding-right: 52px;
+}
+
+/* el navegador (Edge/Chrome en Windows) agrega su propio ojo para ver la contraseña: se oculta
+   para que quede solo el de Savia */
+.entrar__clave input::-ms-reveal,
+.entrar__clave input::-ms-clear {
+  display: none;
+}
+
+.entrar__ver {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.entrar__ver:hover {
+  background: var(--color-marca-suave);
+  color: var(--color-marca);
+}
+
+.entrar__olvide {
+  justify-self: end;
+  margin-top: -2px;
+  border: 0;
+  background: none;
+  color: var(--puerto-700);
+  font: inherit;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.entrar__mensaje {
+  margin: 0;
+  color: var(--verde);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.entrar__mensaje.is-error {
+  color: var(--rojo);
+}
+
+.entrar__separador {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.entrar__separador::before,
+.entrar__separador::after {
+  flex: 1;
+  height: 1px;
+  background: var(--linea);
+  content: '';
+}
+
+.entrar__google {
+  width: 20px;
+  height: 20px;
+}
+
+.entrar__panel .boton--ancho {
+  min-height: 48px;
+}
+
+.entrar__pie {
+  margin: 16px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  text-align: center;
+}
+
+.entrar__pie .enlace {
+  border: 0;
+  background-color: transparent;
+  color: var(--puerto-700);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.entrar__nota {
+  margin: 8px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entrar__indicador,
+  .entrar__pestana {
+    transition: none;
+  }
+
+  .entrar__cambio,
+  .entrar__formulario .entrar__campo {
+    animation: none;
+  }
+}
+
+.a11y-reduce-motion .entrar__indicador,
+.a11y-reduce-motion .entrar__pestana {
+  transition: none;
+}
+
+.a11y-reduce-motion .entrar__cambio,
+.a11y-reduce-motion .entrar__formulario .entrar__campo {
+  animation: none;
+}
+
+/* pantallas de computadora bajas (por ejemplo 1280 x 720): un poco más compacto */
+@media (max-height: 800px) and (min-width: 861px) {
+  .entrar__avatar svg {
+    width: 68px;
+    height: 68px;
+  }
+
+  .entrar__formulario {
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .entrar__campo input,
+  .entrar__panel .boton--ancho {
+    min-height: 44px;
+  }
+
+  .entrar__separador {
+    margin: 12px 0;
+  }
+
+  .entrar__pie {
+    margin-top: 14px;
+  }
+}
+
+@media (max-height: 740px) and (min-width: 861px) {
+  .entrar__nota {
+    display: none;
+  }
+
+  .entrar__avatar svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .entrar__texto {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 860px) {
+  .entrar {
+    min-height: 0;
+    padding-block: 8px;
+  }
+
+  .entrar__tarjeta {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .entrar__marca {
+    padding: 14px 14px 12px;
+  }
+
+  .entrar__titulo,
+  .entrar__texto {
+    text-align: center;
+  }
+
+  /* "Volver a Savia" en la misma fila que el logo, a la derecha */
+  .entrar__volver {
+    top: 14px;
+    right: 10px;
+    left: auto;
+  }
+
+  /* en el teléfono, las pestañas van como dos botones debajo del lema */
+  .entrar__pestanas {
+    position: relative;
+    top: auto;
+    right: auto;
+    order: 2;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    width: 100%;
+    margin-top: 18px;
+    padding: 4px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .entrar__pestana {
+    min-height: 42px;
+    padding: 0 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  /* aquí la forma blanca se desliza de lado, sin las esquinas curvas */
+  .entrar__indicador {
+    top: 4px;
+    right: auto;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: 42px;
+    border-radius: 8px;
+  }
+
+  .entrar__pestanas[data-activa='crear'] .entrar__indicador {
+    transform: translateX(100%);
+  }
+
+  .entrar__indicador::before,
+  .entrar__indicador::after {
+    display: none;
+  }
+
+  .entrar__logo {
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+  }
+
+  .entrar__logo .logo__icono {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* en el teléfono el panel azul queda solo con el logo y las pestañas, para que el
+     formulario quepa en la pantalla */
+  .entrar__lema .seccion__kicker,
+  .entrar__titular,
+  .entrar__circulo--2 {
+    display: none;
+  }
+
+  .entrar__logo {
+    margin: 0;
+  }
+
+  .entrar__panel {
+    padding: 18px 8px 8px;
+    overflow: visible;
+  }
+
+  .entrar__formulario {
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .entrar__campo input,
+  .entrar__panel .boton--ancho {
+    min-height: 42px;
+  }
+
+  .entrar__separador {
+    margin: 8px 0;
+  }
+
+  .entrar__pie {
+    margin-top: 10px;
+  }
+
+  .entrar__avatar svg {
+    width: 52px;
+    height: 52px;
+  }
+
+  .entrar__encabezado {
+    gap: 6px;
+  }
+}
+
+/* ---------- Mi perfil ---------- */
+.perfil__ficha {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px 32px;
+  margin-top: 14px;
+  padding: clamp(20px, 4vw, 34px);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  background: var(--panel);
+}
+
+.perfil__avatar {
+  display: grid;
+  place-items: center;
+  width: 156px;
+  height: 156px;
+  border: 3px solid var(--gris-100);
+  border-radius: 50%;
+  background: var(--gris-50);
+}
+
+.perfil__nombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.perfil__editar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+}
+
+.perfil__editar:hover {
+  background: var(--color-marca-suave);
+  color: var(--color-marca);
+}
+
+.perfil__nombre-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.perfil__nombre-form input {
+  flex: 1 1 220px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--gris-50);
+  color: var(--color-texto);
+  font: inherit;
+  font-size: 1.1rem;
+}
+
+.perfil__correo {
+  margin: 6px 0 0;
+  color: var(--color-texto-suave);
+  overflow-wrap: anywhere;
+}
+
+.perfil__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 12px 0 0;
+  padding: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  list-style: none;
+}
+
+.perfil__cambiar {
+  margin: 12px 0 0 -12px;
+}
+
+.perfil__opciones {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--linea-suave);
+}
+
+.perfil__opcion {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: var(--gris-50);
+  cursor: pointer;
+  transition:
+    border-color var(--hover-duracion) var(--hover-curva),
+    background-color var(--hover-duracion) var(--hover-curva);
+}
+
+.perfil__opcion:hover {
+  border-color: var(--gris-200);
+}
+
+.perfil__opcion[aria-checked='true'] {
+  border-color: var(--color-marca);
+  background: var(--color-marca-suave);
+}
+
+.perfil__opcion:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.perfil__bloque {
+  margin-top: clamp(36px, 6vw, 56px);
+}
+
+.perfil__datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  gap: 14px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.perfil__dato {
+  display: grid;
+  gap: 2px;
+  padding: 18px;
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.perfil__dato-rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.perfil__dato-valor {
+  color: var(--puerto-700);
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.perfil__dato-detalle {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.perfil__mas {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 700;
+}
+
+.perfil__mensaje {
+  margin: 10px 0 0;
+  color: var(--verde);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+}
+
+.perfil__mensaje.is-error {
+  color: var(--rojo);
+}
+
+.perfil__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* los botones sin borde: el primero se corre para que su letra quede alineada con el título */
+.perfil__acciones > .boton-discreto:first-child {
+  margin-inline-start: -12px;
+}
+
+.perfil__borrar {
+  color: var(--rojo);
+}
+
+.perfil__borrar:hover:not(:disabled) {
+  background: var(--rojo-claro);
+  color: var(--rojo);
+}
+
+.perfil__nota {
+  margin: 12px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+}
+
+@media (max-width: 640px) {
+  .perfil__ficha {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .perfil__nombre {
+    justify-content: center;
+  }
+
+  .perfil__meta {
+    justify-content: center;
+  }
+
+  .perfil__cambiar {
+    margin-left: 0;
+  }
+}

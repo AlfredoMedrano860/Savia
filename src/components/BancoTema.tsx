@@ -3,6 +3,7 @@ import { EyeIcon, EyeOffIcon } from '@animateicons/react/lucide'
 import { LETRAS, type Pregunta } from '../lib/banco'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { BotonGuardar } from './BotonGuardar'
+import { EnlaceReporte } from './EnlaceReporte'
 import { Paginacion } from './Paginacion'
 
 const POR_PAGINA = 10
@@ -138,10 +139,15 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
                 {abierta ? (
                   <p className="revision__explicacion">{p.e}</p>
                 ) : null}
-                {!todas && (
-                  <button type="button" className="banco__ver" onClick={() => alternar(p.id)} aria-expanded={abierta}>
-                    {abierta ? 'Ocultar respuesta' : 'Ver respuesta'}
-                  </button>
+                {(!todas || abierta) && (
+                  <div className="revision__pie">
+                    {!todas && (
+                      <button type="button" className="banco__ver" onClick={() => alternar(p.id)} aria-expanded={abierta}>
+                        {abierta ? 'Ocultar respuesta' : 'Ver respuesta'}
+                      </button>
+                    )}
+                    {abierta && <EnlaceReporte pregunta={p} />}
+                  </div>
                 )}
               </li>
             )

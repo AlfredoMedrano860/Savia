@@ -8,7 +8,7 @@
 .revision__temario,
 .contraportada__legal a,
 .practica__nota a,
-a.contacto-tarjeta__valor,
+.contacto-tarjeta__texto,
 .temario__subtema > span:first-child {
   padding-bottom: 2px;
   background-image: linear-gradient(currentColor, currentColor);
@@ -27,10 +27,16 @@ a.contacto-tarjeta__valor,
 .revision__temario:hover,
 .contraportada__legal a:hover,
 .practica__nota a:hover,
-a.contacto-tarjeta__valor:hover,
-.contacto-tarjeta:hover a.contacto-tarjeta__valor,
+.contacto-tarjeta:hover .contacto-tarjeta__texto,
 .temario__subtema:hover > span:first-child {
   background-size: 100% 2px;
+}
+
+/* In the contact cards the link is a block, so the line is drawn on an inline span instead:
+   that way it follows each line of a long email rather than the whole card width. */
+.contacto-tarjeta__texto {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* En el pie, los enlaces legales llevan la misma línea verde hierba que los demás enlaces del
@@ -50,7 +56,7 @@ a.contacto-tarjeta__valor:hover,
   .revision__temario,
   .contraportada__legal a,
   .practica__nota a,
-  a.contacto-tarjeta__valor,
+  .contacto-tarjeta__texto,
   .temario__subtema > span:first-child {
     transition: none;
   }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
 export type RutaLegal = 'terminos' | 'privacidad' | 'cookies' | 'licencias'
-export type Ruta = 'inicio' | 'practicar' | 'progreso' | 'temario' | 'proyecto' | RutaLegal
+export type RutaCuenta = 'entrar' | 'perfil'
+export type Ruta = 'inicio' | 'practicar' | 'progreso' | 'temario' | 'proyecto' | RutaLegal | RutaCuenta
 
 export const RUTAS: { id: Ruta; nombre: string; href: string }[] = [
   { id: 'inicio', nombre: 'Inicio', href: '#/' },
@@ -19,7 +20,13 @@ export const RUTAS_LEGALES: { id: RutaLegal; nombre: string; href: string }[] = 
   { id: 'licencias', nombre: 'Licencias y créditos', href: '#/licencias' },
 ]
 
-const TODAS = [...RUTAS, ...RUTAS_LEGALES]
+// Páginas de la cuenta: se abren desde el botón de la cuenta en la barra, no desde el menú.
+export const RUTAS_CUENTA: { id: RutaCuenta; nombre: string; href: string }[] = [
+  { id: 'entrar', nombre: 'Entrar', href: '#/entrar' },
+  { id: 'perfil', nombre: 'Mi perfil', href: '#/perfil' },
+]
+
+const TODAS = [...RUTAS, ...RUTAS_LEGALES, ...RUTAS_CUENTA]
 
 export const esRutaLegal = (ruta: Ruta): ruta is RutaLegal => RUTAS_LEGALES.some((r) => r.id === ruta)
 

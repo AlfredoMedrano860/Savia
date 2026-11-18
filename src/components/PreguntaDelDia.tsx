@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowRightIcon, CheckIcon, FlameIcon, XIcon } from '@animateicons/react/lucide'
 import { registrarRespuesta } from '../lib/aprendizaje'
+import { avisarCambioDeProgreso } from '../lib/cambios'
 import { cargarPreguntas, LETRAS, TEMAS, TOTAL_PREGUNTAS, type Pregunta } from '../lib/banco'
 import { enlaceTemario } from '../lib/ruta'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
@@ -61,6 +62,7 @@ function leerEstado(hoy: string): EstadoDiario {
 function guardarEstado(estado: EstadoDiario) {
   try {
     localStorage.setItem(CLAVE, JSON.stringify(estado))
+    avisarCambioDeProgreso()
   } catch {
     // sin almacenamiento: la pregunta funciona igual, pero no se recuerda
   }

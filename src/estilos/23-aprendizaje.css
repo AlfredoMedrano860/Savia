@@ -18,7 +18,7 @@
 
 .progreso__accesos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 18px;
 }
 
@@ -778,4 +778,70 @@
 
 .contraportada__instalar:hover .contraportada__instalar-icono {
   background: var(--hierba-200);
+}
+
+/* respaldo del progreso e invitación a instalar */
+.respaldo {
+  margin-top: clamp(48px, 7vw, 72px);
+}
+
+.respaldo__intro {
+  max-width: 62ch;
+  margin: 8px 0 18px;
+}
+
+.respaldo__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.respaldo__estado {
+  margin: 0;
+  color: var(--verde);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.respaldo__estado.is-error {
+  color: var(--rojo);
+}
+
+/* pie de cada pregunta en la revisión y el banco: enlace al temario o "ver respuesta" a la
+   izquierda y "Reportar un error" a la derecha, discreto para no competir con el estudio */
+.revision__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 18px;
+  margin-top: 10px;
+}
+
+.revision__pie .revision__temario,
+.revision__pie .banco__ver {
+  margin-top: 0;
+}
+
+.reportar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color var(--hover-duracion) var(--hover-curva);
+}
+
+.reportar:hover {
+  color: var(--rojo);
+}
+
+/* botón sin borde solo en una tarjeta: el relleno se corre hacia afuera para que la letra
+   quede alineada con el texto de la tarjeta (el fondo del hover sobresale un poco) */
+.acceso > .boton-discreto {
+  margin-inline-start: -12px;
 }

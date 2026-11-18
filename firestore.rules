@@ -1,0 +1,26 @@
+rules_version = '2';
+
+// Reglas de Firestore para Savia. Pégalas en la consola de Firebase:
+// Firestore Database → Reglas → Publicar.
+//
+// Cada persona solo puede leer, escribir y borrar su propio documento usuarios/{uid}, y
+// solo con la forma que usa Savia (el progreso como texto, la fecha del servidor y la
+// versión). Todo lo demás está cerrado.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /usuarios/{uid} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['progreso', 'actualizado', 'version'])
+        && request.resource.data.progreso is string
+        && request.resource.data.progreso.size() < 900000
+        && request.resource.data.actualizado == request.time
+        && request.resource.data.version is int;
+    }
+
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}
