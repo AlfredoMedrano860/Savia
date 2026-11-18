@@ -33,6 +33,8 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
   const restantes = useSegundosRestantes(prueba.limite)
   const animarIconos = useIconosAnimados()
   const [confirmar, setConfirmar] = useState(false)
+  // Al terminar el recorrido, la persona pasa por las preguntas que marcó antes de entregar.
+  const [revisando, setRevisando] = useState(false)
   const [pregunta, setPregunta] = useState<Pregunta | null>(null)
   const [errorCarga, setErrorCarga] = useState(false)
   const dialogo = useRef<HTMLDialogElement>(null)
@@ -43,6 +45,10 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
   const elegida = prueba.respuestas[prueba.actual]
   const respondidas = prueba.respuestas.filter((r) => r !== null).length
   const marcadas = prueba.marcadas.filter(Boolean).length
+  const indicesMarcados = prueba.marcadas.flatMap((m, i) => (m ? [i] : []))
+  const enRevision = revisando && marcadas > 0
+  const siguienteMarcada = indicesMarcados.find((i) => i > prueba.actual)
+  const posicionEnRevision = indicesMarcados.indexOf(prueba.actual) + 1
 
   const urgencia = restantes <= 60 ? 'critico' : restantes <= 600 ? 'alerta' : ''
 
@@ -96,6 +102,13 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
     },
     [prueba, onCambio],
   )
+
+  const revisarMarcadas = () => {
+    if (!indicesMarcados.length) return
+    setConfirmar(false)
+    setRevisando(true)
+    ir(indicesMarcados[0])
+  }
 
   const marcar = () => {
     const nuevas = [...prueba.marcadas]
@@ -234,9 +247,19 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
               )}
               <span>{prueba.marcadas[prueba.actual] ? 'Marcada para revisar' : 'Marcar para revisar'}</span>
             </button>
-            {prueba.actual < total - 1 ? (
+            {enRevision && siguienteMarcada !== undefined ? (
+              <button type="button" className="boton boton--tinta" onClick={() => ir(siguienteMarcada)}>
+                Siguiente marcada
+                <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
+              </button>
+            ) : !enRevision && prueba.actual < total - 1 ? (
               <button type="button" className="boton boton--tinta" onClick={() => ir(prueba.actual + 1)}>
                 Siguiente
+                <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
+              </button>
+            ) : !enRevision && marcadas > 0 ? (
+              <button type="button" className="boton boton--tinta" onClick={revisarMarcadas}>
+                Revisar marcadas ({marcadas})
                 <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
               </button>
             ) : (
@@ -245,6 +268,11 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
               </button>
             )}
           </div>
+          {enRevision && posicionEnRevision > 0 && (
+            <p className="examen__revisando" role="status">
+              Revisando marcadas · {posicionEnRevision} de {marcadas}
+            </p>
+          )}
           <p className="atajos">
             <span className="atajos__titulo">Teclas rápidas</span>
             <span className="atajos__grupo">
@@ -317,9 +345,15 @@ export function Examen({ prueba, error, onCambio, onEntregar, onSalir }: ExamenP
           )}
         </p>
         <div className="dialogo__acciones">
-          <button type="button" className="boton-discreto" onClick={() => setConfirmar(false)}>
-            Seguir respondiendo
-          </button>
+          {marcadas > 0 ? (
+            <button type="button" className="boton-discreto" onClick={revisarMarcadas}>
+              Revisar marcadas
+            </button>
+          ) : (
+            <button type="button" className="boton-discreto" onClick={() => setConfirmar(false)}>
+              Seguir respondiendo
+            </button>
+          )}
           <button type="button" className="boton boton--tinta" onClick={onEntregar}>
             Entregar
           </button>

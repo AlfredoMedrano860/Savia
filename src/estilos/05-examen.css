@@ -247,3 +247,36 @@
     white-space: normal;
   }
 }
+
+/* aviso bajo los botones mientras se recorren las preguntas marcadas antes de entregar */
+.examen__revisando {
+  margin: 10px 0 0;
+  color: var(--color-marca);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .examen__revisando {
+    text-align: center;
+  }
+}
+
+/* Alto fijo de la hoja en pantallas medianas y grandes: así "Anterior", "Marcar" y
+   "Siguiente" quedan siempre en el mismo lugar aunque la pregunta sea más larga o más corta
+   (medido con las 1000 preguntas: el contenido llega hasta ~505 px; las opciones absorben el
+   espacio que sobra). En el teléfono no se fija, porque el alto varía demasiado según cuántas
+   líneas ocupe cada opción y dejaría huecos grandes. */
+@media (min-width: 641px) {
+  .hoja {
+    display: flex;
+    flex-direction: column;
+    min-height: 672px;
+  }
+
+  .hoja > .opciones {
+    flex: 1 0 auto;
+    align-content: start;
+  }
+}
