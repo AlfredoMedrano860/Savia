@@ -11,6 +11,7 @@ import { esRutaLegal, irA, RUTAS, RUTAS_CUENTA, RUTAS_LEGALES, useRuta } from '.
 import { Portada } from './pages/Portada'
 import { MiProgreso } from './pages/MiProgreso'
 import { Practicar } from './pages/Practicar'
+import { cuentasDisponibles } from './lib/cuenta'
 
 // Vistas que no se ven al entrar: se descargan aparte para que la primera carga sea más
 // liviana, y se precargan en cuanto el navegador queda libre para que abrirlas siga siendo
@@ -31,7 +32,17 @@ const Entrar = lazy(() => cargarEntrar().then((m) => ({ default: m.Entrar })))
 const Perfil = lazy(() => cargarPerfil().then((m) => ({ default: m.Perfil })))
 
 function precargarVistas() {
-  const cargar = () => [cargarTemario, cargarProyecto, cargarImprimible, cargarRespuestasImpresa, cargarLegal].forEach((c) => void c().catch(() => {}))
+  // con cuentas activas también la página para iniciar sesión (así «Iniciar sesión» abre el
+  // formulario al instante) y, solo si ya hay sesión, el perfil, que trae la librería de gráficos
+  let conSesion = false
+  try {
+    conSesion = Boolean(localStorage.getItem('savia:sesion'))
+  } catch {
+    // sin almacenamiento no hay sesión guardada
+  }
+  const cuentas = cuentasDisponibles ? (conSesion ? [cargarEntrar, cargarPerfil] : [cargarEntrar]) : []
+  const vistas = [cargarTemario, cargarProyecto, cargarImprimible, cargarRespuestasImpresa, cargarLegal, ...cuentas]
+  const cargar = () => vistas.forEach((c) => void c().catch(() => {}))
   if ('requestIdleCallback' in window) window.requestIdleCallback(cargar, { timeout: 4000 })
   else setTimeout(cargar, 2000)
 }
@@ -43,19 +54,6 @@ const cargandoVista = (
 )
 
 type Vista = { tipo: 'sitio' } | { tipo: 'examen' } | { tipo: 'resultado'; resultado: Resultado } | { tipo: 'imprimir'; prueba: Prueba; codigo: string; soloRespuestas: boolean }
-
-// Después de la primera prueba entregada se avisa una sola vez que el progreso vive solo en
-// este dispositivo y cómo protegerlo (respaldo o instalar la app).
-const CLAVE_INVITACION = 'savia:invitacion-respaldo'
-function tocaInvitarARespaldar() {
-  try {
-    if (localStorage.getItem(CLAVE_INVITACION)) return false
-    localStorage.setItem(CLAVE_INVITACION, '1')
-    return true
-  } catch {
-    return false
-  }
-}
 
 function estadoInicial(): { prueba: Prueba | null; vista: Vista } {
   return { prueba: cargarPrueba(), vista: { tipo: 'sitio' } }
@@ -243,9 +241,6 @@ export default function App() {
         setVista({ tipo: 'resultado', resultado })
         setErrorOperacion('')
         window.scrollTo({ top: 0 })
-        if (tocaInvitarARespaldar()) {
-          notificar('info', 'Tu avance vive en este dispositivo', 'Para no perderlo, en Mi progreso puedes descargar un respaldo o instalar Savia.')
-        }
       })
       .catch((error: unknown) => {
         console.error('No se pudo calificar la prueba.', error)
@@ -255,7 +250,7 @@ export default function App() {
         setOcupado(false)
         entregando.current = false
       })
-  }, [prueba, notificar])
+  }, [prueba])
 
   const borrarTodosLosIntentos = async () => {
     if (

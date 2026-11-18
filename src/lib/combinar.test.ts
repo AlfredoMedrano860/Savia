@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { RegistroPregunta } from './aprendizaje'
 import type { Resultado } from './banco'
-import { MAX_INTENTOS, combinarRespaldos, mismoProgreso } from './combinar'
+import { combinarRespaldos, MAX_INTENTOS, mismoProgreso, sinAccesibilidad } from './combinar'
 import type { Respaldo } from './respaldo'
 
 const respaldo = (datos: Respaldo['datos']): Respaldo => ({ app: 'savia', version: 1, fecha: 1, datos })
@@ -45,9 +45,15 @@ describe('combinarRespaldos', () => {
     expect(r.datos.diaria).toEqual({ fecha: '2026-11-12', racha: 4 })
   })
 
-  it('la accesibilidad es la de este dispositivo; si no tiene, la de la cuenta', () => {
+  it('la accesibilidad es solo la de este dispositivo, aunque no tenga', () => {
     expect(combinarRespaldos(respaldo({ accesibilidad: { tamano: 'grande' } }), respaldo({ accesibilidad: { tamano: 'maximo' } })).datos.accesibilidad).toEqual({ tamano: 'grande' })
-    expect(combinarRespaldos(respaldo({}), respaldo({ accesibilidad: { tamano: 'maximo' } })).datos.accesibilidad).toEqual({ tamano: 'maximo' })
+    expect(combinarRespaldos(respaldo({}), respaldo({ accesibilidad: { mascaraLectura: true } })).datos.accesibilidad).toBeUndefined()
+  })
+
+  it('no cuenta la accesibilidad al comparar ni la sube a la cuenta', () => {
+    const conAjustes = respaldo({ guardadas: [3], accesibilidad: { mascaraLectura: true } })
+    expect(mismoProgreso(conAjustes, respaldo({ guardadas: [3] }))).toBe(true)
+    expect(sinAccesibilidad(conAjustes).datos).toEqual({ guardadas: [3] })
   })
 
   it('un dispositivo nuevo recibe todo lo de la cuenta', () => {
