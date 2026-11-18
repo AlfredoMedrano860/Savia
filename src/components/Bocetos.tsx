@@ -31,6 +31,8 @@ const INICIO_POR_RUTA: Record<Ruta, number> = {
   privacidad: 5,
   cookies: 7,
   licencias: 3,
+  entrar: 2,
+  perfil: 4,
 }
 
 // ---------------------------------------------------------------------------

@@ -1,23 +1,61 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useConfirmacion } from './components/Confirmacion'
 import { Examen } from './components/Examen'
-import { Imprimible } from './components/Imprimible'
-import { RespuestasImpresa } from './components/RespuestasImpresa'
 import { Marco } from './components/Marco'
 import { Notificaciones, type Notificacion } from './components/Notificaciones'
 import { Resultados } from './components/Resultados'
 import { agregarAlHistorial, borrarHistorial, cargarHistorial, cargarPrueba, guardarPrueba } from './lib/almacen'
-import { registrarResultado } from './lib/aprendizaje'
+import { idsPuntosDebiles, registrarResultado } from './lib/aprendizaje'
 import { calificar, nuevaPrueba, nuevoCodigo, pruebaDeRepaso, pruebaDeTema, pruebaImprimible, type Prueba, type Resultado } from './lib/banco'
-import { esRutaLegal, irA, RUTAS, RUTAS_LEGALES, useRuta } from './lib/ruta'
+import { esRutaLegal, irA, RUTAS, RUTAS_CUENTA, RUTAS_LEGALES, useRuta } from './lib/ruta'
 import { Portada } from './pages/Portada'
 import { MiProgreso } from './pages/MiProgreso'
 import { Practicar } from './pages/Practicar'
-import { Legal } from './pages/Legal'
-import { Proyecto } from './pages/Proyecto'
-import { Temario } from './pages/Temario'
+
+// Vistas que no se ven al entrar: se descargan aparte para que la primera carga sea más
+// liviana, y se precargan en cuanto el navegador queda libre para que abrirlas siga siendo
+// instantáneo.
+const cargarLegal = () => import('./pages/Legal')
+const cargarProyecto = () => import('./pages/Proyecto')
+const cargarTemario = () => import('./pages/Temario')
+const cargarImprimible = () => import('./components/Imprimible')
+const cargarRespuestasImpresa = () => import('./components/RespuestasImpresa')
+const cargarEntrar = () => import('./pages/Entrar')
+const cargarPerfil = () => import('./pages/Perfil')
+const Legal = lazy(() => cargarLegal().then((m) => ({ default: m.Legal })))
+const Proyecto = lazy(() => cargarProyecto().then((m) => ({ default: m.Proyecto })))
+const Temario = lazy(() => cargarTemario().then((m) => ({ default: m.Temario })))
+const Imprimible = lazy(() => cargarImprimible().then((m) => ({ default: m.Imprimible })))
+const RespuestasImpresa = lazy(() => cargarRespuestasImpresa().then((m) => ({ default: m.RespuestasImpresa })))
+const Entrar = lazy(() => cargarEntrar().then((m) => ({ default: m.Entrar })))
+const Perfil = lazy(() => cargarPerfil().then((m) => ({ default: m.Perfil })))
+
+function precargarVistas() {
+  const cargar = () => [cargarTemario, cargarProyecto, cargarImprimible, cargarRespuestasImpresa, cargarLegal].forEach((c) => void c().catch(() => {}))
+  if ('requestIdleCallback' in window) window.requestIdleCallback(cargar, { timeout: 4000 })
+  else setTimeout(cargar, 2000)
+}
+
+const cargandoVista = (
+  <main className="contenedor pagina" aria-live="polite">
+    <p className="pagina__texto">Cargando…</p>
+  </main>
+)
 
 type Vista = { tipo: 'sitio' } | { tipo: 'examen' } | { tipo: 'resultado'; resultado: Resultado } | { tipo: 'imprimir'; prueba: Prueba; codigo: string; soloRespuestas: boolean }
+
+// Después de la primera prueba entregada se avisa una sola vez que el progreso vive solo en
+// este dispositivo y cómo protegerlo (respaldo o instalar la app).
+const CLAVE_INVITACION = 'savia:invitacion-respaldo'
+function tocaInvitarARespaldar() {
+  try {
+    if (localStorage.getItem(CLAVE_INVITACION)) return false
+    localStorage.setItem(CLAVE_INVITACION, '1')
+    return true
+  } catch {
+    return false
+  }
+}
 
 function estadoInicial(): { prueba: Prueba | null; vista: Vista } {
   return { prueba: cargarPrueba(), vista: { tipo: 'sitio' } }
@@ -35,6 +73,8 @@ export default function App() {
   const idNotificacion = useRef(0)
   const entregando = useRef(false)
   const [confirmar, dialogoConfirmacion] = useConfirmacion()
+
+  useEffect(precargarVistas, [])
 
   const notificar = useCallback((tipo: Notificacion['tipo'], titulo: string, mensaje: string) => {
     const id = ++idNotificacion.current
@@ -101,7 +141,7 @@ export default function App() {
   }, [ruta])
 
   useEffect(() => {
-    const pagina = [...RUTAS, ...RUTAS_LEGALES].find((r) => r.id === ruta)?.nombre
+    const pagina = [...RUTAS, ...RUTAS_LEGALES, ...RUTAS_CUENTA].find((r) => r.id === ruta)?.nombre
     const titulo =
       vista.tipo === 'examen' && prueba
         ? `${prueba.nombre} · Savia`
@@ -121,9 +161,11 @@ export default function App() {
       temario: 'Explora los seis temas de Biología de EDAD II, revisa sus subtemas y practica cada área con preguntas gratuitas.',
       proyecto: 'Conoce Savia, una herramienta gratuita de apoyo educativo creada como parte de un proyecto comunitario de la Universidad de Costa Rica.',
       terminos: 'Condiciones para usar Savia, la práctica gratuita de Biología para EDAD II.',
-      privacidad: 'Savia no pide cuentas ni datos personales: tu progreso se guarda solo en tu dispositivo.',
+      privacidad: 'Qué datos guarda Savia: sin cuenta, tu progreso se queda solo en tu dispositivo; con cuenta, también en ella.',
       cookies: 'Savia no usa cookies ni rastreo. Qué guarda en tu navegador y cómo borrarlo.',
       licencias: 'Fuentes, íconos y bibliotecas de código abierto que usa Savia y sus licencias.',
+      entrar: 'Entra a Savia o crea una cuenta para guardar tu progreso en la nube y usarlo en cualquier dispositivo.',
+      perfil: 'Tu perfil de Savia: tu blobatar, tus datos y un resumen de tu avance.',
     }
     const descripcion =
       vista.tipo === 'examen'
@@ -201,6 +243,9 @@ export default function App() {
         setVista({ tipo: 'resultado', resultado })
         setErrorOperacion('')
         window.scrollTo({ top: 0 })
+        if (tocaInvitarARespaldar()) {
+          notificar('info', 'Tu avance vive en este dispositivo', 'Para no perderlo, en Mi progreso puedes descargar un respaldo o instalar Savia.')
+        }
       })
       .catch((error: unknown) => {
         console.error('No se pudo calificar la prueba.', error)
@@ -210,7 +255,7 @@ export default function App() {
         setOcupado(false)
         entregando.current = false
       })
-  }, [prueba])
+  }, [prueba, notificar])
 
   const borrarTodosLosIntentos = async () => {
     if (
@@ -262,6 +307,7 @@ export default function App() {
     return (
       <>
         <Marco ruta={null}>
+          <Suspense fallback={cargandoVista}>
           {vista.soloRespuestas ? (
             <RespuestasImpresa
               prueba={vista.prueba}
@@ -281,6 +327,7 @@ export default function App() {
               }}
             />
           )}
+          </Suspense>
         </Marco>
         {avisos}
       </>
@@ -314,7 +361,13 @@ export default function App() {
           </p>
         )}
         {ruta === 'inicio' && <Portada />}
-        {esRutaLegal(ruta) && <Legal documento={ruta} />}
+        <Suspense fallback={cargandoVista}>
+          {esRutaLegal(ruta) && <Legal documento={ruta} />}
+          {ruta === 'temario' && <Temario onPracticarTema={(t) => empezar(() => pruebaDeTema(t))} />}
+          {ruta === 'proyecto' && <Proyecto />}
+          {ruta === 'entrar' && <Entrar />}
+          {ruta === 'perfil' && <Perfil />}
+        </Suspense>
         {ruta === 'practicar' && (
           <Practicar
             enCurso={prueba}
@@ -337,11 +390,16 @@ export default function App() {
           <MiProgreso
             onRepasar={(ids) => empezar(() => pruebaDeRepaso(ids, 'Repaso del día'))}
             onGuardadas={(ids) => empezar(() => pruebaDeRepaso(ids, 'Mis preguntas guardadas'))}
+            onPuntosDebiles={() =>
+              void idsPuntosDebiles().then((ids) =>
+                ids.length
+                  ? empezar(() => pruebaDeRepaso(ids, 'Mis puntos débiles'))
+                  : notificar('info', 'Nada que reforzar por ahora', 'Ya viste todas las preguntas de tus temas más difíciles. Prueba el repaso del día.'),
+              )
+            }
             onPracticarTema={(t) => empezar(() => pruebaDeTema(t))}
           />
         )}
-        {ruta === 'temario' && <Temario onPracticarTema={(t) => empezar(() => pruebaDeTema(t))} />}
-        {ruta === 'proyecto' && <Proyecto />}
       </Marco>
       {avisos}
     </>

@@ -4,6 +4,7 @@ import { formatoDuracion } from '../lib/formato'
 import { enlaceTemario } from '../lib/ruta'
 import { BotonGuardar } from './BotonGuardar'
 import { BotonRegresar } from './BotonRegresar'
+import { EnlaceReporte } from './EnlaceReporte'
 
 type Filtro = 'todas' | 'incorrectas' | 'sin-responder'
 
@@ -188,9 +189,12 @@ export function Resultados({ resultado, onInicio, onRepasar }: ResultadosProps) 
                     </ul>
                     {elegida === null && <p className="revision__aviso">No la respondiste.</p>}
                     <p className="revision__explicacion">{pregunta.e}</p>
-                    <a className="revision__temario" href={enlaceTemario(pregunta.t, pregunta.s)}>
-                      Estudiar {pregunta.s} en el temario
-                    </a>
+                    <div className="revision__pie">
+                      <a className="revision__temario" href={enlaceTemario(pregunta.t, pregunta.s)}>
+                        Estudiar {pregunta.s} en el temario
+                      </a>
+                      <EnlaceReporte pregunta={pregunta} />
+                    </div>
                   </li>
                 )
               })}
