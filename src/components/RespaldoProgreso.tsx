@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { DownloadIcon, SmartphoneIcon, UploadIcon } from '@animateicons/react/lucide'
+import { useCuenta } from '../lib/cuenta'
 import { instalar, useInstalable } from '../lib/pwa'
 import { descargarRespaldo, leerRespaldo, restaurarRespaldo, resumirRespaldo } from '../lib/respaldo'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
@@ -22,6 +23,7 @@ export function RespaldoProgreso() {
   const archivo = useRef<HTMLInputElement>(null)
   const [estado, setEstado] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null)
   const instalada = enPantallaDeInicio()
+  const cuenta = useCuenta()
 
   const descargar = () => {
     const r = descargarRespaldo()
@@ -59,8 +61,11 @@ export function RespaldoProgreso() {
         Tu progreso en este dispositivo
       </h2>
       <p className="pagina__texto respaldo__intro">
-        Savia guarda tu avance solo en este navegador. Si cambias de teléfono o se borran los datos del navegador, se pierde: descarga un
-        respaldo de vez en cuando.
+        {cuenta.estado === 'dentro'
+          ? 'Tu avance se guarda en tu cuenta y en este navegador, así lo encuentras en cualquier dispositivo donde entres. Igual puedes descargar un respaldo cuando quieras.'
+          : cuenta.estado === 'apagado'
+            ? 'Savia guarda tu avance solo en este navegador. Si cambias de teléfono o se borran los datos del navegador, se pierde: descarga un respaldo de vez en cuando.'
+            : 'Savia guarda tu avance en este navegador. Si cambias de teléfono o se borran los datos del navegador, se pierde: entra con una cuenta (arriba, en «Entrar») para guardarlo en la nube, o descarga un respaldo de vez en cuando.'}
       </p>
 
       <div className="progreso__accesos">
@@ -74,7 +79,7 @@ export function RespaldoProgreso() {
             <button type="button" className="boton boton--tinta" onClick={descargar}>
               <DownloadIcon size={18} isAnimated={animarIconos} aria-hidden="true" /> Descargar respaldo
             </button>
-            <button type="button" className="boton" onClick={() => archivo.current?.click()}>
+            <button type="button" className="boton-discreto" onClick={() => archivo.current?.click()}>
               <UploadIcon size={18} isAnimated={animarIconos} aria-hidden="true" /> Restaurar respaldo
             </button>
             <input
@@ -104,7 +109,7 @@ export function RespaldoProgreso() {
           ) : instalable ? (
             <>
               <p className="acceso__texto">Ábrela como una app desde tu pantalla de inicio. Así es más rápido volver a practicar y tu avance queda más protegido.</p>
-              <button type="button" className="boton" onClick={() => void instalar()}>
+              <button type="button" className="boton-discreto" onClick={() => void instalar()}>
                 <SmartphoneIcon size={18} isAnimated={animarIconos} aria-hidden="true" /> Instalar Savia
               </button>
             </>

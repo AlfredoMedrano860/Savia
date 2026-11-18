@@ -20,6 +20,7 @@ const CLAVES = {
   guardadas: 'savia:guardadas',
   diaria: 'savia:diaria',
   accesibilidad: 'savia:accesibilidad',
+  perfil: 'savia:perfil',
 } as const
 
 type Seccion = keyof typeof CLAVES
@@ -113,6 +114,9 @@ export function leerRespaldo(texto: string): Respaldo {
   // la pregunta del día y los ajustes de accesibilidad se validan al leerlos en su componente
   if (esObjeto(entrada.diaria)) datos.diaria = entrada.diaria
   if (esObjeto(entrada.accesibilidad)) datos.accesibilidad = entrada.accesibilidad
+  if (esObjeto(entrada.perfil) && typeof entrada.perfil.avatar === 'string' && entrada.perfil.avatar.length <= 80 && esConteo(entrada.perfil.actualizado)) {
+    datos.perfil = { avatar: entrada.perfil.avatar, actualizado: entrada.perfil.actualizado }
+  }
 
   return { app: 'savia', version: VERSION_RESPALDO, fecha, datos }
 }
@@ -128,6 +132,16 @@ export function restaurarRespaldo(respaldo: Respaldo) {
     if (valor === undefined) localStorage.removeItem(CLAVES[seccion])
     else localStorage.setItem(CLAVES[seccion], JSON.stringify(valor))
   }
+}
+
+/**
+ * Borra de este navegador el progreso de la persona (al cerrar sesión en un equipo que se
+ * comparte, por ejemplo en el colegio), incluida la prueba en curso. Los ajustes de
+ * accesibilidad se quedan: son de la pantalla, no de la persona.
+ */
+export function borrarProgresoLocal() {
+  for (const seccion of SECCIONES) if (seccion !== 'accesibilidad') localStorage.removeItem(CLAVES[seccion])
+  localStorage.removeItem('savia:prueba')
 }
 
 /** Nombre del archivo, con la fecha local: savia-progreso-2026-11-16.json */

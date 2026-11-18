@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import { CODIGOS, TOTAL_PREGUNTAS, cargarPreguntas, mezclar, type Pregunta, type Resultado, type TemaCodigo } from './banco'
+import { avisarCambioDeProgreso } from './cambios'
 
 /*
  * Registro de aprendizaje: cómo le ha ido a la persona con cada pregunta. Se guarda solo en
@@ -47,6 +48,7 @@ function leer<T>(clave: string, valido: (v: unknown) => v is T, vacio: T): T {
 function escribir(clave: string, valor: unknown) {
   try {
     localStorage.setItem(clave, JSON.stringify(valor))
+    avisarCambioDeProgreso()
   } catch (error: unknown) {
     console.warn(`No se pudo guardar el almacenamiento local (${clave}).`, error)
   }

@@ -7,7 +7,7 @@ import { useCarrusel } from '../lib/useCarrusel'
 
 // Fecha en que se publicó la versión vigente de estos textos. Si se cambia algo de
 // fondo, se actualiza esta fecha.
-const VIGENCIA = '10 de noviembre de 2026'
+const VIGENCIA = '17 de noviembre de 2026'
 
 const correo = (
   <a className="enlace" href={`mailto:${SOPORTE.correo}`}>
@@ -25,6 +25,9 @@ const DATOS_LOCALES = [
   ['savia:diaria', 'La pregunta del día que respondiste y tu racha de días seguidos.'],
   ['savia:accesibilidad', 'Tus preferencias del panel de accesibilidad (tamaño de letra, filtros, etc.).'],
   ['savia:invitacion-respaldo', 'Que ya viste el aviso para respaldar tu progreso, para no repetirlo.'],
+  ['savia:perfil', 'El blobatar que elegiste para tu perfil.'],
+  ['savia:sesion', 'Solo si iniciaste sesión: que hay una sesión abierta, para recuperarla al abrir Savia.'],
+  ['firebaseLocalStorageDb', 'Solo si iniciaste sesión: la sesión de tu cuenta, que guarda Firebase en el navegador (IndexedDB).'],
 ]
 
 // Fuentes y bibliotecas de terceros incluidas en Savia, con su licencia.
@@ -38,6 +41,8 @@ const LICENCIAS = [
   ['AnimateIcons (@animateicons/react)', 'Íconos animados', 'MIT'],
   ['Lucide', 'Diseño de los íconos', 'ISC'],
   ['Motion', 'Animaciones de los íconos', 'MIT'],
+  ['Blobatar (@blobatar/react)', 'Avatares de perfil', 'MIT'],
+  ['Firebase JavaScript SDK', 'Cuentas y progreso en la nube (opcional)', 'Apache 2.0'],
 ]
 
 interface Bloque {
@@ -56,7 +61,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
     titulo: 'Términos de uso',
     resumen: (
       <>
-        Savia es gratis, no necesita cuenta y es solo material de práctica. Úsala para estudiar y compártela sin fines de lucro; no
+        Savia es gratis, no necesita cuenta (es opcional) y es solo material de práctica. Úsala para estudiar y compártela sin fines de lucro; no
         es una prueba oficial ni garantiza un resultado en la EDAD II.
       </>
     ),
@@ -163,8 +168,9 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         titulo: '10. Personas menores de edad',
         contenido: (
           <p>
-            Savia puede usarse a cualquier edad. Como no pide cuentas ni datos personales, no necesita la autorización de una persona
-            adulta para usarse; aun así, recomendamos que las personas menores la usen con el acompañamiento de su familia o docentes.
+            Savia puede usarse a cualquier edad y sin cuenta. Si eres menor de edad y quieres crear una cuenta, hazlo con el permiso y
+            el acompañamiento de tu madre, padre o persona encargada. Recomendamos que las personas menores usen Savia con el
+            acompañamiento de su familia o docentes.
           </p>
         ),
       },
@@ -183,8 +189,9 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
     titulo: 'Política de privacidad',
     resumen: (
       <>
-        Savia no pide tu nombre, tu correo ni una cuenta. Tus respuestas y tu progreso se guardan solo en tu dispositivo: no se
-        envían a ningún servidor y nadie del proyecto puede verlos.
+        Puedes usar Savia sin cuenta: así tus respuestas y tu progreso se guardan solo en tu dispositivo. Si decides crear una
+        cuenta, guardamos tu correo, tu nombre y tu progreso para que lo encuentres en cualquier dispositivo, y puedes borrarlo todo
+        cuando quieras.
       </>
     ),
     bloques: [
@@ -199,12 +206,13 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '2. Datos que no recogemos',
+        titulo: '2. Qué datos recogemos',
         contenido: (
           <ul>
-            <li>No hay registro ni inicio de sesión: no pedimos nombre, correo, teléfono, cédula ni ningún otro dato personal.</li>
+            <li>Sin cuenta, ninguno: no pedimos nombre, correo, teléfono, cédula ni ningún otro dato personal.</li>
+            <li>Con cuenta, solo lo que se explica en la sección 4.</li>
             <li>No usamos cookies, analíticas, publicidad ni herramientas de seguimiento de terceros.</li>
-            <li>No vendemos, alquilamos ni compartimos información sobre ti, porque no la tenemos.</li>
+            <li>No vendemos, alquilamos ni compartimos tu información con nadie.</li>
           </ul>
         ),
       },
@@ -214,7 +222,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
           <>
             <p>
               Para que puedas retomar tus prácticas y ver tu avance, Savia guarda alguna información en el almacenamiento local de tu
-              navegador (localStorage). Esa información se queda en tu dispositivo, no se sincroniza con otros y solo tú puedes verla.
+              navegador (localStorage). Si no tienes cuenta, esa información se queda en tu dispositivo y solo tú puedes verla.
               El detalle está en{' '}
               <a className="enlace" href="#/cookies" onClick={(e) => abrirLegal(e, '#/cookies')}>
                 Cookies y almacenamiento
@@ -229,7 +237,37 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '4. Alojamiento del sitio',
+        titulo: '4. Si creas una cuenta (opcional)',
+        contenido: (
+          <>
+            <p>
+              Puedes entrar con Google o con tu correo y una contraseña para guardar tu progreso en la nube. En ese caso guardamos:
+            </p>
+            <ul>
+              <li>Tu correo y tu nombre (y tu foto de perfil, si entras con Google), para identificar tu cuenta.</li>
+              <li>
+                Tu progreso: intentos y respuestas, avance por tema, repaso, preguntas guardadas, pregunta del día y preferencias de
+                accesibilidad.
+              </li>
+            </ul>
+            <p>
+              Las cuentas y el progreso se guardan en Firebase, un servicio de Google que actúa como proveedor del proyecto; Google
+              trata esos datos según sus{' '}
+              <a className="enlace" href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">
+                condiciones de privacidad de Firebase
+              </a>
+              . Las contraseñas no las vemos nunca. Cada cuenta solo puede leer su propio progreso, y solo lo usamos para mostrártelo
+              en Savia: no lo analizamos, no lo compartimos ni lo usamos para publicidad.
+            </p>
+            <p>
+              Al cerrar sesión, tu progreso se borra del dispositivo y queda solo en tu cuenta. Puedes borrar tu cuenta y todo lo
+              guardado en ella desde “Tu cuenta” → “Borrar mi cuenta”.
+            </p>
+          </>
+        ),
+      },
+      {
+        titulo: '5. Alojamiento del sitio',
         contenido: (
           <p>
             Savia se publica en Cloudflare Pages. Como cualquier servidor web, el proveedor puede registrar datos técnicos de las
@@ -243,7 +281,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '5. Lector de voz',
+        titulo: '6. Lector de voz',
         contenido: (
           <p>
             El lector de voz del panel de accesibilidad usa las voces de tu navegador o de tu sistema. Savia no envía el texto a
@@ -253,7 +291,7 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '6. Si nos escribes',
+        titulo: '7. Si nos escribes',
         contenido: (
           <p>
             Si nos escribes al correo de soporte, usaremos tu dirección de correo solo para responderte y no la
@@ -262,14 +300,15 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '7. Tus derechos y cómo borrar tus datos',
+        titulo: '8. Tus derechos y cómo borrar tus datos',
         contenido: (
           <>
             <p>
-              Como tus datos están solo en tu dispositivo, tú decides sobre ellos: puedes verlos en Savia, borrarlos o dejar de
-              usarla cuando quieras.
+              Tú decides sobre tus datos: puedes verlos en Savia, descargarlos (respaldo en Mi progreso), borrarlos o dejar de usarla
+              cuando quieras.
             </p>
             <ul>
+              <li>Si tienes cuenta, usa “Borrar mi cuenta” en “Tu cuenta”: se borran la cuenta y todo tu progreso guardado en ella.</li>
               <li>Para borrar tus intentos, usa “Borrar historial” en Practicar.</li>
               <li>
                 Para borrar todo, elimina los datos del sitio en la configuración de tu navegador o desinstala la app de tu
@@ -284,20 +323,21 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         ),
       },
       {
-        titulo: '8. Personas menores de edad',
+        titulo: '9. Personas menores de edad',
         contenido: (
           <p>
-            Savia no recoge datos personales de nadie, incluidas las personas menores de edad, por lo que puede usarse sin
-            entregar información personal.
+            Savia puede usarse sin cuenta y sin entregar ningún dato personal. Si eres menor de edad, crea una cuenta solo con el
+            permiso de tu madre, padre o persona encargada; quien te represente puede pedirnos en cualquier momento que borremos tu
+            cuenta escribiendo a {correo}.
           </p>
         ),
       },
       {
-        titulo: '9. Cambios a esta política',
+        titulo: '10. Cambios a esta política',
         contenido: (
           <p>
-            Si Savia empieza a tratar datos de otra forma (por ejemplo, si algún día tuviera cuentas), actualizaremos esta política
-            antes del cambio y lo avisaremos en el sitio.
+            Si Savia empieza a tratar datos de otra forma, actualizaremos esta política antes del cambio y lo avisaremos en el
+            sitio. La fecha de la versión vigente aparece al inicio de esta página.
           </p>
         ),
       },
@@ -325,8 +365,9 @@ const DOCUMENTOS: Record<RutaLegal, Documento> = {
         contenido: (
           <>
             <p>
-              En lugar de cookies, Savia usa el almacenamiento local del navegador (localStorage). Estos datos no salen de tu
-              dispositivo ni se envían al servidor; solo sirven para las funciones que usas:
+              En lugar de cookies, Savia usa el almacenamiento local del navegador (localStorage). Sin cuenta, estos datos no salen
+              de tu dispositivo; con cuenta, tu progreso también se guarda en ella (ver la política de privacidad). Solo sirven para
+              las funciones que usas:
             </p>
             <div className="legal__tabla">
               <table>

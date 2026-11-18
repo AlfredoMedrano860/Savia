@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { XIcon } from '@animateicons/react/lucide'
+import { avisarCambioDeProgreso } from '../lib/cambios'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 
 type TamanoTexto = 'normal' | 'grande' | 'muy-grande' | 'maximo'
@@ -256,8 +257,10 @@ export function Accesibilidad() {
     html.classList.toggle('a11y-align-left', ajustes.alinearIzquierda)
     html.classList.toggle('a11y-short-line', ajustes.renglonCorto)
     try {
+      const antes = localStorage.getItem(CLAVE)
       if (JSON.stringify(ajustes) === JSON.stringify(INICIAL)) localStorage.removeItem(CLAVE)
       else localStorage.setItem(CLAVE, JSON.stringify(ajustes))
+      if (localStorage.getItem(CLAVE) !== antes) avisarCambioDeProgreso()
     } catch (error: unknown) {
       console.warn('No se pudieron guardar las preferencias de accesibilidad.', error)
     }
