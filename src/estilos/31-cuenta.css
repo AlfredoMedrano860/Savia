@@ -943,12 +943,35 @@
 
 .perfil__datos {
   display: grid;
-  /* en em: con letra más grande o espaciada (accesibilidad) caben menos por fila en vez de desbordarse */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11em), 1fr));
+  /* seis datos: siempre filas parejas de 6, 3 o 2 (ver abajo), nunca 5 y uno suelto */
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 14px;
   margin: 14px 0 0;
   padding: 0;
   list-style: none;
+}
+
+@media (max-width: 1100px) {
+  .perfil__datos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .perfil__datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* con letra más grande o espaciada (accesibilidad) caben menos: 3 por fila y 1 en el teléfono */
+html:is([data-a11y-font='muy-grande'], [data-a11y-font='maximo'], .a11y-dyslexia, .a11y-spacing) .perfil__datos {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 560px) {
+  html:is([data-a11y-font='muy-grande'], [data-a11y-font='maximo'], .a11y-dyslexia, .a11y-spacing) .perfil__datos {
+    grid-template-columns: 1fr;
+  }
 }
 
 .perfil__dato {

@@ -226,7 +226,7 @@ function AccionesCuenta() {
             <p className="ajustes__detalle">Se borran tu cuenta y todo el progreso guardado en ella. No se puede deshacer.</p>
           </div>
           <button type="button" className="boton-discreto ajustes__accion perfil__borrar" disabled={ocupado} onClick={() => void borrar()}>
-            Borrar cuenta
+            <Trash2Icon size={18} isAnimated={animarIconos} aria-hidden="true" /> Borrar cuenta
           </button>
         </li>
       </ul>
