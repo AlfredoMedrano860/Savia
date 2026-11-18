@@ -188,14 +188,14 @@ button {
   gap: 6px;
   min-height: 44px;
   padding: 0 12px;
-  /* mismo borde (transparente) y esquinas que .boton, para que midan igual a su lado */
+  /* mismo borde (transparente), esquinas y letra que .boton: casi siempre va a su lado
+     ("Nueva prueba" / "Repasar las que fallé", "Entregar" / "Seguir respondiendo") */
   border: 1px solid transparent;
   border-radius: 4px;
   background: transparent;
   color: var(--color-texto-suave);
   font: inherit;
-  font-size: var(--texto-detalle);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition:
     background-color var(--hover-duracion) var(--hover-curva),

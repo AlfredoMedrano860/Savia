@@ -830,12 +830,18 @@
   gap: 6px;
   margin-left: auto;
   color: var(--color-texto-suave);
-  font-size: var(--texto-mini);
-  font-weight: 600;
+  font-size: var(--texto-detalle);
+  font-weight: 700;
   text-decoration: none;
   transition: color var(--hover-duracion) var(--hover-curva);
 }
 
 .reportar:hover {
   color: var(--rojo);
+}
+
+/* botón sin borde solo en una tarjeta: el relleno se corre hacia afuera para que la letra
+   quede alineada con el texto de la tarjeta (el fondo del hover sobresale un poco) */
+.acceso > .boton-discreto {
+  margin-inline-start: -12px;
 }

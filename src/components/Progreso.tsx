@@ -88,7 +88,7 @@ export function Progreso({ onRepasar, onGuardadas, onPuntosDebiles, onPracticarT
               <p className="acceso__texto">
                 Guardaste <strong>{guardadas.length}</strong> {guardadas.length === 1 ? 'pregunta' : 'preguntas'} para practicar aparte.
               </p>
-              <button type="button" className="boton" onClick={() => onGuardadas(guardadas)}>
+              <button type="button" className="boton-discreto" onClick={() => onGuardadas(guardadas)}>
                 Practicar guardadas <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
               </button>
             </>
@@ -112,7 +112,7 @@ export function Progreso({ onRepasar, onGuardadas, onPuntosDebiles, onPracticarT
                 )}
                 {subtemaMasDebil && <>Lo que más te cuesta: {subtemaMasDebil.subtema}.</>}
               </p>
-              <button type="button" className="boton" onClick={onPuntosDebiles}>
+              <button type="button" className="boton-discreto" onClick={onPuntosDebiles}>
                 Practicar puntos débiles <ArrowRightIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
               </button>
             </>
