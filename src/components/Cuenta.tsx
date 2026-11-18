@@ -5,7 +5,7 @@ import { useCuenta } from '../lib/cuenta'
 import { useAvatarElegido } from '../lib/perfil'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 
-/** Botón de la barra de arriba: «Entrar» sin sesión, o el blobatar y el nombre con sesión. */
+/** Botón de la barra de arriba: «Iniciar sesión» sin sesión, o solo el blobatar con sesión. */
 export function BotonCuenta() {
   const cuenta = useCuenta()
   const animarIconos = useIconosAnimados()
@@ -15,17 +15,16 @@ export function BotonCuenta() {
   if (cuenta.estado === 'dentro' && cuenta.usuario) {
     const { nombre, correo } = cuenta.usuario
     return (
-      <a href="#/perfil" className="nav__cuenta" aria-label={`Mi perfil: ${nombre}`}>
-        <Blobatar name={elegido ?? correo} size={28} animate="hover" className="nav__cuenta-avatar" />
-        <span className="nav__cuenta-texto">{nombre.split(' ')[0]}</span>
+      <a href="#/perfil" className="nav__cuenta nav__cuenta--perfil" aria-label={`Mi perfil: ${nombre}`} title="Mi perfil">
+        <Blobatar name={elegido ?? correo} size={40} animate="hover" className="nav__cuenta-avatar" />
       </a>
     )
   }
 
   return (
-    <a href="#/entrar" className="nav__cuenta" aria-disabled={cuenta.estado === 'cargando' || undefined}>
+    <a href="#/entrar" className="nav__cuenta nav__cuenta--entrar" aria-disabled={cuenta.estado === 'cargando' || undefined}>
       <LogInIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
-      <span className="nav__cuenta-texto">{cuenta.estado === 'cargando' ? 'Cargando…' : 'Entrar'}</span>
+      <span className="nav__cuenta-texto">{cuenta.estado === 'cargando' ? 'Cargando…' : 'Iniciar sesión'}</span>
     </a>
   )
 }

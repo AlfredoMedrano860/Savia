@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import { Blobatar } from '@blobatar/react'
 import { useGaze } from '@blobatar/react/gaze'
 import { happy, idle, love, sad, shy } from 'blobatar/expression'
@@ -12,6 +12,12 @@ import { irA, regresar } from '../lib/ruta'
 
 type Modo = 'entrar' | 'crear' | 'recuperar'
 
+// Lo que tarda en desvanecerse el formulario antes de armar el de la otra pestaña.
+const SALIDA_MS = 200
+
+const sinMovimiento = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('a11y-reduce-motion')
+
 // Logo de Google (los cuatro colores oficiales), para el botón de Google.
 function LogoGoogle() {
   return (
@@ -24,15 +30,14 @@ function LogoGoogle() {
   )
 }
 
-const TEXTOS: Record<Modo, { titulo: string; texto: string; boton: string }> = {
+// Solo recuperar la contraseña lleva un texto que explica qué va a pasar; los demás, solo el título.
+const TEXTOS: Record<Modo, { titulo: string; texto?: string; boton: string }> = {
   entrar: {
     titulo: '¡Qué bueno verte de nuevo!',
-    texto: 'Entra para seguir donde te quedaste: tus intentos, tu repaso y tus preguntas guardadas te esperan en cualquier dispositivo.',
     boton: 'Entrar',
   },
   crear: {
     titulo: 'Crea tu cuenta',
-    texto: 'Es gratis y opcional. Con una cuenta, tu progreso se guarda en la nube y no se pierde si cambias de teléfono.',
     boton: 'Crear cuenta',
   },
   recuperar: {
@@ -48,7 +53,12 @@ const TEXTOS: Record<Modo, { titulo: string; texto: string; boton: string }> = {
 export function Entrar() {
   const cuenta = useCuenta()
   const { ref: mirada } = useGaze({ lookAt: 'pointer', travel: 3 })
+  // modo: lo que muestra el formulario · destino: la pestaña elegida (cambia al instante, para
+  // que la forma blanca empiece a deslizarse mientras el formulario se desvanece)
   const [modo, setModo] = useState<Modo>('entrar')
+  const [destino, setDestino] = useState<Modo>('entrar')
+  const [saliendo, setSaliendo] = useState(false)
+  const temporizador = useRef<number | undefined>(undefined)
   const [nombre, setNombre] = useState('')
   const [correo, setCorreo] = useState('')
   const [clave, setClave] = useState('')
@@ -62,6 +72,8 @@ export function Entrar() {
   useEffect(() => {
     if (cuenta.estado === 'dentro') irA('perfil')
   }, [cuenta.estado])
+
+  useEffect(() => () => window.clearTimeout(temporizador.current), [])
 
   const intentar = async (accion: () => Promise<void>) => {
     setOcupado(true)
@@ -87,11 +99,27 @@ export function Entrar() {
     else void intentar(() => entrarConCorreo(correo, clave))
   }
 
+  // Al cambiar de pestaña, el formulario se desvanece y el nuevo se arma en cascada.
   const cambiarModo = (nuevo: Modo) => {
-    setModo(nuevo)
+    if (nuevo === destino) return
+    setDestino(nuevo)
     setError('')
     setAviso('')
+    window.clearTimeout(temporizador.current)
+    if (sinMovimiento()) {
+      setModo(nuevo)
+      return
+    }
+    setSaliendo(true)
+    temporizador.current = window.setTimeout(() => {
+      setModo(nuevo)
+      setSaliendo(false)
+    }, SALIDA_MS)
   }
+
+  // orden en que aparece cada elemento del formulario al armarse (en el orden en que se dibujan)
+  let orden = 0
+  const enCascada = (): CSSProperties => ({ '--orden': orden++ }) as CSSProperties
 
   const expresion = cuenta.estado === 'dentro' ? love : error ? sad : enClave && !verClave ? shy : /\S+@\S+\.\S+/.test(correo) ? happy : idle
   const { titulo, texto, boton } = TEXTOS[modo]
@@ -124,13 +152,13 @@ export function Entrar() {
             Volver a Savia
           </button>
 
-          <div className="entrar__pestanas" role="tablist" aria-label="Elige qué hacer" data-activa={modo === 'crear' ? 'crear' : 'entrar'}>
+          <div className="entrar__pestanas" role="tablist" aria-label="Elige qué hacer" data-activa={destino === 'crear' ? 'crear' : 'entrar'}>
             {/* la forma blanca de la pestaña activa: es una sola y se desliza al cambiar */}
             <span className="entrar__indicador" aria-hidden="true" />
-            <button type="button" role="tab" aria-selected={modo !== 'crear'} className="entrar__pestana" onClick={() => cambiarModo('entrar')}>
+            <button type="button" role="tab" aria-selected={destino !== 'crear'} className="entrar__pestana" onClick={() => cambiarModo('entrar')}>
               Entrar
             </button>
-            <button type="button" role="tab" aria-selected={modo === 'crear'} className="entrar__pestana" onClick={() => cambiarModo('crear')}>
+            <button type="button" role="tab" aria-selected={destino === 'crear'} className="entrar__pestana" onClick={() => cambiarModo('crear')}>
               Crear cuenta
             </button>
           </div>
@@ -146,31 +174,34 @@ export function Entrar() {
         </section>
 
         <section className="entrar__panel" aria-labelledby="entrar-titulo">
+          <div key={modo} className={`entrar__contenido ${saliendo ? 'is-saliendo' : ''}`}>
           <div className="entrar__encabezado">
-            <div className="entrar__avatar">
+            <div className="entrar__avatar entrar__anima" style={enCascada()}>
               <Blobatar ref={mirada} name={correo.trim().toLowerCase() || 'savia'} size={84} animate="always" expression={expresion} title="Tu blobatar" />
             </div>
-            <h1 key={modo} id="entrar-titulo" className="entrar__titulo entrar__cambio">
+            <h1 id="entrar-titulo" className="entrar__titulo entrar__anima" style={enCascada()}>
               {titulo}
             </h1>
           </div>
-          <p key={`texto-${modo}`} className="entrar__texto entrar__cambio">
-            {texto}
-          </p>
+          {texto && (
+            <p className="entrar__texto entrar__anima" style={enCascada()}>
+              {texto}
+            </p>
+          )}
 
           <form className="entrar__formulario" onSubmit={enviar}>
             {modo === 'crear' && (
-              <label className="entrar__campo">
+              <label className="entrar__campo entrar__anima" style={enCascada()}>
                 <span>Tu nombre</span>
                 <input value={nombre} onChange={(e) => setNombre(e.target.value)} autoComplete="given-name" maxLength={60} />
               </label>
             )}
-            <label className="entrar__campo">
+            <label className="entrar__campo entrar__anima" style={enCascada()}>
               <span>Correo</span>
               <input type="email" required value={correo} onChange={(e) => setCorreo(e.target.value)} autoComplete="email" inputMode="email" />
             </label>
             {modo !== 'recuperar' && (
-              <label className="entrar__campo">
+              <label className="entrar__campo entrar__anima" style={enCascada()}>
                 <span className="entrar__rotulo-clave">
                   Contraseña
                   {modo === 'crear' && <small>al menos 6 caracteres</small>}
@@ -200,7 +231,7 @@ export function Entrar() {
             )}
 
             {modo === 'entrar' && (
-              <button type="button" className="enlace entrar__olvide" onClick={() => cambiarModo('recuperar')}>
+              <button type="button" className="enlace entrar__olvide entrar__anima" style={enCascada()} onClick={() => cambiarModo('recuperar')}>
                 ¿Olvidaste tu contraseña?
               </button>
             )}
@@ -216,23 +247,23 @@ export function Entrar() {
               </p>
             )}
 
-            <button type="submit" className="boton boton--tinta boton--ancho" disabled={ocupado}>
+            <button type="submit" className="boton boton--tinta boton--ancho entrar__anima" style={enCascada()} disabled={ocupado}>
               {ocupado ? 'Un momento…' : boton}
             </button>
           </form>
 
           {modo !== 'recuperar' && (
             <>
-              <p className="entrar__separador">
+              <p className="entrar__separador entrar__anima" style={enCascada()}>
                 <span>o</span>
               </p>
-              <button type="button" className="boton-discreto boton--ancho" disabled={ocupado} onClick={() => void intentar(entrarConGoogle)}>
+              <button type="button" className="boton-discreto boton--ancho entrar__anima" style={enCascada()} disabled={ocupado} onClick={() => void intentar(entrarConGoogle)}>
                 <LogoGoogle /> Continuar con Google
               </button>
             </>
           )}
 
-          <p className="entrar__pie">
+          <p className="entrar__pie entrar__anima" style={enCascada()}>
             {modo === 'entrar' && (
               <>
                 ¿No tienes cuenta?{' '}
@@ -256,12 +287,13 @@ export function Entrar() {
             )}
           </p>
 
-          <p className="entrar__nota">
+          <p className="entrar__nota entrar__anima" style={enCascada()}>
             La cuenta es opcional: al cerrar sesión, tu progreso queda en ella y se borra de este dispositivo.{' '}
             <a className="enlace" href="#/privacidad">
               Privacidad
             </a>
           </p>
+          </div>
         </section>
       </div>
     </main>

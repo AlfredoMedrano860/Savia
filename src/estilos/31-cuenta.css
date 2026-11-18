@@ -31,6 +31,20 @@
   background: var(--color-marca-suave);
 }
 
+/* sin sesión: botón principal azul, como los demás botones primarios de Savia */
+.nav__cuenta--entrar {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-texto-sobre-marca);
+}
+
+.nav__cuenta--entrar:hover {
+  border-color: var(--hover-primario-fondo);
+  background: var(--hover-primario-fondo);
+  color: var(--color-texto-sobre-marca);
+  box-shadow: var(--hover-sombra-boton);
+}
+
 .nav__cuenta[aria-disabled='true'] {
   opacity: 0.6;
   pointer-events: none;
@@ -64,15 +78,21 @@
   }
 }
 
-@media (max-width: 420px) {
-  /* con sesión, en pantallas muy angostas basta el blobatar */
-  .nav__cuenta:has(.nav__cuenta-avatar) {
-    padding: 5px;
-  }
+/* con sesión: solo el blobatar, sin borde ni fondo */
+.nav__cuenta--perfil,
+.nav__cuenta--perfil:hover {
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+}
 
-  .nav__cuenta:has(.nav__cuenta-avatar) .nav__cuenta-texto {
-    display: none;
-  }
+.nav__cuenta--perfil .nav__cuenta-avatar {
+  transition: transform var(--hover-duracion) var(--hover-curva);
+}
+
+.nav__cuenta--perfil:hover .nav__cuenta-avatar {
+  transform: translateY(-2px);
 }
 
 /* ---------- página para entrar ----------
@@ -327,6 +347,13 @@
   margin: 0 auto;
   padding: 16px clamp(12px, 2.5vw, 24px);
   overflow-y: auto;
+  /* sin barra visible, como los modales de Savia: si el formulario no cabe (zoom o letra
+     grande), igual se desplaza con la rueda o el dedo */
+  scrollbar-width: none;
+}
+
+.entrar__panel::-webkit-scrollbar {
+  display: none;
 }
 
 /* el blobatar arriba y centrado; el título y el texto, alineados a la izquierda con los
@@ -365,10 +392,36 @@
   line-height: 1.45;
 }
 
-/* el título y el texto entran con un fundido corto al cambiar de pestaña */
-.entrar__cambio {
+/* Al cambiar de pestaña, todo el formulario se desvanece y sube un poco; el de la otra
+   pestaña se arma en cascada: cada elemento aparece un instante después del anterior
+   (--orden lo pone Entrar.tsx en el orden en que se dibujan). */
+.entrar__contenido {
+  display: flex;
+  flex-direction: column;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.entrar__contenido.is-saliendo {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.entrar__anima {
+  animation: entrar-armar 0.45s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: calc(var(--orden, 0) * 45ms);
+}
+
+@keyframes entrar-armar {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.entrar__titulo {
   min-width: 0;
-  animation: entrar-aparecer 0.4s ease both;
 }
 
 .entrar__formulario {
@@ -377,17 +430,6 @@
   margin-top: 16px;
 }
 
-.entrar__formulario .entrar__campo {
-  animation: entrar-aparecer 0.4s ease both;
-}
-
-
-@keyframes entrar-aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-}
 
 .entrar__campo {
   display: grid;
@@ -522,6 +564,11 @@
   min-height: 48px;
 }
 
+/* el botón principal con más aire arriba, separado de la contraseña */
+.entrar__formulario > .boton--tinta {
+  margin-top: 12px;
+}
+
 .entrar__pie {
   margin: 16px 0 0;
   color: var(--color-texto-suave);
@@ -552,9 +599,12 @@
     transition: none;
   }
 
-  .entrar__cambio,
-  .entrar__formulario .entrar__campo {
+  .entrar__anima {
     animation: none;
+  }
+
+  .entrar__contenido {
+    transition: none;
   }
 }
 
@@ -563,9 +613,12 @@
   transition: none;
 }
 
-.a11y-reduce-motion .entrar__cambio,
-.a11y-reduce-motion .entrar__formulario .entrar__campo {
+.a11y-reduce-motion .entrar__anima {
   animation: none;
+}
+
+.a11y-reduce-motion .entrar__contenido {
+  transition: none;
 }
 
 /* pantallas de computadora bajas (por ejemplo 1280 x 720): un poco más compacto */
@@ -751,11 +804,6 @@
 .perfil__avatar {
   display: grid;
   place-items: center;
-  width: 156px;
-  height: 156px;
-  border: 3px solid var(--gris-100);
-  border-radius: 50%;
-  background: var(--gris-50);
 }
 
 .perfil__nombre {
@@ -829,32 +877,59 @@
 .perfil__opciones {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 10px;
   padding-top: 18px;
   border-top: 1px solid var(--linea-suave);
 }
 
+/* 12 opciones: filas parejas de 12, 6 o 4 según el ancho */
+@media (max-width: 1100px) {
+  .perfil__opciones {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil__opciones {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* solo el blobatar, sin marco: el elegido se marca con una línea azul debajo */
 .perfil__opcion {
+  position: relative;
   display: grid;
   place-items: center;
-  aspect-ratio: 1;
-  border: 2px solid transparent;
-  border-radius: 50%;
-  background: var(--gris-50);
+  padding: 4px 0 12px;
+  border: 0;
+  background: none;
   cursor: pointer;
-  transition:
-    border-color var(--hover-duracion) var(--hover-curva),
-    background-color var(--hover-duracion) var(--hover-curva);
 }
 
-.perfil__opcion:hover {
-  border-color: var(--gris-200);
+.perfil__opcion svg {
+  transition: transform var(--hover-duracion) var(--hover-curva);
 }
 
-.perfil__opcion[aria-checked='true'] {
-  border-color: var(--color-marca);
-  background: var(--color-marca-suave);
+.perfil__opcion:hover svg {
+  transform: translateY(-3px);
+}
+
+.perfil__opcion::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 32px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-marca);
+  content: '';
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.22s ease;
+}
+
+.perfil__opcion[aria-checked='true']::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
 .perfil__opcion:focus-visible {
@@ -868,9 +943,10 @@
 
 .perfil__datos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  /* en em: con letra más grande o espaciada (accesibilidad) caben menos por fila en vez de desbordarse */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11em), 1fr));
   gap: 14px;
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -885,6 +961,7 @@
 }
 
 .perfil__dato-rotulo {
+  overflow-wrap: anywhere;
   color: var(--color-texto-suave);
   font-size: var(--texto-mini);
   font-weight: 700;
@@ -921,16 +998,71 @@
   color: var(--rojo);
 }
 
-.perfil__acciones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
+/* tu cuenta: una tarjeta de ajustes, una fila por acción (ícono, texto y botón) */
+.ajustes {
+  margin: 16px 0 0;
+  padding: 0;
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  background: var(--panel);
+  list-style: none;
 }
 
-/* los botones sin borde: el primero se corre para que su letra quede alineada con el título */
-.perfil__acciones > .boton-discreto:first-child {
-  margin-inline-start: -12px;
+.ajustes__fila {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 18px 20px;
+}
+
+.ajustes__fila + .ajustes__fila {
+  border-top: 1px solid var(--linea-suave);
+}
+
+.ajustes__icono {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--color-marca-suave);
+  color: var(--color-marca);
+}
+
+/* íconos en el azul de la marca; solo un error de guardado va en rojo */
+.ajustes__icono.is-error {
+  background: var(--rojo-claro);
+  color: var(--rojo);
+}
+
+.ajustes__titulo {
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+.ajustes__detalle {
+  margin-top: 2px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.ajustes__accion {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .ajustes__fila {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  /* el botón baja debajo del texto, alineado con él */
+  .ajustes__accion {
+    grid-column: 2;
+    justify-self: start;
+    margin-inline-start: -12px;
+  }
 }
 
 .perfil__borrar {
@@ -940,12 +1072,6 @@
 .perfil__borrar:hover:not(:disabled) {
   background: var(--rojo-claro);
   color: var(--rojo);
-}
-
-.perfil__nota {
-  margin: 12px 0 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-mini);
 }
 
 @media (max-width: 640px) {
@@ -966,4 +1092,150 @@
   .perfil__cambiar {
     margin-left: 0;
   }
+}
+
+/* menú: solo enlaces, sin cuadro de fondo; la página actual y el hover se marcan con el color
+   y la línea de abajo */
+.nav__enlace,
+.nav__enlace:hover,
+.nav__enlace:hover:not([aria-current='page']),
+.nav__enlace[aria-current='page'] {
+  background: transparent;
+  transform: none;
+}
+
+/* en pantallas grandes los enlaces van centrados en la página: logo a la izquierda, cuenta a
+   la derecha y dos columnas iguales a los lados para que el centro sea el de la página */
+@media (min-width: 901px) {
+  .nav__contenedor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .nav__contenedor > .logo {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .nav__enlaces {
+    grid-column: 2;
+    margin-left: 0;
+  }
+
+  .nav__cuenta {
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+/* ---------- gráficos del perfil (Recharts) ---------- */
+.perfil__graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.grafico {
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px 16px;
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.grafico__titulo {
+  margin-bottom: 12px;
+  color: var(--tinta);
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-h4);
+  font-weight: 600;
+}
+
+.grafico__vacio,
+.grafico__nota {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.grafico__nota {
+  margin-top: 10px;
+}
+
+.grafico__lienzo {
+  font-size: 0.8125rem;
+}
+
+.grafico__lienzo .recharts-cartesian-axis-tick text,
+.grafico__valor {
+  fill: var(--color-texto-suave);
+}
+
+.grafico__valor {
+  font-weight: 700;
+}
+
+.grafico__lienzo .recharts-yAxis .recharts-cartesian-axis-tick text {
+  font-weight: 600;
+}
+
+.grafico__rejilla line {
+  stroke: var(--gris-100);
+}
+
+.grafico__meta line,
+line.grafico__meta {
+  stroke: var(--gris-400);
+}
+
+.grafico__meta-texto {
+  fill: var(--color-texto-suave);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.grafico__cursor {
+  stroke: var(--gris-300);
+}
+
+.grafico__cursor-barra {
+  fill: var(--color-marca-suave);
+}
+
+.grafico__fondo-barra {
+  fill: var(--gris-50);
+}
+
+.grafico__ayuda {
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: var(--sombra-suave);
+  color: var(--tinta);
+  font-size: var(--texto-detalle);
+}
+
+.grafico__ayuda span {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+}
+
+.grafico__leyenda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-mini);
+  font-weight: 600;
+}
+
+.grafico__leyenda-meta {
+  width: 22px;
+  border-top: 2px dashed var(--gris-400);
 }

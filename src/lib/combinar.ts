@@ -8,7 +8,7 @@ import { VERSION_RESPALDO, type Respaldo } from './respaldo'
  *  - aprendizaje: por pregunta, el registro que se usó más recientemente;
  *  - guardadas: la unión, primero las de este dispositivo;
  *  - pregunta del día: la del día más reciente;
- *  - accesibilidad: la de este dispositivo (es una preferencia de la pantalla que se usa);
+ *  - accesibilidad: solo la de este dispositivo, aunque no tenga (es una preferencia de la pantalla que se usa);
  *  - perfil (el blobatar elegido): el que se eligió más recientemente.
  * Los dos respaldos tienen que venir ya validados con leerRespaldo().
  */
@@ -60,8 +60,9 @@ export function combinarRespaldos(local: Respaldo, nube: Respaldo, ahora = Date.
   if (guardadas.length || l.guardadas || n.guardadas) datos.guardadas = guardadas
   const diaria = combinarDiaria(l.diaria as Diaria | undefined, n.diaria as Diaria | undefined)
   if (diaria) datos.diaria = diaria
-  const accesibilidad = l.accesibilidad ?? n.accesibilidad
-  if (accesibilidad) datos.accesibilidad = accesibilidad
+  // solo la de este dispositivo, nunca la de la cuenta: al apagar todos los ajustes se borran
+  // del navegador, y tomar la de la cuenta los volvía a encender al recargar
+  if (l.accesibilidad) datos.accesibilidad = l.accesibilidad
   const pl = l.perfil as Perfil | undefined
   const pn = n.perfil as Perfil | undefined
   const perfil = pl && pn ? (pn.actualizado > pl.actualizado ? pn : pl) : (pl ?? pn)
@@ -70,7 +71,15 @@ export function combinarRespaldos(local: Respaldo, nube: Respaldo, ahora = Date.
 }
 
 /** Si dos respaldos traen exactamente el mismo progreso (sin mirar la fecha del respaldo). */
-export const mismoProgreso = (a: Respaldo, b: Respaldo) => JSON.stringify(ordenar(a.datos)) === JSON.stringify(ordenar(b.datos))
+/** El progreso sin los ajustes de accesibilidad, que son de cada dispositivo y no se suben a la cuenta. */
+export function sinAccesibilidad(respaldo: Respaldo): Respaldo {
+  const datos = { ...respaldo.datos }
+  delete datos.accesibilidad
+  return { ...respaldo, datos }
+}
+
+/** Si dos respaldos traen el mismo progreso (sin contar la accesibilidad de cada dispositivo). */
+export const mismoProgreso = (a: Respaldo, b: Respaldo) => JSON.stringify(ordenar(sinAccesibilidad(a).datos)) === JSON.stringify(ordenar(sinAccesibilidad(b).datos))
 
 function ordenar(valor: unknown): unknown {
   if (Array.isArray(valor)) return valor.map(ordenar)

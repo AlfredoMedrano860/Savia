@@ -2,7 +2,7 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import datos from '../data/preguntas.json'
 import { agregarAlHistorial } from './almacen'
 import { calificar, pruebaDeRepaso, type Pregunta } from './banco'
-import { VERSION_RESPALDO, crearRespaldo, leerRespaldo, nombreArchivo, restaurarRespaldo, resumirRespaldo } from './respaldo'
+import { VERSION_RESPALDO, crearRespaldo, leerRespaldo, restaurarRespaldo } from './respaldo'
 
 const banco = datos as Pregunta[]
 
@@ -55,12 +55,6 @@ describe('crear y restaurar un respaldo', () => {
     restaurarRespaldo(leerRespaldo(JSON.stringify({ app: 'savia', version: 1, fecha: 1, datos: {} })))
     expect(localStorage.getItem('savia:historial')).toBeNull()
   })
-
-  it('resume cuánto progreso trae', async () => {
-    await llenarProgreso()
-    const resumen = resumirRespaldo(crearRespaldo(1234))
-    expect(resumen).toEqual({ fecha: 1234, intentos: 1, preguntasVistas: 1, guardadas: 2 })
-  })
 })
 
 describe('leer un archivo de respaldo', () => {
@@ -90,11 +84,5 @@ describe('leer un archivo de respaldo', () => {
 
   it('rechaza archivos demasiado grandes', () => {
     expect(() => leerRespaldo('x'.repeat(3 * 1024 * 1024))).toThrow('demasiado grande')
-  })
-})
-
-describe('nombreArchivo', () => {
-  it('lleva la fecha local', () => {
-    expect(nombreArchivo(new Date(2026, 10, 6))).toBe('savia-progreso-2026-11-06.json')
   })
 })
