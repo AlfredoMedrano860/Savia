@@ -244,16 +244,19 @@ function AccionesCuenta() {
 export function Perfil() {
   const cuenta = useCuenta()
   const usuario = cuenta.estado === 'dentro' ? cuenta.usuario : null
+  // recién iniciada la sesión, se espera el progreso de la cuenta (con el blobatar elegido)
+  const cargando = cuenta.estado === 'cargando' || cuenta.entrando
 
-  if (!usuario) {
+  if (!usuario || cuenta.entrando) {
     return (
       <main className="contenedor pagina perfil">
         <header className="pagina__cabecera">
           <h1 className="pagina__titulo">Mi perfil</h1>
           <p className="pagina__texto">
-            {cuenta.estado === 'cargando' ? 'Cargando tu cuenta…' : 'Entra a tu cuenta para ver tu perfil y guardar tu progreso en la nube.'}
+            {cargando ? 'Cargando tu cuenta…' : 'Entra a tu cuenta para ver tu perfil y guardar tu progreso en la nube.'}
           </p>
         </header>
+        {cargando && <span className="perfil__espera" aria-hidden="true" />}
         {cuenta.estado === 'fuera' && (
           <a className="boton boton--tinta" href="#/entrar">
             Iniciar sesión
