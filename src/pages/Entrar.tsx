@@ -7,7 +7,7 @@ import 'blobatar/gaze.css'
 import { ArrowLeftIcon, EyeIcon, EyeOffIcon } from '@animateicons/react/lucide'
 import { Cinta } from '../components/Cinta'
 import { Logo } from '../components/Marco'
-import { crearCuentaConCorreo, entrarConCorreo, entrarConGoogle, mensajeDeError, recuperarClave, useCuenta } from '../lib/cuenta'
+import { crearCuentaConCorreo, entrarConCorreo, entrarConGoogle, mensajeDeError, prepararCuenta, recuperarClave, useCuenta } from '../lib/cuenta'
 import { irA, regresar } from '../lib/ruta'
 
 type Modo = 'entrar' | 'crear' | 'recuperar'
@@ -74,6 +74,10 @@ export function Entrar() {
   }, [cuenta.estado])
 
   useEffect(() => () => window.clearTimeout(temporizador.current), [])
+
+  // Firebase se descarga al abrir la página: así la ventana de Google se abre en el mismo toque
+  // (Safari en iPhone la bloquea si hay que esperar)
+  useEffect(prepararCuenta, [])
 
   const intentar = async (accion: () => Promise<void>) => {
     setOcupado(true)
@@ -257,8 +261,8 @@ export function Entrar() {
               <p className="entrar__separador entrar__anima" style={enCascada()}>
                 <span>o</span>
               </p>
-              <button type="button" className="boton-discreto boton--ancho entrar__anima" style={enCascada()} disabled={ocupado} onClick={() => void intentar(entrarConGoogle)}>
-                <LogoGoogle /> Continuar con Google
+              <button type="button" className="boton-discreto boton--ancho entrar__anima" style={enCascada()} disabled={ocupado || !cuenta.conectado} onClick={() => void intentar(entrarConGoogle)}>
+                <LogoGoogle /> {cuenta.conectado ? 'Continuar con Google' : 'Preparando Google…'}
               </button>
             </>
           )}

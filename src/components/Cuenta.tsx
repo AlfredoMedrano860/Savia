@@ -1,7 +1,7 @@
 import { Blobatar } from '@blobatar/react'
 import 'blobatar/motion.css'
 import { LogInIcon } from '@animateicons/react/lucide'
-import { useCuenta } from '../lib/cuenta'
+import { prepararCuenta, useCuenta } from '../lib/cuenta'
 import { useAvatarElegido } from '../lib/perfil'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 
@@ -22,7 +22,16 @@ export function BotonCuenta() {
   }
 
   return (
-    <a href="#/entrar" className="nav__cuenta nav__cuenta--entrar" aria-disabled={cuenta.estado === 'cargando' || undefined}>
+    <a
+      href="#/entrar"
+      className="nav__cuenta nav__cuenta--entrar"
+      aria-disabled={cuenta.estado === 'cargando' || undefined}
+      // empieza a descargar Firebase en cuanto se acerca el dedo o el mouse: así, en la página para
+      // entrar, la ventana de Google se abre en el mismo toque y el navegador no la bloquea
+      onPointerDown={prepararCuenta}
+      onPointerEnter={prepararCuenta}
+      onFocus={prepararCuenta}
+    >
       <LogInIcon size={18} isAnimated={animarIconos} aria-hidden="true" />
       <span className="nav__cuenta-texto">{cuenta.estado === 'cargando' ? 'Cargando…' : 'Iniciar sesión'}</span>
     </a>
