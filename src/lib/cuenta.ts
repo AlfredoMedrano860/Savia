@@ -16,9 +16,14 @@ import { borrarProgresoLocal, crearRespaldo, leerRespaldo, restaurarRespaldo, ty
  * Firebase solo se descarga cuando alguien inicia sesión o ya tenía una sesión abierta.
  */
 
+// En el sitio publicado, el inicio de sesión pasa por el mismo dominio de Savia: /__/auth/* se
+// reenvía a Firebase (functions/__/auth). En el celular, Safari y Chrome separan los datos de cada
+// dominio, y si Google regresaba a firebaseapp.com, Savia no se enteraba de que la persona entró.
+// En localhost no hay reenvío y se usa el dominio de Firebase directamente.
+const enLocal = typeof location === 'undefined' || ['localhost', '127.0.0.1'].includes(location.hostname)
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  authDomain: enLocal || !import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? import.meta.env.VITE_FIREBASE_AUTH_DOMAIN : location.host,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
@@ -28,6 +33,25 @@ export const cuentasDisponibles = Boolean(config.apiKey && config.authDomain && 
 
 // Marca de que hay una sesión abierta, para cargar Firebase al abrir Savia solo si hace falta.
 const CLAVE_SESION = 'savia:sesion'
+// Marca de que se fue a Google en esta misma pestaña (celular) y hay que recoger el resultado al volver.
+const CLAVE_GOOGLE = 'savia:google'
+
+function vuelveDeGoogle() {
+  try {
+    const habia = sessionStorage.getItem(CLAVE_GOOGLE) === '1'
+    sessionStorage.removeItem(CLAVE_GOOGLE)
+    return habia
+  } catch {
+    return false
+  }
+}
+function yendoAGoogle() {
+  try {
+    return sessionStorage.getItem(CLAVE_GOOGLE) === '1'
+  } catch {
+    return false
+  }
+}
 const ESPERA_SUBIDA_MS = 3000
 const VERSION_DOCUMENTO = 1
 
@@ -49,6 +73,8 @@ export interface EstadoCuenta {
   // momento de la última sincronización correcta con la nube
   sincronizado: number | null
   error: string | null
+  // error al volver de Google en el celular (se muestra en la página para entrar)
+  errorEntrada: string | null
   // Firebase ya descargado: el botón de Google solo se habilita entonces (ver entrarConGoogle)
   conectado: boolean
 }
@@ -59,6 +85,7 @@ let estado: EstadoCuenta = {
   sincronizando: false,
   sincronizado: null,
   error: null,
+  errorEntrada: null,
   conectado: false,
 }
 const oyentes = new Set<() => void>()
@@ -101,6 +128,10 @@ function cargarFirebase(): Promise<Servicios> {
     a.onAuthStateChanged(auth, (usuario) => void alCambiarUsuario(usuario))
     listos = { auth, db, a, f }
     cambiar({ conectado: true })
+    if (vuelveDeGoogle()) {
+      // el resultado (la sesión) llega por onAuthStateChanged; aquí solo se recogen los errores
+      a.getRedirectResult(auth).catch((error: unknown) => cambiar({ estado: 'fuera', errorEntrada: mensajeDeError(error) }))
+    }
     return listos
   })()
   return servicios
@@ -150,7 +181,7 @@ export function iniciarCuenta() {
   window.addEventListener('pagehide', subirSiQuedaPendiente)
   let habiaSesion = false
   try {
-    habiaSesion = localStorage.getItem(CLAVE_SESION) === '1'
+    habiaSesion = localStorage.getItem(CLAVE_SESION) === '1' || yendoAGoogle()
   } catch {
     habiaSesion = false
   }
@@ -281,26 +312,52 @@ export function prepararCuenta() {
   if (cuentasDisponibles) cargarFirebase().catch(() => {})
 }
 
-function ventanaDeGoogle(s: Servicios) {
+function proveedorGoogle(s: Servicios) {
   const proveedor = new s.a.GoogleAuthProvider()
   proveedor.setCustomParameters({ prompt: 'select_account' })
-  return s.a.signInWithPopup(s.auth, proveedor)
+  return proveedor
+}
+
+/** En el celular, Google se abre en esta misma pestaña y regresa a Savia (sin pestañas extra). */
+const conToque = () => window.matchMedia('(pointer: coarse)').matches
+
+function irAGoogle(s: Servicios) {
+  try {
+    sessionStorage.setItem(CLAVE_GOOGLE, '1')
+  } catch {
+    // sin almacenamiento igual se recupera la sesión al volver
+  }
+  return s.a.signInWithRedirect(s.auth, proveedorGoogle(s))
+}
+
+async function google(s: Servicios) {
+  if (conToque()) return irAGoogle(s)
+  try {
+    await s.a.signInWithPopup(s.auth, proveedorGoogle(s))
+  } catch (error: unknown) {
+    // si el navegador bloquea la ventana, se va a Google en esta misma pestaña
+    const codigo = typeof error === 'object' && error && 'code' in error ? (error as { code: unknown }).code : ''
+    if (codigo === 'auth/popup-blocked') return irAGoogle(s)
+    throw error
+  }
 }
 
 /**
- * Safari (sobre todo en iPhone) solo deja abrir la ventana de Google en el mismo momento del
- * toque: si antes se espera a que cargue Firebase, la bloquea. Por eso, si ya está cargado, la
- * ventana se abre sin esperar nada.
+ * En computadora, Google se abre en una ventana; en el celular, en la misma pestaña. Safari solo
+ * deja abrir la ventana en el mismo momento del clic: si antes se espera a que cargue Firebase,
+ * la bloquea. Por eso, si ya está cargado, se llama sin esperar nada.
  */
 export async function entrarConGoogle() {
+  cambiar({ errorEntrada: null })
   if (listos) {
-    await ventanaDeGoogle(listos)
+    await google(listos)
     return
   }
-  await ventanaDeGoogle(await cargarFirebase())
+  await google(await cargarFirebase())
 }
 
 export async function entrarConCorreo(correo: string, clave: string) {
+  cambiar({ errorEntrada: null })
   const s = await cargarFirebase()
   await s.a.signInWithEmailAndPassword(s.auth, correo.trim(), clave)
 }
