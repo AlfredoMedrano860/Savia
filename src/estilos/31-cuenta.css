@@ -1262,3 +1262,40 @@ line.grafico__meta {
   width: 22px;
   border-top: 2px dashed var(--gris-400);
 }
+
+/* mientras llega el progreso de la cuenta: un círculo que late en lugar del blobatar */
+.nav__cuenta-espera,
+.perfil__espera {
+  display: block;
+  border-radius: 50%;
+  background: var(--gris-100);
+  animation: cuenta-espera 1.2s ease-in-out infinite;
+}
+
+.nav__cuenta-espera {
+  width: 34px;
+  height: 34px;
+}
+
+.perfil__espera {
+  width: 120px;
+  height: 120px;
+  margin-top: 8px;
+}
+
+@keyframes cuenta-espera {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__cuenta-espera,
+  .perfil__espera {
+    animation: none;
+  }
+}
+
+html.a11y-reduce-motion :is(.nav__cuenta-espera, .perfil__espera) {
+  animation: none;
+}
