@@ -49,6 +49,8 @@ export interface EstadoCuenta {
   // momento de la última sincronización correcta con la nube
   sincronizado: number | null
   error: string | null
+  // Firebase ya descargado: el botón de Google solo se habilita entonces (ver entrarConGoogle)
+  conectado: boolean
 }
 
 let estado: EstadoCuenta = {
@@ -57,6 +59,7 @@ let estado: EstadoCuenta = {
   sincronizando: false,
   sincronizado: null,
   error: null,
+  conectado: false,
 }
 const oyentes = new Set<() => void>()
 function cambiar(parcial: Partial<EstadoCuenta>) {
@@ -85,6 +88,9 @@ interface Servicios {
 }
 let servicios: Promise<Servicios> | null = null
 
+// Firebase ya cargado, para usarlo sin esperar (ver entrarConGoogle)
+let listos: Servicios | null = null
+
 function cargarFirebase(): Promise<Servicios> {
   servicios ??= (async () => {
     const [{ initializeApp }, a, f] = await Promise.all([import('firebase/app'), import('firebase/auth'), import('firebase/firestore/lite')])
@@ -93,7 +99,9 @@ function cargarFirebase(): Promise<Servicios> {
     auth.languageCode = 'es'
     const db = f.getFirestore(app)
     a.onAuthStateChanged(auth, (usuario) => void alCambiarUsuario(usuario))
-    return { auth, db, a, f }
+    listos = { auth, db, a, f }
+    cambiar({ conectado: true })
+    return listos
   })()
   return servicios
 }
@@ -250,7 +258,7 @@ const MENSAJES: Record<string, string> = {
   'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres.',
   'auth/too-many-requests': 'Hubo demasiados intentos. Espera unos minutos y vuelve a intentarlo.',
   'auth/network-request-failed': 'No hay conexión a internet. Revisa tu conexión e inténtalo de nuevo.',
-  'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Permite las ventanas emergentes para Savia e inténtalo de nuevo.',
+  'auth/popup-blocked': 'El navegador bloqueó la ventana de Google. Toca otra vez «Continuar con Google»; si vuelve a pasar, permite las ventanas emergentes para Savia.',
   'auth/operation-not-allowed': 'Esta forma de entrar no está activada todavía.',
   'auth/unauthorized-domain': 'Este sitio no está autorizado para iniciar sesión. Avísale a soporte.',
   'auth/requires-recent-login': 'Por seguridad, vuelve a entrar a tu cuenta y repite la acción.',
@@ -268,11 +276,28 @@ export function mensajeDeError(error: unknown): string | null {
   return MENSAJES[codigo] ?? 'Algo salió mal. Inténtalo de nuevo en un momento.'
 }
 
-export async function entrarConGoogle() {
-  const s = await cargarFirebase()
+/** Descarga Firebase de antemano (al abrir la página para entrar), para que el botón de Google responda al instante. */
+export function prepararCuenta() {
+  if (cuentasDisponibles) cargarFirebase().catch(() => {})
+}
+
+function ventanaDeGoogle(s: Servicios) {
   const proveedor = new s.a.GoogleAuthProvider()
   proveedor.setCustomParameters({ prompt: 'select_account' })
-  await s.a.signInWithPopup(s.auth, proveedor)
+  return s.a.signInWithPopup(s.auth, proveedor)
+}
+
+/**
+ * Safari (sobre todo en iPhone) solo deja abrir la ventana de Google en el mismo momento del
+ * toque: si antes se espera a que cargue Firebase, la bloquea. Por eso, si ya está cargado, la
+ * ventana se abre sin esperar nada.
+ */
+export async function entrarConGoogle() {
+  if (listos) {
+    await ventanaDeGoogle(listos)
+    return
+  }
+  await ventanaDeGoogle(await cargarFirebase())
 }
 
 export async function entrarConCorreo(correo: string, clave: string) {
