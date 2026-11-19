@@ -125,7 +125,7 @@ export function Entrar() {
   let orden = 0
   const enCascada = (): CSSProperties => ({ '--orden': orden++ }) as CSSProperties
 
-  const expresion = cuenta.estado === 'dentro' ? love : error ? sad : enClave && !verClave ? shy : /\S+@\S+\.\S+/.test(correo) ? happy : idle
+  const expresion = cuenta.estado === 'dentro' ? love : error || cuenta.errorEntrada ? sad : enClave && !verClave ? shy : /\S+@\S+\.\S+/.test(correo) ? happy : idle
   const { titulo, texto, boton } = TEXTOS[modo]
 
   if (cuenta.estado === 'apagado') {
@@ -240,9 +240,9 @@ export function Entrar() {
               </button>
             )}
 
-            {error && (
+            {(error || cuenta.errorEntrada) && (
               <p className="entrar__mensaje is-error" role="alert">
-                {error}
+                {error || cuenta.errorEntrada}
               </p>
             )}
             {aviso && (
