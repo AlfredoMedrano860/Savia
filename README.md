@@ -41,14 +41,16 @@ Las cuentas son opcionales. Si no se configuran, Savia funciona igual que siempr
 5. **Crear la base de datos.** En *Firestore Database*, crea la base en modo producción (elige una región, por ejemplo `us-east1`; no se puede cambiar después).
 6. **Publicar las reglas.** Copia el contenido de [`firestore.rules`](firestore.rules) en *Firestore Database → Reglas* y publícalas. Con ellas, cada persona solo puede leer y escribir su propio progreso.
 7. **Configurar las variables.** Copia `.env.example` como `.env.local` y llena los cuatro valores (`VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID`). En Cloudflare Pages, agrégalos en *Settings → Environment variables* y vuelve a publicar. Estos valores son públicos; la seguridad la dan las reglas.
-8. **Revisar la seguridad del sitio.** `public/_headers` ya permite a Firebase en la Content-Security-Policy. Si usas un `authDomain` propio (distinto de `*.firebaseapp.com`), agrégalo a `frame-src`.
+8. **Permitir que Google regrese al dominio de Savia.** En el sitio publicado, el inicio de sesión pasa por el propio dominio: las Pages Functions de [`functions/__/`](functions/__) reenvían `/__/auth/*` a Firebase (en el celular, Safari y Chrome no dejan que una pestaña de `firebaseapp.com` le avise a Savia que la persona entró). En [Google Cloud Console](https://console.cloud.google.com/apis/credentials) → *Credenciales* → el cliente OAuth *Web client (auto created by Google Service)*, agrega en *URI de redireccionamiento autorizados* `https://tu-proyecto.pages.dev/__/auth/handler` (y el del dominio propio si lo hay). En `localhost` se usa `*.firebaseapp.com` directamente.
+9. **Nombre que ve la persona.** En *Configuración del proyecto → General → Nombre público*, y en Google Cloud → *Google Auth Platform → Desarrollo de la marca*, pon «Savia» para que Google no muestre el ID del proyecto.
 
 ### Cómo funciona
 
 - El progreso de cada persona se guarda en el documento `usuarios/{uid}` de Firestore, en el mismo formato con el que se guarda en el navegador (`src/lib/respaldo.ts`).
 - Al entrar, y cada vez que se abre Savia con la sesión iniciada, se combina el progreso del dispositivo con el de la cuenta sin perder nada (`src/lib/combinar.ts`). Cuando cambia el progreso, se sube unos segundos después (`src/lib/cuenta.ts`).
-- Firebase solo se descarga cuando alguien inicia sesión o ya tenía una sesión abierta. Se usa Firestore Lite, que pesa menos.
-- Al cerrar sesión, el progreso se borra del dispositivo (puede ser un equipo compartido) y queda en la cuenta. «Borrar mi cuenta» elimina la cuenta y su progreso.
+- Con Google, en computadora se abre una ventana; en el celular, Google se abre en la misma pestaña y regresa a Savia.
+- Firebase solo se descarga cuando alguien va a iniciar sesión o ya tenía una sesión abierta. Se usa Firestore Lite, que pesa menos.
+- Al cerrar sesión, el progreso se borra del dispositivo (puede ser un equipo compartido) y queda en la cuenta. «Borrar cuenta» (en Mi perfil) elimina la cuenta y su progreso.
 
 ## Información legal
 
