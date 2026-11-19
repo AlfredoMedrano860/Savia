@@ -75,6 +75,9 @@ export interface EstadoCuenta {
   error: string | null
   // error al volver de Google en el celular (se muestra en la página para entrar)
   errorEntrada: string | null
+  // recién se inició sesión en este dispositivo y todavía no llega el progreso de la cuenta (el
+  // perfil y la barra esperan, para no mostrar un blobatar que no es el elegido)
+  entrando: boolean
   // Firebase ya descargado: el botón de Google solo se habilita entonces (ver entrarConGoogle)
   conectado: boolean
 }
@@ -86,6 +89,7 @@ let estado: EstadoCuenta = {
   sincronizado: null,
   error: null,
   errorEntrada: null,
+  entrando: false,
   conectado: false,
 }
 const oyentes = new Set<() => void>()
@@ -154,8 +158,14 @@ async function alCambiarUsuario(u: User | null) {
     cambiar({ estado: 'fuera', usuario: null, sincronizado: null, sincronizando: false })
     return
   }
+  let yaHabiaSesion = false
+  try {
+    yaHabiaSesion = localStorage.getItem(CLAVE_SESION) === '1'
+  } catch {
+    yaHabiaSesion = false
+  }
   ponerMarcaDeSesion()
-  cambiar({ estado: 'dentro', usuario: datosDe(u), error: null })
+  cambiar({ estado: 'dentro', usuario: datosDe(u), error: null, entrando: !yaHabiaSesion })
   await sincronizarAlEntrar(u.uid)
 }
 
@@ -220,6 +230,19 @@ async function escribirNube(s: Servicios, uid: string, respaldo: Respaldo) {
   })
 }
 
+/**
+ * Recarga la página para que toda la app lea el progreso nuevo. Al cerrar sesión o borrar la
+ * cuenta (arriba = true) vuelve al principio: si no, el navegador conserva el desplazamiento y
+ * la persona queda viendo el pie de página.
+ */
+function recargar(arriba = false) {
+  if (arriba) {
+    history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
+  }
+  window.location.reload()
+}
+
 async function sincronizarAlEntrar(uid: string) {
   cambiar({ sincronizando: true, error: null })
   try {
@@ -233,11 +256,13 @@ async function sincronizarAlEntrar(uid: string) {
     // app lo lea (el registro de aprendizaje y el historial viven en memoria).
     if (!mismoProgreso(combinado, local)) {
       restaurarRespaldo(combinado)
-      window.location.reload()
+      recargar()
+      return
     }
+    cambiar({ entrando: false })
   } catch (error: unknown) {
     console.error('No se pudo sincronizar el progreso con la cuenta.', error)
-    cambiar({ sincronizando: false, error: 'No se pudo sincronizar con tu cuenta. Tu progreso sigue guardado en este dispositivo.' })
+    cambiar({ sincronizando: false, entrando: false, error: 'No se pudo sincronizar con tu cuenta. Tu progreso sigue guardado en este dispositivo.' })
   }
 }
 
@@ -395,7 +420,7 @@ export async function cerrarSesion() {
   await s.a.signOut(s.auth)
   borrarProgresoLocal()
   sacarMarcaDeSesion()
-  window.location.reload()
+  recargar(true)
 }
 
 /** Borra el progreso guardado en la nube y la cuenta. El progreso de este navegador también se borra. */
@@ -419,5 +444,5 @@ export async function borrarCuenta() {
   }
   borrarProgresoLocal()
   sacarMarcaDeSesion()
-  window.location.reload()
+  recargar(true)
 }
