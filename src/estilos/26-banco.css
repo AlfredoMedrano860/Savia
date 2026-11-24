@@ -43,6 +43,119 @@
   border-radius: 4px;
 }
 
+/* ---------- practicar solo algunos subtemas ----------
+   Cada subtema lleva una casilla a la izquierda; con alguna marcada, el botón del tema practica
+   solo esos y debajo de la lista aparece el resumen con "Quitar marcas". */
+.temario__subtemas li.temario__fila {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.temario__fila .temario__subtema {
+  flex: 1;
+  min-width: 0;
+}
+
+/* la casilla ocupa 32 px para que sea fácil de tocar, aunque el cuadro mida 18 */
+.temario__marca {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  margin: -6px 0 -6px -8px;
+  cursor: pointer;
+}
+
+.temario__marca input {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 2px solid var(--puerto-300);
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.temario__marca input::after {
+  width: 5px;
+  height: 9px;
+  margin-top: -2px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  content: '';
+  opacity: 0;
+  transform: rotate(45deg);
+}
+
+.temario__marca:hover input {
+  border-color: var(--puerto-600);
+}
+
+.temario__marca input:checked {
+  border-color: var(--puerto-600);
+  background: var(--puerto-600);
+}
+
+.temario__marca input:checked::after {
+  opacity: 1;
+}
+
+.temario__marca input:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.temario__fila.is-marcado .temario__subtema > span:first-child {
+  color: var(--puerto-700);
+  font-weight: 600;
+}
+
+.temario__seleccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--puerto-50);
+  color: var(--puerto-800);
+  font-size: var(--texto-detalle);
+}
+
+.temario__limpiar {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--puerto-700);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.temario__limpiar:focus-visible {
+  outline: 2px solid var(--color-foco);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .temario__seleccion {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .banco {
   margin-top: 20px;
   padding-top: 20px;

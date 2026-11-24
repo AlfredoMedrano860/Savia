@@ -15,13 +15,21 @@ function useDestino() {
   return destino
 }
 
-export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodigo) => void }) {
+export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodigo, subtemas: string[]) => void }) {
   const [preguntas, setPreguntas] = useState<Pregunta[] | null>(null)
   const [errorCarga, setErrorCarga] = useState(false)
   const destino = useDestino()
   // Banco abierto en el modal: el tema y el subtema elegido (null = todos); null = cerrado.
   const [banco, setBanco] = useState<{ tema: TemaCodigo; subtema: string | null } | null>(null)
   const abrirBanco = (tema: TemaCodigo, subtema: string | null) => setBanco({ tema, subtema })
+  // Subtemas marcados en cada tema para practicar solo esos; sin marcas se practica el tema entero.
+  const [elegidos, setElegidos] = useState<Partial<Record<TemaCodigo, string[]>>>({})
+  const alternarSubtema = (tema: TemaCodigo, subtema: string) =>
+    setElegidos((actuales) => {
+      const delTema = actuales[tema] ?? []
+      return { ...actuales, [tema]: delTema.includes(subtema) ? delTema.filter((s) => s !== subtema) : [...delTema, subtema] }
+    })
+  const limpiar = (tema: TemaCodigo) => setElegidos((actuales) => ({ ...actuales, [tema]: [] }))
 
   useEffect(() => {
     let vigente = true
@@ -53,7 +61,8 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
         <h1 className="pagina__titulo">Temario</h1>
         <p className="pagina__texto">
           Estos son los seis temas que evalúa la prueba de Biología y los contenidos de cada uno. Puedes practicar un tema por aparte
-          con {PREGUNTAS_POR_TEMA} preguntas y {PREGUNTAS_POR_TEMA * MINUTOS_POR_PREGUNTA} minutos.
+          con {PREGUNTAS_POR_TEMA} preguntas y {PREGUNTAS_POR_TEMA * MINUTOS_POR_PREGUNTA} minutos, o marcar solo los subtemas que
+          quieras repasar.
         </p>
       </header>
 
@@ -71,6 +80,9 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
             const lista = subtemas(t, preguntas)
             const delTema = preguntas.filter((p) => p.t === t)
             const total = delTema.length
+            const marcados = elegidos[t] ?? []
+            const disponibles = lista.filter((s) => marcados.includes(s.nombre)).reduce((suma, s) => suma + s.total, 0)
+            const deLaPractica = Math.min(PREGUNTAS_POR_TEMA, disponibles)
             return (
               <li key={t} id={`tema-${t}`} className={`panel temario__tema ${destino?.tema === t ? 'is-destino' : ''}`}>
                 <div className="temario__cabecera">
@@ -80,8 +92,12 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                     <p className="temario__total">{total} preguntas en el banco</p>
                   </div>
                   <div className="temario__acciones">
-                    <button type="button" className="boton boton--tinta" onClick={() => onPracticarTema(t)}>
-                      Practicar este tema
+                    <button type="button" className="boton boton--tinta" onClick={() => onPracticarTema(t, marcados)}>
+                      {marcados.length === 0
+                        ? 'Practicar este tema'
+                        : marcados.length === 1
+                          ? 'Practicar 1 subtema'
+                          : `Practicar ${marcados.length} subtemas`}
                     </button>
                     <button type="button" className="boton-discreto" aria-haspopup="dialog" onClick={() => abrirBanco(t, null)}>
                       {total === 1 ? 'Ver la pregunta' : `Ver las ${total} preguntas`}
@@ -90,7 +106,22 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                 </div>
                 <ul className="temario__subtemas">
                   {lista.map((s) => (
-                    <li key={s.nombre} className={destino?.tema === t && destino.subtema === s.nombre ? 'is-destacado' : undefined}>
+                    <li
+                      key={s.nombre}
+                      className={[
+                        'temario__fila',
+                        destino?.tema === t && destino.subtema === s.nombre ? 'is-destacado' : '',
+                        marcados.includes(s.nombre) ? 'is-marcado' : '',
+                      ].join(' ')}
+                    >
+                      <label className="temario__marca">
+                        <input
+                          type="checkbox"
+                          checked={marcados.includes(s.nombre)}
+                          onChange={() => alternarSubtema(t, s.nombre)}
+                          aria-label={`Practicar ${s.nombre}`}
+                        />
+                      </label>
                       <button
                         type="button"
                         className="temario__subtema"
@@ -104,6 +135,17 @@ export function Temario({ onPracticarTema }: { onPracticarTema: (tema: TemaCodig
                     </li>
                   ))}
                 </ul>
+                {marcados.length > 0 && (
+                  <p className="temario__seleccion" aria-live="polite">
+                    <span>
+                      {marcados.length === 1 ? '1 subtema marcado' : `${marcados.length} subtemas marcados`} · {deLaPractica}{' '}
+                      {deLaPractica === 1 ? 'pregunta' : 'preguntas'} y {deLaPractica * MINUTOS_POR_PREGUNTA} minutos
+                    </span>
+                    <button type="button" className="temario__limpiar" onClick={() => limpiar(t)}>
+                      Quitar marcas
+                    </button>
+                  </p>
+                )}
               </li>
             )
           })}
