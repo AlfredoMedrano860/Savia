@@ -4,6 +4,7 @@ import {
   CODIGOS,
   MODOS,
   NOTA_MINIMA,
+  TEMAS,
   TOTAL_PREGUNTAS,
   calificar,
   cargarPreguntas,
@@ -118,6 +119,28 @@ describe('práctica por tema y repaso', () => {
     const prueba = await pruebaDeTema('T22')
     expect(prueba.items).toHaveLength(15)
     expect(prueba.items.every((i) => temaDe(i.id) === 'T22')).toBe(true)
+  })
+
+  it('la práctica de subtemas elegidos solo usa esos subtemas y los reparte parejo', async () => {
+    // dos subtemas de T20 con suficientes preguntas para repartir 15
+    const grandes = [...new Set(banco.filter((p) => p.t === 'T20').map((p) => p.s))].filter(
+      (s) => banco.filter((p) => p.s === s).length >= 8,
+    )
+    const [a, b] = grandes
+    const prueba = await pruebaDeTema('T20', [a, b])
+    const deA = prueba.items.filter((i) => porId.get(i.id)!.s === a).length
+    const deB = prueba.items.filter((i) => porId.get(i.id)!.s === b).length
+    expect(prueba.items).toHaveLength(15)
+    expect(deA + deB).toBe(15)
+    expect(Math.abs(deA - deB)).toBe(1)
+    expect(prueba.nombre).toBe(`Práctica · ${TEMAS.T20} (2 subtemas)`)
+  })
+
+  it('la práctica de un solo subtema lleva su nombre', async () => {
+    const s = banco.find((p) => p.t === 'T19')!.s
+    const prueba = await pruebaDeTema('T19', [s])
+    expect(prueba.items.every((i) => porId.get(i.id)!.s === s)).toBe(true)
+    expect(prueba.nombre).toBe(`Práctica · ${s}`)
   })
 
   it('el repaso usa exactamente las preguntas pedidas', () => {
