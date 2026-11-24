@@ -358,7 +358,7 @@ export default function App() {
         {ruta === 'inicio' && <Portada />}
         <Suspense fallback={cargandoVista}>
           {esRutaLegal(ruta) && <Legal documento={ruta} />}
-          {ruta === 'temario' && <Temario onPracticarTema={(t) => empezar(() => pruebaDeTema(t))} />}
+          {ruta === 'temario' && <Temario onPracticarTema={(t, subtemas) => empezar(() => pruebaDeTema(t, subtemas))} />}
           {ruta === 'proyecto' && <Proyecto />}
           {ruta === 'entrar' && <Entrar />}
           {ruta === 'perfil' && <Perfil />}

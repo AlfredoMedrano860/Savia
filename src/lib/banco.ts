@@ -225,12 +225,33 @@ export async function pruebaImprimible(codigo: string): Promise<Prueba> {
 
 export const PREGUNTAS_POR_TEMA = 15
 
-export async function pruebaDeTema(tema: TemaCodigo): Promise<Prueba> {
-  const preguntas = await cargarPreguntas()
-  const ids = mezclar(preguntas.filter((p) => p.t === tema))
+/**
+ * Práctica de un tema: {@link PREGUNTAS_POR_TEMA} preguntas al azar. Con subtemas elegidos, solo
+ * de esos subtemas y repartidas lo más parejo posible entre ellos, para que un subtema con muchas
+ * preguntas no tape a los demás.
+ */
+export async function pruebaDeTema(tema: TemaCodigo, elegidos: readonly string[] = []): Promise<Prueba> {
+  const preguntas = (await cargarPreguntas()).filter((p) => p.t === tema)
+  const ids = (elegidos.length === 0 ? mezclar(preguntas) : repartirEntreSubtemas(preguntas, elegidos))
     .slice(0, PREGUNTAS_POR_TEMA)
     .map((p) => p.id)
-  return crearPrueba('tema', `Práctica · ${TEMAS[tema]}`, ids, PREGUNTAS_POR_TEMA * MINUTOS_POR_PREGUNTA)
+  const nombre =
+    elegidos.length === 0 ? TEMAS[tema] : elegidos.length === 1 ? elegidos[0] : `${TEMAS[tema]} (${elegidos.length} subtemas)`
+  return crearPrueba('tema', `Práctica · ${nombre}`, ids, ids.length * MINUTOS_POR_PREGUNTA)
+}
+
+// Toma una pregunta de cada subtema por turno hasta llenar la prueba; los subtemas que se quedan
+// sin preguntas dejan su lugar a los otros.
+function repartirEntreSubtemas(preguntas: Pregunta[], elegidos: readonly string[]): Pregunta[] {
+  const pilas = mezclar([...elegidos]).map((s) => mezclar(preguntas.filter((p) => p.s === s)))
+  const elegidas: Pregunta[] = []
+  while (elegidas.length < PREGUNTAS_POR_TEMA && pilas.some((pila) => pila.length > 0)) {
+    for (const pila of pilas) {
+      const siguiente = pila.pop()
+      if (siguiente && elegidas.length < PREGUNTAS_POR_TEMA) elegidas.push(siguiente)
+    }
+  }
+  return mezclar(elegidas)
 }
 
 export function subtemas(tema: TemaCodigo, preguntas: Pregunta[]) {
