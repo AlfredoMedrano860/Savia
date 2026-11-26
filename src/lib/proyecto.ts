@@ -1,5 +1,5 @@
 export const PROYECTO = {
-  codigo: 'TCU-704',
+  codigo: 'TC-704',
   nombre: 'Consultorio Comunitario: un abordaje preventivo desde la construcción del vínculo',
   nombreCorto: 'Consultorio Comunitario',
   universidad: 'Universidad de Costa Rica',
