@@ -1191,13 +1191,8 @@ html:is([data-a11y-font='muy-grande'], [data-a11y-font='maximo'], .a11y-dyslexia
   font-size: 0.8125rem;
 }
 
-.grafico__lienzo .recharts-cartesian-axis-tick text,
-.grafico__valor {
+.grafico__lienzo .recharts-cartesian-axis-tick text {
   fill: var(--color-texto-suave);
-}
-
-.grafico__valor {
-  font-weight: 700;
 }
 
 .grafico__lienzo .recharts-yAxis .recharts-cartesian-axis-tick text {
@@ -1223,12 +1218,90 @@ line.grafico__meta {
   stroke: var(--gris-300);
 }
 
-.grafico__cursor-barra {
-  fill: var(--color-marca-suave);
+/* ---------- aciertos por tema: barras en HTML ----------
+   La tarjeta es una columna: las filas se reparten en el alto que le da el gráfico de notas de
+   al lado, así no queda un hueco abajo. Cada fila: nombre, pista con la barra y el porcentaje. */
+.grafico--temas {
+  display: flex;
+  flex-direction: column;
 }
 
-.grafico__fondo-barra {
-  fill: var(--gris-50);
+.barras {
+  display: grid;
+  flex: 1;
+  grid-template-columns: max-content minmax(0, 1fr) 3.2em;
+  align-content: space-evenly;
+  gap: 14px 12px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barras__fila {
+  display: contents;
+}
+
+.barras__nombre {
+  align-self: center;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+  font-weight: 600;
+  text-align: right;
+}
+
+.barras__pista {
+  position: relative;
+  align-self: center;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--gris-50);
+}
+
+/* nota para aprobar: la misma línea punteada del gráfico de notas */
+.barras__pista::after {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: var(--meta);
+  border-left: 2px dashed var(--gris-400);
+  content: '';
+}
+
+.barras__relleno {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: #3770bf;
+}
+
+.barras__valor {
+  align-self: center;
+  color: var(--tinta);
+  font-size: var(--texto-detalle);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.barras__fila.is-aprobado .barras__valor {
+  color: var(--hierba-700);
+}
+
+.grafico--temas .grafico__leyenda {
+  margin-top: 14px;
+}
+
+/* en celular el nombre va arriba de su barra, para que la barra tenga todo el ancho */
+@media (max-width: 480px) {
+  .barras {
+    grid-template-columns: minmax(0, 1fr) 3.2em;
+    gap: 4px 10px;
+  }
+
+  .barras__nombre {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    text-align: left;
+  }
 }
 
 .grafico__ayuda {
@@ -1250,17 +1323,57 @@ line.grafico__meta {
 
 .grafico__leyenda {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px 18px;
   margin: 8px 0 0;
   color: var(--color-texto-suave);
   font-size: var(--texto-mini);
   font-weight: 600;
 }
 
+.grafico__leyenda > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .grafico__leyenda-meta {
   width: 22px;
   border-top: 2px dashed var(--gris-400);
+}
+
+/* mismos colores que el gráfico de notas (AZUL y AZUL_TENUE en GraficosAvance.tsx) */
+.grafico__leyenda-linea {
+  width: 22px;
+  border-top: 3px solid #3770bf;
+  border-radius: 2px;
+}
+
+.grafico__leyenda-punto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #9db8df;
+}
+
+/* resumen arriba del gráfico de notas: el promedio reciente y si sube o baja */
+.grafico__resumen {
+  margin: 0 0 8px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-detalle);
+}
+
+.grafico__resumen strong {
+  color: var(--tinta);
+}
+
+.grafico__resumen strong.is-sube {
+  color: var(--hierba-700);
+}
+
+.grafico__resumen strong.is-baja {
+  color: var(--rojo);
 }
 
 /* mientras llega el progreso de la cuenta: un círculo que late en lugar del blobatar */
