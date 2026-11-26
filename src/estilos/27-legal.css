@@ -156,7 +156,7 @@
 }
 
 /* En escritorio, los créditos de la derecha se alinean con el bloque de la izquierda:
-   "TCU-704 · Puntarenas" a la altura de la primera línea del aviso y "Desarrollado por"
+   "TC-704 · Puntarenas" a la altura de la primera línea del aviso y "Desarrollado por"
    a la altura de los enlaces legales. */
 @media (min-width: 861px) {
   .contraportada__base {
