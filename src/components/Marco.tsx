@@ -57,6 +57,22 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
     setAbierto(false)
   }, [ruta])
 
+  // Con el menú abierto (cubre toda la pantalla en celular) la página de atrás no se desplaza,
+  // y Escape lo cierra.
+  useEffect(() => {
+    if (!abierto) return
+    const anterior = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const alTeclear = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setAbierto(false)
+    }
+    window.addEventListener('keydown', alTeclear)
+    return () => {
+      document.body.style.overflow = anterior
+      window.removeEventListener('keydown', alTeclear)
+    }
+  }, [abierto])
+
   return (
     <>
       <FiltrosTinta />
@@ -89,7 +105,13 @@ export function Marco({ ruta, children }: { ruta: Ruta | null; children: ReactNo
           </button>
           <nav id="nav-enlaces" className={`nav__enlaces ${abierto ? 'is-abierto' : ''}`} aria-label="Principal">
             {RUTAS.filter((r) => r.id !== 'proyecto').map((r) => (
-              <a key={r.id} href={r.href} className="nav__enlace" aria-current={ruta === r.id ? 'page' : undefined}>
+              <a
+                key={r.id}
+                href={r.href}
+                className="nav__enlace"
+                aria-current={ruta === r.id ? 'page' : undefined}
+                onClick={() => setAbierto(false)}
+              >
                 {r.nombre}
               </a>
             ))}

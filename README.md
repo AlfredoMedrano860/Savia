@@ -1,6 +1,6 @@
 # Savia
 
-Aplicación gratuita para practicar Biología de la prueba EDAD II. Incluye 1000 preguntas explicadas, prácticas cronometradas, temario y repaso de errores. Se puede usar sin cuenta; con una cuenta (opcional), el progreso se guarda en la nube. Fue creada en el TCU-704 de la Universidad de Costa Rica.
+Aplicación gratuita para practicar Biología de la prueba EDAD II. Incluye 1000 preguntas explicadas, prácticas cronometradas, temario y repaso de errores. Se puede usar sin cuenta; con una cuenta (opcional), el progreso se guarda en la nube. Fue creada en el TC-704 de la Universidad de Costa Rica.
 
 ## Funciones
 

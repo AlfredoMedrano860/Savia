@@ -187,9 +187,10 @@ button {
   justify-content: center;
   gap: 6px;
   min-height: 44px;
-  padding: 0 12px;
-  /* mismo borde (transparente), esquinas y letra que .boton: casi siempre va a su lado
-     ("Nueva prueba" / "Repasar las que fallé", "Entregar" / "Seguir respondiendo") */
+  /* mismo relleno vertical, borde (transparente), esquinas y letra que .boton, para que midan
+     lo mismo: casi siempre va a su lado ("Nueva prueba" / "Repasar las que fallé", "Entregar" /
+     "Seguir respondiendo", "Repasar ahora" / "Practicar guardadas") */
+  padding: 10px 12px;
   border: 1px solid transparent;
   border-radius: 4px;
   background: transparent;
