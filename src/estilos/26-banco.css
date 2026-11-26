@@ -195,6 +195,30 @@
   margin-top: 12px;
 }
 
+/* En celular los subtemas no se acomodan en varias filas: forman una sola fila que se desliza
+   de lado, de borde a borde del modal, como las pestañas de My Green Farm. useCarrusel centra
+   el subtema elegido. El margen negativo es el mismo relleno lateral de .modal__contenido. */
+@media (max-width: 767px) {
+  .banco__filtros {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * clamp(18px, 4vw, 44px));
+    padding: 4px clamp(18px, 4vw, 44px);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: clamp(18px, 4vw, 44px);
+    scrollbar-width: none;
+  }
+
+  .banco__filtros::-webkit-scrollbar {
+    display: none;
+  }
+
+  .banco__filtros .filtro {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
 .banco__conteo {
   margin: 14px 0 10px;
   color: var(--color-texto-suave);

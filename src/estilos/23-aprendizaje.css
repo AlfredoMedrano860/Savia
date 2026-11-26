@@ -240,6 +240,18 @@
   margin: -6px 0 -6px auto;
 }
 
+/* en celular la etiqueta del tema ocupa la fila y "Guardar" baja a la siguiente: sin el margen
+   negativo, para que no se monte sobre la etiqueta */
+@media (max-width: 640px) {
+  .hoja__meta {
+    row-gap: 10px;
+  }
+
+  .hoja__meta .guardar {
+    margin: 0 0 0 auto;
+  }
+}
+
 .revision__cabecera {
   display: flex;
   align-items: flex-start;

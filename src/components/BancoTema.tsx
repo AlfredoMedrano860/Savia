@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { EyeIcon, EyeOffIcon } from '@animateicons/react/lucide'
 import { LETRAS, type Pregunta } from '../lib/banco'
+import { useCarrusel } from '../lib/useCarrusel'
 import { useIconosAnimados } from '../lib/useIconosAnimados'
 import { BotonGuardar } from './BotonGuardar'
 import { EnlaceReporte } from './EnlaceReporte'
@@ -30,6 +31,8 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
   const [todas, setTodas] = useState(false)
   const animarIconos = useIconosAnimados()
   const idBusqueda = useId()
+  // en celular los subtemas forman un carrusel que centra el elegido
+  const filtros = useCarrusel<HTMLDivElement>(subtema)
 
   const lista = useMemo(() => {
     const q = normalizar(busqueda.trim())
@@ -87,7 +90,7 @@ export function BancoTema({ preguntas, subtemas, subtema, onSubtema }: BancoTema
         </button>
       </div>
 
-      <div className="banco__filtros" role="group" aria-label="Filtrar por subtema">
+      <div ref={filtros} className="banco__filtros" role="group" aria-label="Filtrar por subtema">
         <button type="button" className={`filtro ${subtema === null ? 'is-activo' : ''}`} aria-pressed={subtema === null} onClick={() => onSubtema(null)}>
           Todos ({preguntas.length})
         </button>
